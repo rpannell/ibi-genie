@@ -1,0 +1,52 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>VS2017 .Net Core Entity Framework Scaffolder</title>
+	<!-- <link rel="stylesheet" href="assets/css/nav.css"> -->
+    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.css" />
+    <link rel="stylesheet" href="node_modules/bootstrap-table/dist/bootstrap-table.css" />
+    <link rel="stylesheet" href="node_modules/font-awesome/css/font-awesome.css" />
+    <link rel="stylesheet" href="content/css/Site.css" />
+	<link href="./assets/xeditable/xeditable.css" rel="stylesheet"/>
+</head>
+<body>
+	<nav class="navigation">
+		<header class="navigation-header"> 
+			<h1 class="navigation-title">Application Framework Code Generator</h1>
+			<i class="navigation-header-icon fa fa-beer" aria-hidden="true"></i>
+		</header> 
+		<div class="navigation-item">
+			<h5 id="btnCreatePlugin" class="navigation-category"><i class="navigation-icon fa fa-plug" aria-hidden="true"></i>Create New Plugins/Services</h5>
+		</div>
+		<div class="navigation-item">
+			<h5 id="btnCoreSaffolding" class="navigation-category"><i class="navigation-icon fa fa-database" aria-hidden="true"></i>Entity Scaffolding</h5>
+		</div>
+		<div class="navigation-item">
+			<h5 id="btnOptions" class="navigation-category"><i class="navigation-icon fa fa-cog" aria-hidden="true"></i>Manage Configuration</h5>
+		</div>
+	</nav>
+	<div class="content">
+	
+	</div>
+</body>
+<script>
+    // You can also require other files to run in this process
+    window.$ = window.jQuery = require('jquery');
+    require('jquery-migrate');
+	require('jquery-ui');
+    require('bootstrap');
+    require('bootstrap-table');
+	require('./assets/xeditable/xeditable');
+	require('./assets/js/bootstrapeditable');
+    const {ipcRenderer} = require('electron');
+
+    $(document).ready(function () {
+		$(".content").load( "home.html" );
+        $("#btnCreatePlugin").click(function () { $(".content").load( "templating.html" ); });
+        $("#btnCoreSaffolding").click(function () { $(".content").load( "corescaffolding.html" ); });
+		$("#btnOptions").click(function () { $(".content").load( "options.html" ); });
+    });
+</script>
+
+</html>

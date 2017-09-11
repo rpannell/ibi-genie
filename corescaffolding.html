@@ -1,0 +1,186 @@
+﻿<div class="row" id="dvAlert">
+	<div class="col-xs-12">
+		<div class="alert alert-danger" role="alert"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>&nbsp;&nbsp;The configuration isn't correct for this functionality.  Please go and update the configuration to ensure there is a valid service and valid database info before continuing.</div>
+	</div>
+</div>
+<div class="row">
+	<div class="col-xs-10"><h3>.NET Core WebApi Service Scaffolder</h3></div>
+	<div class="col-xs-2"><button type="button" id="btnOptions" class="btn btn-default pull-right"><i class="fa fa-cog"></i></button></div>
+</div>
+<hr/>
+<form class="form-horizontal">
+	<div class="form-group">
+		<label class="col-xs-3 control-label">Current Service</label>
+		<div class="col-xs-9" id="lblCurrentService"></div>
+	</div>
+	<div class="form-group">
+		<label class="col-xs-3 control-label">Database</label>
+		<div class="col-xs-9" id="lblCurrentDatabase"></div>
+	</div>
+	<div class="form-group">
+		<label class="col-xs-3 control-label">Service Location</label>
+		<div class="col-xs-9" id="lblCodeLocation"></div>
+	</div>
+	<div class="form-group">
+		<label class="col-xs-3 control-label">Plugin Location</label>
+		<div class="col-xs-9" id="lblPluginLocation"></div>
+	</div>
+</form>
+<hr/>
+<div class="row">
+	<div class="col-xs-12">
+		<div id="custom-toolbar">
+			<button id="btnAddEntity" class="btn btn-default"><i class="fa fa-plus"></i>&nbsp;&nbsp;Add Entity</button>
+			<button id="btnWriteScaffolding" class="btn btn-default"><i class="fa fa-code"></i>&nbsp;&nbsp;Finish</button>
+		</div>
+		<table id="table" data-toggle="table" data-show-footer="false" style="min-height: 300px;">
+			<thead>
+				<tr>
+					<th data-field="PropertyName">Name</th>
+					<th data-field="TableName">DB</th>
+					<th data-formatter="CountFormatter">Column Count</th>
+					<th data-formatter="OperateFormatter" data-events="operateEvents">Options</th>
+				</tr>
+			</thead>
+		</table>
+	</div>
+</div>
+<div class="modal fade in" data-backdrop="static" data-keyboard="false" id="mdlConfirm">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title">Confirm</h4>
+			</div>
+			<div class="modal-body">
+				<div class="row">
+					<div class="col-xs-12">
+						Are you sure you want to add these entities to service and the plugin below?  If you don't want to add to the plugin uncheck the checkbox below
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-3"><div class="pull-right">Service:</div></div>
+					<div class="col-xs-9" id="dvServiceLocation"></div>
+					<div class="col-xs-3"><div class="pull-right">Plugin:</div></div>
+					<div class="col-xs-9" id="dvPluginLocation"></div>
+				</div>
+				<div class="row" id="dvScaffoldPlugin">
+					<div class="col-xs-3"></div>
+					<div class="col-xs-9">
+						<div class="checkbox">
+							<label>
+								<input type="checkbox" id="chkScaffoldPlugin" checked="checked" /> Add Entity to Plugin
+							</label>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+				<button type="button" id="btnOk" class="btn btn-primary">Ok</button>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="modal fade in" data-backdrop="static" data-keyboard="false" id="mdlAdd">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title">Entity Info</h4>
+			</div>
+			<div class="modal-body">
+				<input type="hidden" id="hdSchema" />
+				<input type="hidden" id="hdTableName" />
+				<div class="row">
+					<form class="form-horizontal">
+						<div class="row">
+							<label class="col-xs-12 col-md-2 control-label">Database:</label>
+							<div class="col-xs-12 col-md-4">
+								<select class="form-control" id="dlDatabase"></select>
+							</div>
+							<label class="col-xs-12 col-md-2 control-label">Table Name:</label>
+							<div class="col-xs-12 col-md-4">
+								<select class="form-control" id="dlTable"></select>
+							</div>
+						</div>
+						<div class="row">
+							<label class="col-xs-12 col-md-2 control-label">Entity Name:</label>
+							<div class="col-xs-12 col-md-4"><input id="txtEntityName" class="form-control" /></div>
+							<div class="col-xs-12 col-md-2"><button type="button" id="btnGo" class="btn btn-default">Go</button></div>
+							<div class="col-xs-12 col-md-4">
+								<div class="checkbox">
+									<label><input id="chkReadOnly" type="checkbox" /> Is Read Only</label>
+								</div>
+							</div>
+						</div>
+						<div class="row"><div class="col-xs-12"><hr/></div></div>
+						<div class="row">
+							<div class="col-xs-12">
+								<table id="tblEntityInfo" data-toggle="table" data-show-footer="false" style="min-height: 300px;">
+									<thead>
+										<tr>
+											<th data-field="ColumnName">Column</th>
+											<th data-field="DataType">Data Type</th>
+											<th data-field="PropertyName" data-editable="true">Property</th>
+											<th data-field="PropertyType" data-editable="true" data-editable-type="select" data-editable-sourceCache="true" data-editable-source="http://localhost:3000/GetPropertyType" >Property Type</th>
+											<th data-field="IsPrimaryKey" data-title="PK" data-radio="true" data-check-box-header="true">PK</th>
+											<th data-field="Ignore" data-editable="true" data-editable-type="select" data-editable-sourceCache="true" data-editable-source="http://localhost:3000/GetYesNo">Ignore</th>
+											<th data-field="IsInsertOnly" data-editable="true" data-editable-type="select" data-editable-sourceCache="true" data-editable-source="http://localhost:3000/GetYesNo">Ins Only</th>
+											<th data-field="IsAutoComplete" data-editable="true" data-editable-type="select" data-editable-sourceCache="true" data-editable-source="http://localhost:3000/GetYesNo">Auto Compl</th>
+											<th data-field="Search" data-editable="true" data-editable-type="select" data-editable-sourceCache="true" data-editable-source="http://localhost:3000/GetSearchType">Search</th>
+										</tr>
+									</thead>
+								</table>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" id="btnCancel" class="btn btn-default">Cancel</button>
+				<button type="button" id="btnAddNewEntity" class="btn btn-primary">Add</button>
+			</div>
+		</div>
+	</div>
+</div>
+<script>
+	$.fn.editable.defaults.mode = 'inline';
+	function CountFormatter(value, row) {
+        return row.Columns.length;
+    }
+
+	// You can also require other files to run in this process
+	function OperateFormatter(value, row, index) {
+		var htmlString = "";
+		htmlString = '<div class="btn-group">' +
+						'<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true">' +
+						'<label>Actions</label><span class="caret"></span></button>' +
+						'<ul class="dropdown-menu dropdown-menu-right" role="menu">' +
+							'<li class="btn_del"><a>Remove</a></li>' +
+							'<li class="btn_edit"><a>Edit</a></li>' +
+						'</ul>' +
+					'</div>';
+		return [htmlString].join('');
+	}
+
+	window.operateEvents = {
+		'click .btn_del': function (e, value, row, index) {
+			$("#table").bootstrapTable('remove', {field: 'PropertyName', values: [row.PropertyName]});
+			console.log(row.PropertyName);
+		},
+		'click .btn_edit': function (e, value, row, index) {
+			$("#tblEntityInfo").bootstrapTable('load', row.Columns);
+			$("#txtEntityName").val(row.PropertyName);
+			if(row.IsReadOnly){
+				$("#chkReadOnly").prop("checked", "checked");
+			}
+			$("#dlTable").val(row.Schema + "." + row.TableName);
+			$("#hdSchema").val(row.Schema);
+			$("#hdTableName").val(row.TableName);
+			$('#mdlAdd').modal('show')
+		}
+	};
+	delete require.cache[require.resolve('./assets/scaffolding')]
+    require('./assets/scaffolding');
+</script>

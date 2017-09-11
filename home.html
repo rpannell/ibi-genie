@@ -1,0 +1,17 @@
+<div class="row hidden" id="dvAlert">
+	<div class="col-xs-12">
+		<div class="alert alert-danger" role="alert"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>&nbsp;&nbsp;The configuration is not valid, please visit the configuration section before continuing.</div>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-xs-12"><h3>Home</h3></div>
+</div>
+<script>
+    var config = require('./assets/config');
+	$(document).ready(function () {
+		if(!config.IsValid()){
+			$("#dvAlert").removeClass("hidden");
+		}
+	});
+</script>

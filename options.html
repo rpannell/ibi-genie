@@ -1,0 +1,94 @@
+﻿
+    <div class="row">
+        <div class="col-xs-12"><h3>Configuration</h3></div>
+    </div>
+    <div class="row">
+        <div class="col-xs-4 control-label">Database Server:</div>
+        <div class="col-xs-8">
+            <input type="text" class="form-control" id="txtDatabaseService" />
+        </div>
+    </div>
+	<div class="row">
+        <div class="col-xs-4 control-label">Database User:</div>
+        <div class="col-xs-8">
+            <input type="text" class="form-control" id="txtDatabaseUser" />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-4 control-label">Database Password:</div>
+        <div class="col-xs-8">
+            <input type="text" class="form-control" id="txtDatabasePassword" />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-4 control-label">Source Control Location:</div>
+        <div class="col-xs-6">
+            <input type="text" class="form-control" id="txtSourceControlLocation" readonly="readonly"/>
+        </div>
+		<div class="col-xs-2">
+			<button id="btnSelectSourceLocation" class="btn btn-default pull-right">Select</button>
+		</div>
+    </div>
+	<hr />
+    <div class="row">
+        <div class="col-xs-4 control-label">Current Plugins:</div>
+        <div class="col-xs-8">
+            <select class="form-control" id="dlPlugins">
+                <option value="">--Select Current Plugin--</option>
+            </select>
+        </div>
+    </div>
+	<div class="row">
+        <div class="col-xs-4 control-label">Current Plugin Branch Location:</div>
+        <div class="col-xs-8">
+            <label id="lblPluginBranch"></label>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-4 control-label">Current Service:</div>
+        <div class="col-xs-8">
+            <select class="form-control" id="dlServices">
+                <option value="">--Select Current Service--</option>
+            </select>
+        </div>
+    </div>
+		<div class="row">
+        <div class="col-xs-4 control-label">Current Service Branch Location:</div>
+        <div class="col-xs-8">
+            <label id="lblServiceBranch"></label>
+        </div>
+    </div>
+	<hr/>
+    <div class="row">
+        <div class="col-xs-12"><button class="btn btn-success pull-right" id="btnSave">Update</button></div>
+    </div>
+	
+	<div class="modal fade in" data-backdrop="static" data-keyboard="false" id="mdlRadioSelection">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title">Select Branch</h4>
+				</div>
+				<div class="modal-body">
+						<form class="form-horizontal">
+							<input type="hidden" id="rdIsPlugin" value="false" />
+							<input type="hidden" id="sourceName" />
+							<div class="row">
+								<label class="col-xs-12 bold">What branch?</label>
+								<div class="col-xs-12" id="rdBranch" ></div>
+							</div>
+						</form>
+				</div>
+				<div class="modal-footer">
+					<button type="button" id="btnCancel" class="btn btn-default">Cancel</button>
+					<button type="button" id="btnRadioSelect" class="btn btn-primary">Ok</button>
+				</div>
+			</div>
+		</div>
+	</div>
+<script>
+    // You can also require other files to run in this process
+	delete require.cache[require.resolve('./assets/options')]
+    require('./assets/options');
+</script>

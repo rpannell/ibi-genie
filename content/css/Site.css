@@ -1,0 +1,147 @@
+﻿:root {
+  --color:          hsl(0,0%,22%);
+  --color-subtle:   hsl(0,0%,44%);
+  --color-strong:   hsl(0,0%,11%);
+  --color-link:     hsl(0,0%,22%);
+
+  --color-border:   hsl(0,0%,88%);
+  --color-bg:       hsl(0,0%,96%);
+
+  --color-accent:   black; /* Fallback */
+}
+
+/* .form-group.vdivide [class*='col-']:not(:last-child):after { */
+	/* background: #e0e0e0; */
+	/* width: 1px; */
+	/* content: ""; */
+	/* display:block; */
+	/* position: absolute; */
+	/* top:0; */
+	/* bottom: 0; */
+	/* right: 0; */
+	/* min-height: 70px; */
+/* } */
+
+
+html {
+  height: 100%;
+  font-family: 'BlinkMacSystemFont', 'Lucida Grande', 'Segoe UI', Ubuntu, Cantarell, sans-serif;
+  font-size: 14px;
+  line-height: 1.5;
+  overflow: hidden; /* Prevents rubber-band scrolling of the whole "page" */
+  color: var(--color);
+  background-color: #fff; /* To cover OSes with no default background color */
+}
+body {
+  margin: 0;
+  height: 100%;
+  display: flex;
+}
+.v-center {
+    display: table !important;
+}
+
+    .v-center div[class*='col-'] {
+        display: table-cell !important;
+        vertical-align: middle;
+        float: none;
+    }
+
+.processing-modal {
+    width: 250px;
+    height: 250px;
+    position: absolute; /*You can use fixed too*/
+    top: 50%;
+    left: 50%;
+    margin-top: -125px;
+    margin-left: -125px;
+    z-index: 1040;
+}
+.content {
+  flex: 1;
+  position: relative;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  padding: 5px;
+}
+.navigation{
+  width: 340px;
+  overflow-x: hidden;
+  overflow-y: auto;
+  color: var(--color-subtle);
+  border-right: 1px solid var(--color-border);
+  background-color: var(--color-bg);
+}
+
+.navigation-header {
+  position: relative;
+  padding: 2rem;
+  margin-bottom: 1rem;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.navigation-title strong {
+  font-weight: 600;
+  color: var(--color-strong);
+}
+
+.navigation-header-icon {
+  position: absolute;
+  width: 36px;
+  height: 36px;
+  font-size: 36px;
+  top: 1.5rem; /* magic */
+  right: 1.75rem; /* magic */
+}
+
+.navigation-item {
+  padding: .5em 0;
+}
+
+.navigation-icon {
+  width: 16px;
+  height: 16px;
+  vertical-align: top;
+  margin-right: .25rem;
+}
+
+.navigation-category {
+  margin: .2em 0;
+  padding-left: 2rem;
+  font-size: 11px;
+  font-weight: normal;
+  text-transform: uppercase;
+}
+
+.navigation-button {
+  display: block;
+  width: 100%;
+  padding: .3rem;
+  padding-left: calc(2rem + 16px + .5rem); /* padding + icon + magic */
+  line-height: 2;
+  text-align: left;
+  font: inherit;
+  font-size: 13px;
+  color: inherit;
+  border: none;
+  background-color: transparent;
+  cursor: default;
+  outline: none;
+}
+.navigation-category:hover
+{
+    text-decoration: underline;
+}
+.navigation-button:focus:not(.is-selected) {
+  background-color: hsla(0,0%,0%,.1);
+}
+.navigation-button.is-selected {
+  background-color: var(--color-accent);
+}
+.navigation-button.is-selected,
+.navigation-button.is-selected em {
+  color: #fff;
+}
+.navigation-button.is-selected:focus {
+  opacity: .8;
+}

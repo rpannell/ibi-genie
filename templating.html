@@ -1,0 +1,106 @@
+
+    <div class="row">
+        <div class="col-xs-12"><h3>Plugin Source Creator</h3></div>
+    </div>
+	<div class="form-group">
+        <div class="col-xs-12 col-xs-3 control-label">Source Code Location:</div>
+        <div class="col-xs-12 col-xs-9">
+			<label id="lblSourceLocation"></label>
+        </div>
+    </div>
+	<form id="frmTemplating" method="post" enctype="multipart/form-data" novalidate="novalidate" >
+		<div class="form-group">
+			<div class="col-xs-12 col-md-3 control-label">Name of Plugin/Service:</div>
+			<div class="col-xs-12 col-md-9">
+				<input type="text" class="form-control" id="txtName" name="txtName" required />
+				<label class="error" for="txtName">Name is required</label>
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="col-xs-6 control-label">Plugin:</div>
+			<div class="col-xs-6 control-label">Service:</div>
+			<div class="col-xs-6">
+				<div class="radio">
+					<label>
+						<input type="radio" name="pluginType" id="standardPlugin" value="sp" /> Standard Plugin
+					</label>
+				</div>
+				<!-- <div class="radio"> -->
+					<!-- <label> -->
+						<!-- <input type="radio" name="pluginType" id="coreExternalPlguin" value="cep" /> Core External Plugin -->
+					<!-- </label> -->
+				<!-- </div> -->
+				<div class="radio">
+					<label>
+						<input type="radio" name="pluginType" value="NA" checked="checked" />N/A
+					</label>
+				</div>
+			</div>
+			<div class="col-xs-6">
+				<div class="radio">
+					<label>
+						<input type="radio" name="serviceType" id="standardService" value="ss" /> Standard Service
+					</label>
+				</div>
+				<!-- <div class="radio"> -->
+					<!-- <label> -->
+						<!-- <input type="radio" name="serviceType" id="coreService" value="cs" /> Core Service -->
+					<!-- </label> -->
+				<!-- </div> -->
+				<div class="radio">
+					<label>
+						<input type="radio" name="serviceType" value="NA" checked="checked" />N/A
+					</label>
+				</div>
+			</div>
+		</div>
+		<div class="form-group"><div class="row"><div class="col-xs-12"><hr /></div></div></div>
+		<div class="form-group">
+			<div class="col-xs-6 hidden dvPluginInfo">
+				<div class="row">
+					<div class="col-xs-12 col-md-6 control-label">Plugin Info:</div>
+					<div class="col-xs-12">Web Service URL</div>
+					<div class="col-xs-12"><input type="text" class="form-control" id="txtWebServiceURL" name="txtWebServiceURL" value="http://localhost:63143/" required/></div>
+					<div class="col-xs-12">Test Web Service URL</div>
+					<div class="col-xs-12"><input type="text" class="form-control" id="txtTestWebServiceURL" name="txtTestWebServiceURL" value="http://webservices2.interlinebrands.com:8906/" required/></div>
+					<div class="col-xs-12">Production Web Service URL</div>
+					<div class="col-xs-12"><input type="text" class="form-control" id="txtProdWebServiceURL" name="txtProdWebServiceURL" value="http://webservices2.interlinebrands.com:8906/" required/></div>
+				</div>
+			</div>
+			<div class="col-xs-6 hidden dvSericeInfo">
+				<div class="row">
+					<div class="col-xs-12 control-label">Service Info:</div>
+					<div class="col-xs-12">Database Name</div>
+					<div class="col-xs-12"><input type="text" class="form-control" id="txtDatabaseName" name="txtDatabaseName" required/></div>
+					<div class="col-xs-12">Database Server</div>
+					<div class="col-xs-12"><input type="text" class="form-control" id="txtDatabaesServer" name="txtDatabaesServer" value="jaxdwdv01" /required></div>
+					<div class="col-xs-12">Database User</div>
+					<div class="col-xs-12"><input type="text" class="form-control" id="txtDatabaseUser" name="txtDatabaseUser" value="Dwsvc" required /></div>
+					<div class="col-xs-12">Database Password</div>
+					<div class="col-xs-12"><input type="text" class="form-control" id="txtDatabasePassword" name="txtDatabasePassword" value="Pass@word1"  required/></div>
+					<div class="col-xs-12">Production Database Server</div>
+					<div class="col-xs-12"><input type="text" class="form-control" id="txtProdDatabaesServer" name="txtProdDatabaesServer" value="SQL02P" required /></div>
+					<div class="col-xs-12">Production Database User</div>
+					<div class="col-xs-12"><input type="text" class="form-control" id="txtProdDatabaseUser" name="txtProdDatabaseUser" value="Dwsvc" required /></div>
+					<div class="col-xs-12">Production Database Password</div>
+					<div class="col-xs-12"><input type="text" class="form-control" id="txtProdDatabasePassword" name="txtProdDatabasePassword" value="Pass@word1" required  /></div>
+				</div>
+			</div>
+			
+		</div>
+		<div class="form-group"><div class="row"><div class="col-xs-12"><hr /></div></div></div>
+		<div class="form-group">
+			<div class="row">
+				<div class="col-xs-2 col-xs-offset-8"><button type="button" class="btn btn-primary pull-right" id="btnCancel">Cancel</button></div>
+				<div class="col-xs-2">
+					<button type="submit" class="btn btn-success pull-right" id="btnCreate">Create Code</button>
+					
+				</div>
+			</div>
+		</div>
+	</form>
+<script>
+    // You can also require other files to run in this process
+	delete require.cache[require.resolve('./assets/templating')]
+    require('./assets/templating');
+</script>
