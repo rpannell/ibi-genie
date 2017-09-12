@@ -8,6 +8,10 @@ const tfs = require('./assets/tfs-unlock');
 const menu = electron.Menu;
 const fs = require('fs');
 var mainWindow = null
+const {autoUpdater} = require("electron-updater");
+
+autoUpdater.logger = log;
+autoUpdater.logger.transports.file.level = 'info';
 
 function initialize() {
     var shouldQuit = makeSingleInstance();
@@ -72,5 +76,18 @@ ipcMain.on('browse-to', (event, arg) => {
         slashes: true
     }));
 });
+autoUpdater.on('update-available', (info) => {
+  var updateText = 'Update available, the application will restart shortly';
+  log.info(updateText);
+  win.webContents.send('message', updateText);
+})
+autoUpdater.on('update-downloaded', (info) => {
+  // Wait 5 seconds, then quit and install
+  // In your application, you don't need to wait 5 seconds.
+  // You could call autoUpdater.quitAndInstall(); immediately
+  setTimeout(function() {
+    autoUpdater.quitAndInstall();  
+  }, 5000)
+})
 
 initialize();

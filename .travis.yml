@@ -1,0 +1,22 @@
+ language: node_js
+
+ 
+ before_deploy:
+    - npm run release
+
+env:
+    global:
+        - GH_TOKEN=ffc9a41d396d949321dde36a32c60aca7aa2a23f
+    
+deploy:
+  provider: releases
+  github_token: $GITHUB_TOKEN
+  skip_cleanup: true
+  file_glob: true
+  file:
+    - dist/**/*.zip
+    - dist/**/*.dmg
+    - dist/**/*.deb
+    - dist/**/*.AppImage
+  on:
+    tags: true    
