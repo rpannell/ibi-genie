@@ -9,6 +9,7 @@ const menu = electron.Menu;
 const fs = require('fs');
 var mainWindow = null
 const {autoUpdater} = require("electron-updater");
+const log = require('electron-log');
 
 autoUpdater.logger = log;
 autoUpdater.logger.transports.file.level = 'info';
@@ -69,7 +70,6 @@ function makeSingleInstance() {
 }
 
 ipcMain.on('browse-to', (event, arg) => {
-    console.log("Browse To: " + arg);
     mainWindow.loadURL(url.format({
         pathname: path.join(__dirname.replace("mainprocess", ""), arg),
         protocol: 'file:',
