@@ -7,7 +7,7 @@ const url = require('url')
 const tfs = require('./assets/tfs-unlock');
 const menu = electron.Menu;
 const fs = require('fs');
-var mainWindow = null
+let mainWindow = null;
 const {autoUpdater} = require("electron-updater");
 const log = require('electron-log');
 
@@ -40,7 +40,10 @@ function initialize() {
         mainWindow.on('closed', function () {
             mainWindow = null
         })
-		
+		//console.log("send");
+		//mainWindow.webContents.on('did-finish-load', () => {
+		//	mainWindow.webContents.send('message', 'whoooooooh!')
+		//})
 		autoUpdater.checkForUpdates();
 	});
     app.on('window-all-closed', function () {

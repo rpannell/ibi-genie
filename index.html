@@ -26,11 +26,9 @@
 			<h5 id="btnOptions" class="navigation-category"><i class="navigation-icon fa fa-cog" aria-hidden="true"></i>Manage Configuration</h5>
 		</div>
 	</nav>
-	<div id="dvMessage" class="hidden alert alert-danger" role="alert">
-		
-	</div>
-	<div class="content">
-	
+	<div id="mainView">
+		<div id="dvMessage" class="hidden alert alert-danger" role="alert"></div>
+		<div class="content"></div>
 	</div>
 </body>
 <script>
@@ -42,11 +40,10 @@
     require('bootstrap-table');
 	require('./assets/xeditable/xeditable');
 	require('./assets/js/bootstrapeditable');
-    const {ipcRenderer} = require('electron');
 	
-	ipcRenderer.on('message', function(event, text) {
+	require('electron').ipcRenderer.on('message', function(event, text) {
 		$("#dvMessage").html(text);
-		$("#dvMessage").removeClass(hidden);
+		$("#dvMessage").removeClass("hidden");
 	})
 	
     $(document).ready(function () {
