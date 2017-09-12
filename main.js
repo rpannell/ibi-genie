@@ -21,8 +21,9 @@ function initialize() {
     require(path.join(__dirname, 'mainprocess/application-menu.js'));
     require(path.join(__dirname, 'mainprocess/application-webapi.js'));
     require(path.join(__dirname, 'mainprocess/application-ipc.js'));
-    function createWindow() {
-        var windowOptions = {
+
+    app.on('ready', function(){
+		var windowOptions = {
             width: 1200,
             minWidth: 600,
             height: 840,
@@ -39,9 +40,9 @@ function initialize() {
         mainWindow.on('closed', function () {
             mainWindow = null
         })
-    }
-
-    app.on('ready', createWindow);
+		
+		autoUpdater.checkForUpdates();
+	});
     app.on('window-all-closed', function () {
         // On OS X it is common for applications and their menu bar
         // to stay active until the user quits explicitly with Cmd + Q
@@ -76,7 +77,13 @@ ipcMain.on('browse-to', (event, arg) => {
         slashes: true
     }));
 });
+
+autoUpdater.on('checking-for-update', () => {
+  log.info('Checking for update...');
+})
+
 autoUpdater.on('update-available', (info) => {
+  console.log("Hmmm");
   var updateText = 'Update available, the application will restart shortly';
   log.info(updateText);
   win.webContents.send('message', updateText);
@@ -89,5 +96,9 @@ autoUpdater.on('update-downloaded', (info) => {
     autoUpdater.quitAndInstall();  
   }, 5000)
 })
-
+autoUpdater.on('error', (err) => {
+  var updateText = 'Error in auto-updater.';
+  log.info(updateText);
+  win.webContents.send('message', updateText);
+})
 initialize();
