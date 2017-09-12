@@ -1,6 +1,6 @@
 {
   "name": "ApplicationFrameworkManagement",
-  "version": "1.0.4",
+  "version": "1.0.6",
   "description": "Application Framework Management",
   "main": "main.js",
   "scripts": {
@@ -53,27 +53,8 @@
     "yeoman-environment": "^1.6.6"
   },
   "build": {
-    "appId": "yourappid",
-    "dmg": {
-      "contents": [
-        {
-          "x": 110,
-          "y": 150
-        },
-        {
-          "x": 240,
-          "y": 150,
-          "type": "link",
-          "path": "/Applications"
-        }
-      ]
-    },
-    "linux": {
-      "target": [
-        "AppImage",
-        "deb"
-      ]
-    },
+    "appId": "apps.interlinebrands.com",
+	"productName": "",
     "win": {
       "publish": [
         "github"

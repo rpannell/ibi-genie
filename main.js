@@ -83,7 +83,6 @@ autoUpdater.on('checking-for-update', () => {
 })
 
 autoUpdater.on('update-available', (info) => {
-  console.log("Hmmm");
   var updateText = 'Update available, the application will restart shortly';
   log.info(updateText);
   win.webContents.send('message', updateText);
