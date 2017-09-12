@@ -1,13 +1,13 @@
 {
   "name": "ApplicationFrameworkManagement",
-  "version": "1.0.12",
+  "version": "1.0.13",
   "description": "Application Framework Management",
   "main": "main.js",
   "scripts": {
-    "start": "electron .",
+    "start": "npm install && electron .",
     "dist": "build",
     "release": "build",
-	"postinstall": "electron-builder install-app-deps"
+    "postinstall": "electron-builder install-app-deps"
   },
   "keywords": [
     "Electron",
