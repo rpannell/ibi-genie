@@ -85,7 +85,7 @@ autoUpdater.on('checking-for-update', () => {
 autoUpdater.on('update-available', (info) => {
   var updateText = 'Update available, the application will restart shortly';
   log.info(updateText);
-  win.webContents.send('message', updateText);
+  mainWindow.webContents.send('message', updateText);
 })
 autoUpdater.on('update-downloaded', (info) => {
   // Wait 5 seconds, then quit and install
@@ -98,6 +98,6 @@ autoUpdater.on('update-downloaded', (info) => {
 autoUpdater.on('error', (err) => {
   var updateText = 'Error in auto-updater.';
   log.info(updateText);
-  win.webContents.send('message', updateText);
+  mainWindow.webContents.send('message', updateText);
 })
 initialize();
