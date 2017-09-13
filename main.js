@@ -3,7 +3,6 @@ const {ipcMain} = require('electron');
 const app = electron.app
 const BrowserWindow = electron.BrowserWindow
 const path = require('path')
-const npm = require('npm');
 const url = require('url')
 const tfs = require('./assets/tfs-unlock');
 const menu = electron.Menu;
@@ -41,19 +40,6 @@ function initialize() {
         mainWindow.on('closed', function () {
             mainWindow = null
         })
-		//console.log("send");
-		//mainWindow.webContents.on('did-finish-load', () => {
-		//	mainWindow.webContents.send('message', 'whoooooooh!')
-		//})
-		
-		exec('npm install -g generator-ibi-appframework.tgz', (err, stdout, stderr) => {
-		  if (err) {
-			return;
-		  }
-
-		  log.info(`stdout: ${stdout}`);
-		  log.info(`stderr: ${stderr}`);
-		});
 		
 		autoUpdater.checkForUpdates();
 	});
