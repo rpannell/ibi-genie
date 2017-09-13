@@ -1,6 +1,6 @@
 ﻿// window.$ = window.jQuery = require('jquery'); //so we can use jquery
 // require('jquery-ui');
-// const {ipcRenderer} = require('electron');
+const {ipcRenderer} = require('electron');
 var configInfo = require('./config');
 var currentConfig = configInfo.GetConfig();
 const dialog = require('electron').remote.dialog 

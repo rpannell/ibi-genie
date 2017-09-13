@@ -1,4 +1,5 @@
 ﻿require('jquery-validation');
+const {ipcRenderer} = require('electron');
 $(document).ready(function () {
     var templateConfig = ipcRenderer.sendSync('get-config');
 	
