@@ -1,6 +1,6 @@
 {
   "name": "ApplicationFrameworkManagement",
-  "version": "1.0.14",
+  "version": "1.0.15",
   "description": "Application Framework Management",
   "main": "main.js",
   "scripts": {
