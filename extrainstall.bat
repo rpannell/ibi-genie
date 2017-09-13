@@ -1,7 +1,7 @@
 @ECHO OFF
 
 ECHO Installing YO
-npm install -g yo yeoman-environment generator-ibi-appframework.tgz
+npm install -g yo yeoman-generator yeoman-environment generator-ibi-appframework.tgz
 
 REM ECHO Installing Yeoman-Environment
 REM npm install -g yeoman-environment

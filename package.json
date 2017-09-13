@@ -1,10 +1,10 @@
 {
   "name": "ApplicationFrameworkManagement",
-  "version": "1.0.17",
+  "version": "1.0.20",
   "description": "Application Framework Management",
   "main": "main.js",
   "scripts": {
-    "start": "npm install && electron .",
+    "start": "electron .",
     "dist": "build",
     "release": "build",
     "postinstall": "electron-builder install-app-deps"
@@ -32,7 +32,7 @@
     "url": "https://github.com/rpannell/ibi-genie.git"
   },
   "dependencies": {
-    "body-parser": "^1.17.1",
+    "body-parser": "^1.18.1",
     "bootstrap": "^3.3.7",
     "bootstrap-table": "^1.11.2",
     "commander": "^2.9.0",
@@ -40,7 +40,7 @@
     "electron-ipc": "^0.3.0",
     "electron-json-storage": "^3.0.7",
     "electron-log": "^2.2.9",
-    "electron-updater": "^2.8.9",
+    "electron-updater": "^2.9.3",
     "express": "^4.15.2",
     "font-awesome": "^4.7.0",
     "jquery": "^3.2.1",
@@ -55,17 +55,22 @@
   "build": {
     "appId": "apps.interlinebrands.com",
     "win": {
-      "publish": [ "github" ],
+      "publish": [
+        "github"
+      ],
       "target": "nsis",
       "icon": "build/iconA.ico"
     },
-	"nsis": {
-		"include": "build/installer-globals.nsi"
-	},
-	"extraFiles": [
-		{
-			"filter": ["*.tgz", "*.bat"]
-		}
-	]
+    "nsis": {
+      "include": "build/installer-globals.nsi"
+    },
+    "extraFiles": [
+      {
+        "filter": [
+          "*.tgz",
+          "*.bat"
+        ]
+      }
+    ]
   }
 }

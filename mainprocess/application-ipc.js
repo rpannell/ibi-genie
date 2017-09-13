@@ -57,15 +57,19 @@ ipcMain.on('run-scaffolding', (event, arg) => {
 			console.log('done');
 		});
 		
-		if(arg.AddToPlugin != undefined && arg.AddToPlugin){
+		
+	});
+	
+	if(arg.AddToPlugin != undefined && arg.AddToPlugin){
+		yeomanEnv.lookup(() => {
 			yeomanEnv.run('ibi-appframework:EFPlugin', { 'projectname': arg.ProjectName, 
 														 'location': 	arg.PluginLocation, 
 														 'entityinfo': 	JSON.stringify(arg.EntityInfo), 
 														 'force': 		true }, err => {
 				console.log('done');
 			});	
-		}
-	});
+		});
+	}
 	
 	event.returnValue = 'saved';
 });

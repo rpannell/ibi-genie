@@ -1,6 +1,6 @@
 // You can also require other files to run in this process
 var configInfo = require('./config');
-
+const {ipcRenderer} = require('electron');
 String.prototype.replaceAll = function(search, replacement) {
     var target = this;
     return target.replace(new RegExp(search, 'g'), replacement);
@@ -287,7 +287,7 @@ $(document).ready(function () {
 				PluginLocation: configInfo.GetPluginSourceLocation(),
 				AddToPlugin: $("#chkScaffoldPlugin").prop('checked')
 			}		
-			
+			console.log(args.EntityInfo);
 			//update the scaffolding file
 			UpdateScaffoldJsonInfo(currentServiceData, entity);
 			WriteJsonFile(currentServiceData, configInfo.GetServiceSourceLocation());
