@@ -18,7 +18,7 @@
   ],
   "publish": {
     "provider": "github",
-    "repo": "ibi-geny",
+    "repo": "ibi-genie",
     "private": false
   },
   "author": "GitHub",
@@ -29,7 +29,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/rpannell/ibi-geny.git"
+    "url": "https://github.com/rpannell/ibi-genie.git"
   },
   "dependencies": {
     "body-parser": "^1.17.1",
