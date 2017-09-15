@@ -263,6 +263,14 @@ $(document).ready(function () {
 		$("#mdlConfirm").modal('hide');
 		var answer = ""
 		var data = entityInfo;
+		var args = {
+			ProjectName: configInfo.GetCurrentService(),
+			ServiceLocation: configInfo.GetCurrentServiceLocation(),
+			PluginLocation: configInfo.GetPluginSourceLocation(),
+			AddToPlugin: $("#chkScaffoldPlugin").prop('checked'),
+			Entities: []
+		};
+		
 		for(var i = 0; i < data.length; i++){	
 			var entity = data[i];
 			//set the primary key
@@ -280,20 +288,13 @@ $(document).ready(function () {
 			}
 			entity.PrimaryKey = pk;
 			entity.PrimaryName = pkname;
-			var args = {
-				ProjectName: configInfo.GetCurrentService(),
-				EntityInfo: entity,
-				ServiceLocation: configInfo.GetCurrentServiceLocation(),
-				PluginLocation: configInfo.GetPluginSourceLocation(),
-				AddToPlugin: $("#chkScaffoldPlugin").prop('checked')
-			}		
-			console.log(args.EntityInfo);
-			//update the scaffolding file
+			//add this entity to the list of entities to scaffold
+			args.Entities.push(entity);
 			UpdateScaffoldJsonInfo(currentServiceData, entity);
 			WriteJsonFile(currentServiceData, configInfo.GetServiceSourceLocation());
-			answer = ipcRenderer.sendSync('run-scaffolding', args);			
 		}
 		
+		answer = ipcRenderer.sendSync('run-scaffolding', args);	
 		if(answer == "saved"){ 
 			window.setTimeout(function(){
 				$(".content").load("home.html");

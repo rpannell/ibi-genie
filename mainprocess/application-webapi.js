@@ -1,4 +1,7 @@
-﻿String.prototype.titlecase = function (lang, withLowers = false) {
+﻿/*
+ * Used to set a string to title case
+ */
+String.prototype.titlecase = function (lang, withLowers = false) {
     var i, string, lowers, uppers;
 
     string = this.replace(/([^\s:\-'])([^\s:\-']*)/g, function (txt) {
@@ -29,6 +32,9 @@
     return string;
 }
 
+/*
+ * String manipulation functions
+ */
 if (typeof String.prototype.startsWith != 'function') {
     String.prototype.startsWith = function (str) {
         return this.slice(0, str.length) == str;
@@ -49,16 +55,22 @@ const webApi = express();
 const path = require('path');
 const fs = require('fs');
 const jsonfile = require('jsonfile');
-
 var elecConfig = require("electron-config");
 var config = new elecConfig();
 
+/*
+ * Used to help with the body of a web-api call
+ */
 var bodyParser = require('body-parser')
 webApi.use(bodyParser.json());       // to support JSON-encoded bodies
 webApi.use(bodyParser.urlencoded({     // to support URL-encoded bodies
     extended: true
 }));
 
+/*
+ * Get the config information and set it to the 
+ * default information if it's not set
+ */ 
 var config = config.get("IBIPluginManagementOptions");
 if (config == null || config == undefined) {
 	config = {
@@ -82,6 +94,9 @@ if (config == null || config == undefined) {
 	};
 }
 
+/*
+ * Get the list of SQL Server databases from a databas server
+ */
 webApi.get('/', function (req, res) {
     mssql.close();
     mssql.connect(config).then(pool => {
@@ -143,6 +158,9 @@ webApi.get('/GetYesNo', function (req, res) {
 	]);
 });
 
+/*
+ * Get the tables from a SQL Server database
+ */
 webApi.post('/GetTables', function (req, res) {
     var db = req.body.DatabaseName;
     mssql.close();
@@ -157,6 +175,10 @@ webApi.post('/GetTables', function (req, res) {
     })
 });
 
+/*
+ * Get the data from the scaffoldinginfo.json file 
+ * from a service
+ */
 webApi.post('/GetCurrentJson', function (req, res) {
 	var currLoc = req.body.CurrentLocation;
 	var realPath = path.join(currLoc, "scaffoldinginfo.json");
@@ -168,6 +190,9 @@ webApi.post('/GetCurrentJson', function (req, res) {
 	}
 });
 
+/*
+ * Write the data to the scaffoldinginfo.json for a service
+ */
 webApi.post('/SetJson', function (req, res) {
 	var currLoc = req.body.CurrentLocation;
 	var updatedData = req.body.JsonData;
@@ -175,6 +200,9 @@ webApi.post('/SetJson', function (req, res) {
 	jsonfile.writeFileSync(realPath, JSON.parse(updatedData), {spaces: 2, flag : 'w'})
 });
 
+/*
+ * Get the information about a table based on the database name, table name and schema
+ */
 webApi.post('/GetTableInfo', function (req, res) {
     var db = req.body.DatabaseName;
     var tbl = req.body.TableName
@@ -202,7 +230,6 @@ webApi.post('/GetTableInfo', function (req, res) {
             };
             endResult.push(data);
         }
-		console.log(endResult);
         res.send({
             EntityPropertyName: ToPascalCase(tbl.replace("vw", "")),
             TableColums: endResult
@@ -213,10 +240,13 @@ webApi.post('/GetTableInfo', function (req, res) {
     })
 });
 
+/// Starts the web api service
 app.on('ready', function () {
     webApi.listen(3000, function () { });
 })
 
+/// Converts a string to PascalCase
+/// RGP - 09/15/2017
 function ToPascalCase(input) {
     var rtn = "";
     if (input.includes("_")) {
@@ -231,6 +261,8 @@ function ToPascalCase(input) {
     return rtn;
 }
 
+/// Converts the database type to a C# type
+/// RGP - 09/15/2017
 function DatabaseTypeToSystemType(datatype, isNullable) {
     var rtnString = "string";
 

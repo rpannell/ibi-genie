@@ -1,7 +1,89 @@
 ﻿require('jquery-validation');
 const {ipcRenderer} = require('electron');
+
+/*
+	Create a few validator functions to help with the templating form
+*/
+$.validator.addMethod('standardPluginDataRequired', function (value, element, param) {
+	return $("#standardPlugin").is(":checked") && value != undefined && value != null && value != "";
+}, 'Required For Standard Plugin');
+
+$.validator.addMethod('standardServiceDataRequired', function (value, element, param) {
+	return $("#standardService").is(":checked") && value != undefined && value != null && value != "";
+}, 'Required For Standard Service');
+
+$.validator.addMethod('noSpace', function (value, element, param) {
+	return value.indexOf(" ") < 0 && value != "";
+}, 'Space is not required');
+
+/*
+	Setup the validation for the templating form
+ */
+function SetupValidation(){
+	$("#frmTemplating").validate({});
+	
+	$( "#txtName" ).rules( "add", {
+		noSpace: true,
+		required: true,
+		messages: { required: "Name is required"}
+	});
+	
+	//standard plugin
+	$( "#txtWebServiceURL" ).rules( "add", {
+		standardPluginDataRequired: true,
+		messages: { standardPluginDataRequired: "The development URL is required"}
+	});
+	$( "#txtTestWebServiceURL" ).rules( "add", {
+		standardPluginDataRequired: true,
+		messages: { standardPluginDataRequired: "The test URL is required"}
+	});
+	$( "#txtProdWebServiceURL" ).rules( "add", {
+		standardPluginDataRequired: true,
+		messages: { standardPluginDataRequired: "The production URL is required"}
+	});
+	//standard plugin
+	
+	//standard service
+	$( "#txtDatabaseName" ).rules( "add", {
+		standardServiceDataRequired: true,
+		messages: { standardServiceDataRequired: "The name of the database is required"}
+	});
+	$( "#txtDatabaesServer" ).rules( "add", {
+		standardServiceDataRequired: true,
+		messages: { standardServiceDataRequired: "The development database server is required"}
+	});
+	$( "#txtDatabaseUser" ).rules( "add", {
+		standardServiceDataRequired: true,
+		messages: { standardServiceDataRequired: "The development database user is required"}
+	});
+	$( "#txtDatabasePassword" ).rules( "add", {
+		standardServiceDataRequired: true,
+		messages: { standardServiceDataRequired: "The development database password is required"}
+	});
+	$( "#txtProdDatabaesServer" ).rules( "add", {
+		standardServiceDataRequired: true,
+		messages: { standardServiceDataRequired: "The production database server is required"}
+	});
+	$( "#txtProdDatabaseUser" ).rules( "add", {
+		standardServiceDataRequired: true,
+		messages: { standardServiceDataRequired: "The production database user is required"}
+	});
+	$( "#txtProdDatabasePassword" ).rules( "add", {
+		standardServiceDataRequired: true,
+		messages: { standardServiceDataRequired: "The production database password is required"}
+	});
+	//standard service
+}
+
 $(document).ready(function () {
     var templateConfig = ipcRenderer.sendSync('get-config');
+	SetupValidation();
+	$( "#txtName" ).rules( "add", {
+		required: true,
+		messages: {
+			required: "Name of the  is required",
+		}
+	});
 	
 	$("#txtName").change(function(){
 		var value = $("#txtName").val();
@@ -45,6 +127,13 @@ $(document).ready(function () {
 				WebServiceUrl: $("#txtWebServiceURL").val(),
 				webServiceTestUrl: $("#txtTestWebServiceURL").val(),
 				webServiceProdUrl: $("#txtProdWebServiceURL").val(),
+				DatabaseName: $("#txtDatabaseName").val(),
+				DatabaseServer: $("#txtDatabaesServer").val(),
+				DatabaseUser: $("#txtDatabaseUser").val(),
+				DatabasePassword: $("#txtDatabasePassword").val(),
+				DatabaseProdServer: $("#txtProdDatabaesServer").val(),
+				DatabaseProdUser: $("#txtProdDatabaseUser").val(),
+				DatabaseProdPassword: $("#txtProdDatabasePassword").val()
 			};
 
 			var answer = ipcRenderer.sendSync('run-templates', config);

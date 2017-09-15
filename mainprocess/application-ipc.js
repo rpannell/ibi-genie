@@ -52,7 +52,7 @@ ipcMain.on('run-scaffolding', (event, arg) => {
 	yeomanEnv.lookup(() => {
 		yeomanEnv.run('ibi-appframework:EFWebApiService', { 'projectname': 	arg.ProjectName, 
 															'location': 	arg.ServiceLocation, 
-															'entityinfo': 	JSON.stringify(arg.EntityInfo), 
+															'entityinfo': 	JSON.stringify(arg.Entities), 
 															'force': 		true }, err => {
 			console.log('done');
 		});
@@ -64,7 +64,7 @@ ipcMain.on('run-scaffolding', (event, arg) => {
 		yeomanEnv.lookup(() => {
 			yeomanEnv.run('ibi-appframework:EFPlugin', { 'projectname': arg.ProjectName, 
 														 'location': 	arg.PluginLocation, 
-														 'entityinfo': 	JSON.stringify(arg.EntityInfo), 
+														 'entityinfo': 	JSON.stringify(arg.Entities), 
 														 'force': 		true }, err => {
 				console.log('done');
 			});	
