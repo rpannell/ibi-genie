@@ -103,7 +103,6 @@ webApi.get('/GetPropertyType', function (req, res) {
 		{value: "byte[]", text: "byte[]"},
 		{value: "DateTime", text: "DateTime"},
 		{value: "DateTime?", text: "DateTime?"},
-		
 		{value: "decimal", text: "decimal"},
 		{value: "decimal?", text: "decimal?"},
 		{value: "double", text: "double"},
@@ -113,6 +112,8 @@ webApi.get('/GetPropertyType', function (req, res) {
 		{value: "Guid", text: "Guid"},
 		{value: "long", text: "long"},
 		{value: "long?", text: "long?"},
+		{value: "short", text: "short"},
+		{value: "short?", text: "short?"},
 		{value: "string", text: "string"}
 	]);
 });
@@ -193,7 +194,7 @@ webApi.post('/GetTableInfo', function (req, res) {
                 PropertyName: ToPascalCase(columninfo.ColumnName),
                 Ordinal: columninfo.Position,
                 IsPrimaryKey: columninfo.Position == 1 ? true : false,
-                PropertyType: DatabaseTypeToSystemType(columninfo.DataType, columninfo.IsNullable == "NO" ? true : false),
+                PropertyType: DatabaseTypeToSystemType(columninfo.DataType, columninfo.IsNullable == "NO" ? false : true),
 				Ignore: false,
 				IsInsertOnly: false,
 				IsAutoComplete: false,
@@ -201,6 +202,7 @@ webApi.post('/GetTableInfo', function (req, res) {
             };
             endResult.push(data);
         }
+		console.log(endResult);
         res.send({
             EntityPropertyName: ToPascalCase(tbl.replace("vw", "")),
             TableColums: endResult
@@ -235,7 +237,10 @@ function DatabaseTypeToSystemType(datatype, isNullable) {
     if (datatype == "int") {
         rtnString = isNullable ? "int?" : "int";
     }
-    else if (datatype == "datetime" || datatype == "date" || datatype == "datetime2") {
+	else if (datatype == "smallint" || datatype == "tinyint") {
+        rtnString = isNullable ? "short?" : "short";
+    }
+    else if (datatype == "datetime" || datatype == "date" || datatype == "datetime2" || datatype == "smalldatetime") {
         rtnString = isNullable ? "DateTime?" : "DateTime";
     }
     else if (datatype == "bit") {
@@ -247,10 +252,10 @@ function DatabaseTypeToSystemType(datatype, isNullable) {
     else if (datatype == "float") {
         rtnString = isNullable ? "float?" : "float";
     }
-    else if (datatype == "money" || datatype == "numeric") {
+    else if (datatype == "numeric") {
         rtnString = isNullable ? "double?" : "double";
     }
-    else if (datatype == "decimal") {
+	else if (datatype == "money" || datatype == "smallmoney" || datatype == "decimal") {
         rtnString = isNullable ? "decimal?" : "decimal";
     }
     else if (datatype == "uniqueidentifier") {
