@@ -78,7 +78,8 @@ function UpdateScaffoldJsonInfo(currentServiceData, entity){
 			"PropertyName": column.PropertyName,
 			"PropertyType": column.PropertyType,
 			"SearchType": column.Search,
-			"IsInsertOnly": column.IsInsertOnly
+			"IsInsertOnly": column.IsInsertOnly,
+			"MaxLength": column.MaxLength
 		});
 	}
 	
@@ -152,7 +153,7 @@ $(document).ready(function () {
 		traditional: true
 	});
 	
-	
+	$("#btnScaffoldOptions").click(function () { $(".content").load( "options.html" ); });
 	$("#btnAddEntity").click(function(){
 		$('#mdlAdd').modal('show')
 		LoadDatabases();
@@ -194,6 +195,8 @@ $(document).ready(function () {
 			data: JSON.stringify({ DatabaseName: $("#dlDatabase").val(), TableName: $("#hdTableName").val(), Schema: $("#hdSchema").val() }),
 			success: function (data) {
 				var databaseInformation = data.TableColums;
+				console.log("DB INFO:");
+				console.log(databaseInformation);
 				var currentEntityInfoFromScaffoldingFile = null;
 				if(currentServiceData.CurrentEntitiesInfo != undefined && currentServiceData != null){
 					for(var i = 0; i < currentServiceData.CurrentEntitiesInfo.length; i++){
@@ -216,6 +219,7 @@ $(document).ready(function () {
 								databaseInformation[i].IsInsertOnly = property.IsInsertOnly != undefined ? property.IsInsertOnly : false;
 								databaseInformation[i].IsAutoComplete = property.IsAutoComplete != undefined ? property.IsAutoComplete : false;
 								databaseInformation[i].Search = property.SearchType;
+								databaseInformation[i].MaxLength = property.MaxLength != undefined ? property.MaxLength : databaseInformation[i].MaxLength;
 								break;
 							}
 						}

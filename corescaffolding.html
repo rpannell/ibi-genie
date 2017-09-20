@@ -4,8 +4,8 @@
 	</div>
 </div>
 <div class="row">
-	<div class="col-xs-10"><h3>.NET Core WebApi Service Scaffolder</h3></div>
-	<div class="col-xs-2"><button type="button" id="btnOptions" class="btn btn-default pull-right"><i class="fa fa-cog"></i></button></div>
+	<div class="col-xs-10"><h3>WebApi Service Scaffolder</h3></div>
+	<div class="col-xs-2"><button type="button" id="btnScaffoldOptions" class="btn btn-default pull-right"><i class="fa fa-cog"></i></button></div>
 </div>
 <hr/>
 <form class="form-horizontal">
@@ -92,7 +92,6 @@
 			<div class="modal-body">
 				<input type="hidden" id="hdSchema" />
 				<input type="hidden" id="hdTableName" />
-				<div class="row">
 					<form class="form-horizontal">
 						<div class="row">
 							<label class="col-xs-12 col-md-2 control-label">Database:</label>
@@ -122,6 +121,7 @@
 										<tr>
 											<th data-field="ColumnName">Column</th>
 											<th data-field="DataType">Data Type</th>
+											<th data-field="MaxLength">String Length</th>
 											<th data-field="PropertyName" data-editable="true">Property</th>
 											<th data-field="PropertyType" data-editable="true" data-editable-type="select" data-editable-sourceCache="true" data-editable-source="http://localhost:3000/GetPropertyType" >Property Type</th>
 											<th data-field="IsPrimaryKey" data-title="PK" data-radio="true" data-check-box-header="true">PK</th>
@@ -135,7 +135,6 @@
 							</div>
 						</div>
 					</form>
-				</div>
 			</div>
 			<div class="modal-footer">
 				<button type="button" id="btnCancel" class="btn btn-default">Cancel</button>

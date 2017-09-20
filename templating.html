@@ -1,7 +1,7 @@
-
-    <div class="row">
-        <div class="col-xs-12"><h3>Plugin Source Creator</h3></div>
-    </div>
+<div class="row">
+	<div class="col-xs-10"><h3>Plugin Source Creator</h3></div>
+	<div class="col-xs-2"><button type="button" id="btnTemplateOptions" class="btn btn-default pull-right"><i class="fa fa-cog"></i></button></div>
+</div>
 	<div class="form-group">
         <div class="col-xs-12 col-xs-3 control-label">Source Code Location:</div>
         <div class="col-xs-12 col-xs-9">
@@ -22,14 +22,14 @@
 			<div class="col-xs-6">
 				<div class="radio">
 					<label>
-						<input type="radio" name="pluginType" id="standardPlugin" value="sp" /> Standard Plugin
+						<input type="radio" name="pluginType" id="standardPlugin" value="sp" /> Plugin
 					</label>
 				</div>
-				<!-- <div class="radio"> -->
-					<!-- <label> -->
-						<!-- <input type="radio" name="pluginType" id="coreExternalPlguin" value="cep" /> Core External Plugin -->
-					<!-- </label> -->
-				<!-- </div> -->
+				<div class="radio">
+					<label>
+						<input type="radio" name="pluginType" id="standardApplication" value="app" /> Application
+					</label>
+				</div>
 				<div class="radio">
 					<label>
 						<input type="radio" name="pluginType" value="NA" checked="checked" />N/A
@@ -39,7 +39,7 @@
 			<div class="col-xs-6">
 				<div class="radio">
 					<label>
-						<input type="radio" name="serviceType" id="standardService" value="ss" /> Standard Service
+						<input type="radio" name="serviceType" id="standardService" value="ss" /> Entity Framework Service
 					</label>
 				</div>
 				<!-- <div class="radio"> -->
@@ -58,7 +58,7 @@
 		<div class="form-group">
 			<div class="col-xs-6 ">
 				<div class="row hidden dvPluginInfo">
-					<div class="col-xs-12 col-md-6 control-label">Plugin Info:</div>
+					<div class="col-xs-12 col-md-6 control-label">Plugin/Application Info:</div>
 					<div class="col-xs-12">Web Service URL</div>
 					<div class="col-xs-12"><input type="text" class="form-control" id="txtWebServiceURL" name="txtWebServiceURL" value="http://localhost:63143/" /></div>
 					<div class="col-xs-12">Test Web Service URL</div>

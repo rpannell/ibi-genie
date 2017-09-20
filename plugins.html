@@ -1,0 +1,138 @@
+<div class="row">
+	<div class="col-xs-10"><h3>Edit Plugin/Application Information</h3></div>
+	<div class="col-xs-2"><button type="button" id="btnPluginOptions" class="btn btn-default pull-right"><i class="fa fa-cog"></i></button></div>
+</div>
+<div class="row">
+	<div class="col-xs-12">
+		<div id="custom-toolbar">
+			<button id="btnAddPlugin" class="btn btn-default"><i class="fa fa-plus"></i>&nbsp;&nbsp;New</button>
+		</div>
+		<table id="tblPlugins" data-toggle="table" data-show-footer="false" style="min-height: 300px;">
+			<thead>
+				<tr>
+					<th data-field="PluginName">Name</th>
+					<th data-field="PluginDescription">Description</th>
+					<th data-field="RoleCount"># Roles</th>
+					<th data-field="GroupCount"># Groups</th>
+					<th data-field="MemberCount"># Users</th>
+					<th data-formatter="OperateFormatter" data-events="operateEvents">Options</th>
+				</tr>
+			</thead>
+		</table>
+	</div>
+</div>
+
+<div class="modal fade in" data-backdrop="static" data-keyboard="false" id="mdlPluginAdd">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title">Plugin / Application</h4>
+			</div>
+			<form class="form-horizontal" id="frmPlugin" method="post" enctype="multipart/form-data" novalidate="novalidate">
+				<input type="hidden" id="hdPluginId" />
+				<div class="modal-body">
+					<div class="row">
+						<label class="col-xs-12 col-md-2 control-label">Name:</label>
+						<div class="col-xs-12 col-md-4">
+							<input type="text" class="form-control" id="txtPluginName" name="txtPluginName" data-toggle="tooltip" data-placement="top" title="The Name of the Application or Plugin" placeholder="Name of the Plugin/Application" />
+						</div>
+						<label class="col-xs-12 col-md-2 control-label">Area PreFix:</label>
+						<div class="col-xs-12 col-md-4">
+							<input type="text" class="form-control" id="txtAreaPrefix" name="txtAreaPrefix" placeholder="The area of the plugin" />
+						</div>
+					</div>
+					<div class="row">
+						<label class="col-xs-12 col-md-2 control-label">Display Name:</label>
+						<div class="col-xs-12 col-md-10">
+							<input type="text" class="form-control" id="txtDisplayName" name="txtDisplayName" placeholder="The name displayed on the home page" />
+						</div>
+					</div>
+					<div class="row">
+						<label class="col-xs-12 col-md-2 control-label">Description:</label>
+						<div class="col-xs-12 col-md-10">
+							<textarea rows="5" class="form-control" id="txtDescription" name="txtDescription" placeholder="The description of the plugin/application" />
+						</div>
+					</div>
+					<div class="row">
+						<label class="col-xs-12 col-md-2 control-label">Icon:</label>
+						<div class="col-xs-12 col-md-4">
+							<input type="text" class="form-control" id="txtCssIcon" name="txtCssIcon" placeholder="The font-awesome icon for the home page" />
+						</div>
+						<label class="col-xs-12 col-md-2 control-label">Category:</label>
+						<div class="col-xs-12 col-md-4">
+							<input type="text" class="form-control" id="txtCategory" name="txtCategory" placeholder="The category of the plugin" />
+						</div>
+					</div>
+					<div class="row">
+						<label class="col-xs-12 col-md-2 control-label">Main Url:</label>
+						<div class="col-xs-12 col-md-4">
+							<input type="text" class="form-control" id="txtMainUrl" name="txtMainUrl" placeholder="The home url of a plugin or the full url of an application" />
+						</div>
+						<label class="col-xs-12 col-md-2 control-label">Training Url:</label>
+						<div class="col-xs-12 col-md-4">
+							<input type="text" class="form-control" id="txtTrainingUrl" name="txtTrainingUrl" placeholder="The url of the Training Video" />
+						</div>
+					</div>
+					<div class="row">
+						<label class="col-xs-12 col-md-2 control-label">Anon Role:</label>
+						<div class="col-xs-12 col-md-4">
+							<input type="text" class="form-control" id="txtAnonymousRole" name="txtAnonymousRole" placeholder="The role for anonymous access" />
+						</div>
+						<label class="col-xs-12 col-md-2 control-label">Output Directory:</label>
+						<div class="col-xs-12 col-md-4">
+							<input type="text" class="form-control" id="txtOutputDirectory" name="txtOutputDirectory" placeholder="" />
+						</div>
+					</div>
+					<div class="row">
+						<label class="col-xs-12 col-md-2 control-label">Sort Index:</label>
+						<div class="col-xs-12 col-md-4">
+							<input type="number" class="form-control" id="txtSortIndex" name="txtSortIndex" min="1" max="10" step="1" />
+						</div>
+					</div>
+					<div class="row">
+						<label class="col-xs-12 col-md-2 control-label">Is Application:</label>
+						<div class="col-xs-12 col-md-4">
+							<div class="checkbox">
+								<label>
+									<input type="checkbox" id="chkIsExternal" />
+								</label>
+							</div>
+						</div>
+						<label class="col-xs-12 col-md-2 control-label">Show In Home:</label>
+						<div class="col-xs-12 col-md-4">
+							<div class="checkbox">
+								<label>
+									<input type="checkbox" id="chkIsShowInHome" />
+								</label>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" id="btnCancel" class="btn btn-default">Cancel</button>
+					<button type="submit" id="btnAddNewPlugin" class="btn btn-primary">Add</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+
+<script>
+// You can also require other files to run in this process
+	function OperateFormatter(value, row, index) {
+		var htmlString = "";
+		htmlString = '<div class="btn-group">' +
+						'<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true">' +
+						'<label>Actions</label><span class="caret"></span></button>' +
+						'<ul class="dropdown-menu dropdown-menu-right" role="menu">' +
+							'<li class="btn_edit"><a>Edit</a></li>' +
+							'<li class="btn_roles"><a>Roles</a></li>' +
+						'</ul>' +
+					'</div>';
+		return [htmlString].join('');
+	}
+
+	delete require.cache[require.resolve('./assets/plugins')]
+    require('./assets/plugins');
+</script>

@@ -5,7 +5,7 @@ const {ipcRenderer} = require('electron');
 	Create a few validator functions to help with the templating form
 */
 $.validator.addMethod('standardPluginDataRequired', function (value, element, param) {
-	return $("#standardPlugin").is(":checked") && value != undefined && value != null && value != "";
+	return ($("#standardPlugin").is(":checked") || $("#standardApplication").is(":checked")) && value != undefined && value != null && value != "";
 }, 'Required For Standard Plugin');
 
 $.validator.addMethod('standardServiceDataRequired', function (value, element, param) {
@@ -78,12 +78,6 @@ function SetupValidation(){
 $(document).ready(function () {
     var templateConfig = ipcRenderer.sendSync('get-config');
 	SetupValidation();
-	$( "#txtName" ).rules( "add", {
-		required: true,
-		messages: {
-			required: "Name of the  is required",
-		}
-	});
 	
 	$("#txtName").change(function(){
 		var value = $("#txtName").val();
@@ -91,11 +85,10 @@ $(document).ready(function () {
 	});
 	
 	$('input[type=radio][name=pluginType]').change(function() {
-        if (this.value == 'NA') {
-            $(".dvPluginInfo").addClass("hidden");
-        } else {
-			$(".dvPluginInfo").removeClass("hidden");
-		}
+		$(".dvPluginInfo").addClass("hidden");
+        if (this.value == 'sp' || this.value == 'app') {
+            $(".dvPluginInfo").removeClass("hidden");
+        }
     });
 	
 	$('input[type=radio][name=serviceType]').change(function() {
@@ -120,7 +113,7 @@ $(document).ready(function () {
 				Name: $("#txtName").val(),
 				SourceLocation: templateConfig.SourceControlLocation,
 				StandardPlugin: $("#standardPlugin").is(":checked"),
-				CoreExternalPlugin: $("#coreExternalPlguin").is(":checked"),
+				StandardApplication: $("#standardApplication").is(":checked"),
 				StandardService: $("#standardService").is(":checked"),
 				CoreService: $("#coreService").is(":checked"),
 				CreateMaster: $("#standardService").is(":checked") || $("#coreService").is(":checked"),
@@ -142,4 +135,5 @@ $(document).ready(function () {
 			}
 		}
 	});
+	$("#btnTemplateOptions").click(function () { $(".content").load( "options.html" ); });
 });

@@ -24,8 +24,16 @@ ipcMain.on('run-templates', (event, arg) => {
 															   'webServiceProdUrl': 	arg.webServiceProdUrl,
 															 }, err => { });
 		});
-	} else if(arg.CoreExternalPlugin){
-		
+	} else if(arg.StandardApplication){
+		yeomanEnv.lookup(() => {
+			yeomanEnv.run('ibi-appframework:StandardApplication', { 'pluginName': 				arg.Name, 
+																	'sourceLocation': 			arg.SourceLocation, 
+																	'createMasterSolution': 	arg.CreateMaster,
+																	'webServiceUrl': 			arg.WebServiceUrl,
+																	'webServiceTestUrl': 		arg.webServiceTestUrl,
+																	'webServiceProdUrl': 		arg.webServiceProdUrl,
+															 }, err => { });
+		});
 	}
 	
 	if(arg.StandardService){
@@ -41,8 +49,6 @@ ipcMain.on('run-templates', (event, arg) => {
 																'databaseProdPassword': arg.DatabaseProdPassword
 															  }, err => { });
 		});
-	} else if(arg.CoreService){
-		
 	}
 	
 	event.returnValue = 'saved';
