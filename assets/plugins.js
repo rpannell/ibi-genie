@@ -14,23 +14,124 @@ $.validator.addMethod('noSpace', function (value, element, param) {
 	return value.indexOf(" ") < 0 && value != "";
 }, 'Space is not required');
 
+$.validator.addMethod("checkNameExists", function(value, element)
+{
+	var isExists = true;
+    $.ajax(
+    {
+        type: "GET",
+        url: "http://localhost:3000/api/Plugins/GetByName/" + value,
+        contentType: 'application/json; charset=utf-8',
+		dataType: "json",
+		async: false,  //make sure we at least get the file and see
+        success: function(returnData)
+        {
+			console.log(returnData);
+			if(returnData.length == 0 ||(
+			   (returnData[0].PluginId == $("#hdPluginId").val()))){
+				isExists = true;
+			} else {
+				isExists = false;
+			}
+        },
+        error: function(xhr, textStatus, errorThrown)
+        {
+            alert('ajax loading error... ... '+url + query);
+            return false;
+        }
+    });
+	return isExists;
+}, '');
+
+$.validator.addMethod("checkAreaExists", function(value, element)
+{
+	var isExists = true;
+    $.ajax(
+    {
+        type: "GET",
+        url: "http://localhost:3000/api/Plugins/GetByAreaName/" + value,
+        contentType: 'application/json; charset=utf-8',
+		dataType: "json",
+		async: false,  //make sure we at least get the file and see
+        success: function(returnData)
+        {
+			console.log(returnData);
+			if(returnData.length == 0 ||(
+			   (returnData[0].PluginId == $("#hdPluginId").val()))){
+				isExists = true;
+			} else {
+				isExists = false;
+			}
+        },
+        error: function(xhr, textStatus, errorThrown)
+        {
+            alert('ajax loading error... ... '+url + query);
+            return false;
+        }
+    });
+	return isExists;
+}, '');
+
+$.validator.addMethod("checkRoleExists", function(value, element)
+{
+	var pluginId = $("#hdPluginRolePluginId").val();
+	var url = "http://localhost:3000/api/PluginRoles/GetByPluginIdAndName/" + pluginId ;
+	var isExists = true;
+    $.ajax(
+    {
+		type: "POST",
+		url: url,
+		contentType: 'application/json; charset=utf-8',
+		data: JSON.stringify({ Name: value}),
+		async: false,  //make sure we at least get the file and see
+		success: function (returnData) {
+			if(returnData.length == 0 ||(
+			   (returnData[0].PluginRoleId == $("#hdPluginRoleId").val()))){
+				isExists = true;
+			} else {
+				isExists = false;
+			}
+		},
+		error: function (error) {
+			console.log("Error:");
+			console.log(error);
+		}	
+    });
+	return isExists;
+}, '');
+
+function SetupPluginRoleValidation(){
+	$("#frmPluginRole").validate({ focusCleanup: true });
+	$( "#txtPluginRoleName" ).rules( "add", {
+		required: true,
+		checkRoleExists: true,
+		maxlength: 50,
+		messages: { required: "Name is required",
+					checkRoleExists: "Name already exists"}
+	});
+}
+
 function SetupValidation(){
 	$("#frmPlugin").validate({ focusCleanup: true });
 	
 	$( "#txtPluginName" ).rules( "add", {
 		noSpace: true,
 		required: true,
+		checkNameExists: true,
 		maxlength: 50,
 		messages: { required: "Name is required",
-					noSpace: "Cannot have a space"}
+					noSpace: "Cannot have a space",
+					checkNameExists: "Name already exists"}
 	});
 	
 	$( "#txtAreaPrefix" ).rules( "add", {
 		noSpace: true,
 		requiredForPlugin: true,
+		checkAreaExists: true,
 		maxlength: 50,
 		messages: { requiredForPlugin: "Area Prefix is required for plugins",
-					noSpace: "Cannot have a space"}
+					noSpace: "Cannot have a space",
+					checkAreaExists: "Area already exists"}
 	});
 	
 	$( "#txtDisplayName" ).rules( "add", {
@@ -91,12 +192,37 @@ function SetupValidation(){
 
 window.operateEvents = {
 	'click .btn_roles': function (e, value, row, index) {
-		console.log(row.PluginId);
+		GetPluginRolesByPluginId(row.PluginId);
 	},
 	'click .btn_edit': function (e, value, row, index) {
 		GetPlugin(row.PluginId);
 	}
 };
+
+function GetPluginRolesByPluginId(pluginId){
+	ClearPluginRoleInfo();
+	$("#hdPluginRolePluginId").val(pluginId);
+	jQuery.ajax({
+		type: "GET",
+		url: "http://localhost:3000/api/PluginRoles/GetByPluginId/" + pluginId,
+		contentType: 'application/json; charset=utf-8',
+		dataType: "json",
+		async: false,  //make sure we at least get the file and see
+		success: function (data) {
+			$("#dvPluginRoles").empty();
+			for(var i = 0; i < data.length; i++){
+				$("#dvPluginRoles").append("<button data-pluginroleid=\"" + data[i].PluginRoleId + "\" type=\"button\" class=\"editpluginrole list-group-item\">" + data[i].Description + "</button>");
+			}
+			$('#mdlPluginRoleAdd').modal('show');
+		},
+		error: function (error) {
+			console.log("Error:");
+			console.log(error);
+		},
+		traditional: true
+	});
+	
+}
 
 function ClearPluginInfo(){
 	$("#hdPluginId").val("");
@@ -113,6 +239,13 @@ function ClearPluginInfo(){
 	$("#txtSortIndex").val("1");
 	$("#chkIsExternal").prop('checked', false);
 	$("#chkIsShowInHome").prop('checked', true);
+}
+
+function ClearPluginRoleInfo(){
+	$("#hdPluginRoleId").val("");
+	$("#hdPluginRoleId").val("");
+	$("#txtPluginRoleName").val("");
+	$("#dvPluginRoles").empty();
 }
 
 function GetPluginFromModal(){
@@ -132,6 +265,13 @@ function GetPluginFromModal(){
 		DisplayName: $("#txtDisplayName").val(),
 		OutputDirectoryName: $("#txtOutputDirectory").val(),
 		AnonymousRole: $("#txtAnonymousRole").val()
+	};
+}
+
+function GetPluginRoleFromModal(){
+	return {
+		PluginId: parseInt($("#hdPluginRolePluginId").val()),
+		Description: $("#txtPluginRoleName").val(),
 	};
 }
 
@@ -209,6 +349,26 @@ function AddPlugin(){
 	});
 }
 
+function AddPluginRole(){
+	var plugindata = GetPluginRoleFromModal();
+	console.log(plugindata);
+	jQuery.ajax({
+		 type: "POST",
+		url: "http://localhost:3000/api/PluginRoles/",
+		contentType: 'application/json; charset=utf-8',
+		data: JSON.stringify(plugindata),
+		success: function () {
+			ClearPluginRoleInfo();
+			$('#mdlPluginRoleAdd').modal('hide');
+		},
+		error: function (error) {
+			console.log("Error:");
+			console.log(error);
+		}	
+	});
+}
+
+
 function ReloadTable(){
 	jQuery.ajax({
 		type: "GET",
@@ -218,6 +378,10 @@ function ReloadTable(){
 		//async: false,  //make sure we at least get the file and see
 		success: function (data) {
 			$("#tblPlugins").bootstrapTable('load', data);
+		},
+		error: function (error) {
+			console.log("Error:");
+			console.log(error);
 		},
 		traditional: true
 	});
@@ -232,8 +396,17 @@ $(document).ready(function () {
 	$('[data-toggle="tooltip"]').tooltip();
 	$("#btnPluginOptions").click(function () { $(".content").load( "options.html" ); });
 	SetupValidation();
+	SetupPluginRoleValidation();
 	ReloadTable();
 	ClearPluginInfo();
+	ClearPluginRoleInfo();
+	$("#frmPluginRole").submit(function(event){
+		event.preventDefault();
+		if ($(this).valid()) {
+			AddPluginRole();
+		}
+	});
+	
 	$("#frmPlugin").submit(function(event){
 		event.preventDefault();
 		if ($(this).valid()) {

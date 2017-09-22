@@ -1,18 +1,18 @@
 var elecConfig = require("electron-config");
 var configInfo = new elecConfig();
-var CONFIGNAME = "IBIPluginManagementOptions";
+const systemConstants = require('./const');
 var updateFunction = function(config){
 	if(config != undefined && config != null){
-		configInfo.set(CONFIGNAME, config);
+		configInfo.set(systemConstants.CONFIGKEY, config);
 	}
 }
 var getFunction = function(){
-	var currentConfig = configInfo.get(CONFIGNAME);
+	var currentConfig = configInfo.get(systemConstants.CONFIGKEY);
 	if (currentConfig == null || currentConfig == undefined) {
         currentConfig = {
-            DatabaseName: "jaxdwdv01",
-			DatabaseUser: "Dwsvc",
-            DatabasePassword: "Pass@word1",
+            DatabaseName: systemConstants.DEFAULTDEVSERVER,
+			DatabaseUser: systemConstants.DEFAULTDEVUSER,
+            DatabasePassword: systemConstants.DEFAULTDEVPASSWORD,
             SourceControlLocation: "",
             CurrentPlugin: "",
             CurrentService: "",
@@ -21,6 +21,34 @@ var getFunction = function(){
         };
     }
 	return currentConfig;
+}
+
+exports.GetDatabaseConnection = function(){
+	var config = configInfo.get(systemConstants.CONFIGKEY);
+	var dbConfigOptions = {};
+	if (config == null || config == undefined) {
+		dbConfigOptions = {
+			database: "master",
+			user: systemConstants.DEFAULTDEVUSER,
+			server: systemConstants.DEFAULTDEVSERVER,
+			password: systemConstants.DEFAULTDEVPASSWORD,
+			options: {
+				encrypt: false
+			}
+		};
+	} else {
+		dbConfigOptions = {
+			database: "master",
+			server: config.DatabaseName,
+			user: config.DatabaseUser,
+			password: config.DatabasePassword,
+			options: {
+				encrypt: false
+			}
+		};
+	}
+	
+	return dbConfigOptions;
 }
 
 exports.UpdateConfig = function(config){

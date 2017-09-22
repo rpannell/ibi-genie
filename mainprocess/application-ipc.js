@@ -2,13 +2,13 @@
 var elecConfig = require("electron-config");
 const fs = require('fs');
 const path = require('path');
-var config = new elecConfig();
+var config = require('../assets/config');
 var yeoman = require('yeoman-environment');
 var yeomanEnv = yeoman.createEnv();
 var glob = require('glob');
 
 ipcMain.on('update-config', (event, arg) => {
-    config.set("IBIPluginManagementOptions", arg);
+    config.UpdateConfig(arg);
     event.returnValue = 'saved';
 });
 
@@ -81,7 +81,7 @@ ipcMain.on('run-scaffolding', (event, arg) => {
 });
 
 ipcMain.on('get-config', (event, arg) => {
-    var currentConfig = config.get("IBIPluginManagementOptions");
+    var currentConfig = config.GetConfig();
     if (currentConfig == null || currentConfig == undefined) {
         currentConfig = {
             DatabaseName: "jaxdwdv01",
@@ -99,7 +99,7 @@ ipcMain.on('get-config', (event, arg) => {
 });
 
 ipcMain.on('get-plugin-folder-names', (event, arg) => {
-    var currentConfig = config.get("IBIPluginManagementOptions");
+    var currentConfig = config.GetConfig();
     if (currentConfig == null || currentConfig == undefined || currentConfig.SourceControlLocation == "") {
         event.returnValue = [];
     } else {
@@ -110,7 +110,7 @@ ipcMain.on('get-plugin-folder-names', (event, arg) => {
 });
 
 ipcMain.on('get-service-folder-names', (event, arg) => {
-    var currentConfig = config.get("IBIPluginManagementOptions");
+    var currentConfig = config.GetConfig();
     if (currentConfig == null || currentConfig == undefined || currentConfig.SourceControlLocation == "") {
         event.returnValue = [];
     } else {

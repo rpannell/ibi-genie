@@ -67,104 +67,13 @@ webApi.use(bodyParser.urlencoded({     // to support URL-encoded bodies
     extended: true
 }));
 
-var pluginRouter = express.Router();
-pluginRouter.get('/', function (req, res) {
-	mssql.close();
-	mssql.connect(config).then(pool => {
-		return pool.request()
-		.query("SELECT PluginId ,PluginDescription, PluginName ,IsInstalled ,RoleCount, GroupCount, MemberCount FROM IBIWebFramework.dbo.vwPluginInfo ORDER BY PluginName");
-	}).then(result => { res.send(result.recordset); })
-	  .catch(err => { res.send(""); })
-});
-
-pluginRouter.get('/:id', function (req, res) {
-	var query = "SELECT * FROM IBIWebFramework.dbo.Plugins WHERE PluginId = " + req.params.id;
-	mssql.close();
-	mssql.connect(config).then(pool => {
-		return pool.request().query(query);
-	}).then(result => { res.send(result.recordset); })
-	  .catch(err => { console.log(err); res.send(""); })
-});
-
-pluginRouter.put('/:id', function (req, res) {
-	var query = "UPDATE IBIWebFramework.dbo.Plugins SET ";
-	query += "Description = '" + req.body.Description + "', ";
-	query += "Name = '" + req.body.Name + "', ";
-	query += "CssIcon = '" + req.body.CssIcon + "', ";
-	query += "Category = '" + req.body.Category + "', ";
-	query += "IsInstalled = " + req.body.IsInstalled + ", ";
-	query += "TrainingVideoURL = '" + req.body.TrainingVideoURL + "', ";
-	query += "IsExternal = " + req.body.IsExternal + ", ";
-	query += "MainUrl = '" + req.body.MainUrl + "', ";
-	query += "AreaRoutePrefix = '" + req.body.AreaRoutePrefix + "', ";
-	query += "ShowInHome = " + req.body.ShowInHome + ", ";
-	query += "SortIndex = " + req.body.SortIndex + ", ";
-	query += "DisplayName = '" + req.body.DisplayName + "', ";
-	query += "OutputDirectoryName = '" + req.body.OutputDirectoryName + "', ";
-	query += "AnonymousRole = '" + req.body.AnonymousRole + "' ";
-	query += "WHERE PluginId = " + req.body.PluginId;
-	console.log(query);
-	mssql.close();
-	mssql.connect(config).then(pool => {
-		return pool.request().query(query);
-	}).then(result => { console.log(result); res.send(""); })
-	  .catch(err => { console.log(err); res.send(""); })
-});
-
-pluginRouter.post('/', function (req, res) {
-	var query = "INSERT INTO IBIWebFramework.dbo.Plugins(Description,Name,CssIcon,Category,IsInstalled,TrainingVideoURL,IsExternal,MainUrl,AreaRoutePrefix,ShowInHome,SortIndex,DisplayName,OutputDirectoryName,AnonymousRole) VALUES (";
-	query += "'" + req.body.Description + "', ";
-	query += "'" + req.body.Name + "', ";
-	query += "'" + req.body.CssIcon + "', ";
-	query += "'" + req.body.Category + "', ";
-	query += "" + req.body.IsInstalled + ", ";
-	query += "'" + req.body.TrainingVideoURL + "', ";
-	query += "" + req.body.IsExternal + ", ";
-	query += "'" + req.body.MainUrl + "', ";
-	query += "'" + req.body.AreaRoutePrefix + "', ";
-	query += "" + req.body.ShowInHome + ", ";
-	query += "" + req.body.SortIndex + ", ";
-	query += "'" + req.body.DisplayName + "', ";
-	query += "'" + req.body.OutputDirectoryName + "', ";
-	query += "'" + req.body.AnonymousRole + "' ";
-	query += ")";
-	console.log(query);
-	mssql.close();
-	mssql.connect(config).then(pool => {
-		return pool.request().query(query);
-	}).then(result => { console.log(result); res.send(""); })
-	  .catch(err => { console.log(err); res.send(""); })
-});
-
-//var pluginController = require('./Controllers/PluginsController');
-webApi.use('/api/Plugins', pluginRouter);
-
+webApi.use('/api/Plugins', require('./Controllers/PluginsController'));
+webApi.use('/api/PluginRoles', require('./Controllers/PluginRolesController'));
 /*
  * Get the config information and set it to the 
  * default information if it's not set
  */ 
-var config = config.get("IBIPluginManagementOptions");
-if (config == null || config == undefined) {
-	config = {
-		database: "master",
-		user: "Dwsvc",
-		server: "jaxdwdv01",
-		password: "Pass@word1",
-		options: {
-			encrypt: false
-		}
-	};
-} else {
-	config = {
-		database: "master",
-		server: config.DatabaseName,
-		user: config.DatabaseUser,
-		password: config.DatabasePassword,
-		options: {
-			encrypt: false
-		}
-	};
-}
+var config = require('../assets/config').GetDatabaseConnection();
 
 /*
  * Get the list of SQL Server databases from a databas server

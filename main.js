@@ -14,6 +14,8 @@ const { exec } = require('child_process');
 autoUpdater.logger = log;
 autoUpdater.logger.transports.file.level = 'info';
 
+const localRedis = require('./mainprocess/Controllers/RedisController');
+
 function initialize() {
     var shouldQuit = makeSingleInstance();
     if (shouldQuit) return app.quit();
