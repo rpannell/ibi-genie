@@ -1,63 +1,77 @@
 ﻿
-    <div class="row">
-        <div class="col-xs-12"><h3>Configuration</h3></div>
-    </div>
-    <div class="row">
-        <div class="col-xs-4 control-label">Database Server:</div>
-        <div class="col-xs-8">
-            <input type="text" class="form-control" id="txtDatabaseService" />
-        </div>
-    </div>
-	<div class="row">
-        <div class="col-xs-4 control-label">Database User:</div>
-        <div class="col-xs-8">
-            <input type="text" class="form-control" id="txtDatabaseUser" />
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-xs-4 control-label">Database Password:</div>
-        <div class="col-xs-8">
-            <input type="text" class="form-control" id="txtDatabasePassword" />
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-xs-4 control-label">Source Control Location:</div>
-        <div class="col-xs-6">
-            <input type="text" class="form-control" id="txtSourceControlLocation" readonly="readonly"/>
-        </div>
+<div class="row">
+	<div class="col-xs-12"><h3>Configuration</h3></div>
+</div>
+<form class="form-horizontal">
+	<div class="form-group">
+		<label class="col-xs-4 control-label">Database Server:</label>
+		<div class="col-xs-8">
+			<input type="text" class="form-control" id="txtDatabaseService" />
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-xs-4 control-label">Database User:</label>
+		<div class="col-xs-8">
+			<input type="text" class="form-control" id="txtDatabaseUser" />
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-xs-4 control-label">Database Password:</label>
+		<div class="col-xs-8">
+			<input type="text" class="form-control" id="txtDatabasePassword" />
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-xs-4 control-label">Source Control Location:</label>
+		<div class="col-xs-6">
+			<input type="text" class="form-control" id="txtSourceControlLocation" readonly="readonly"/>
+		</div>
 		<div class="col-xs-2">
 			<button id="btnSelectSourceLocation" class="btn btn-default pull-right">Select</button>
 		</div>
-    </div>
+	</div>
 	<hr />
-    <div class="row">
-        <div class="col-xs-4 control-label">Current Plugins:</div>
-        <div class="col-xs-8">
-            <select class="form-control" id="dlPlugins">
-                <option value="">--Select Current Plugin--</option>
-            </select>
-        </div>
-    </div>
-	<div class="row">
-        <div class="col-xs-4 control-label">Current Plugin Branch Location:</div>
-        <div class="col-xs-8">
-            <label id="lblPluginBranch"></label>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-xs-4 control-label">Current Service:</div>
-        <div class="col-xs-8">
-            <select class="form-control" id="dlServices">
-                <option value="">--Select Current Service--</option>
-            </select>
-        </div>
-    </div>
-		<div class="row">
-        <div class="col-xs-4 control-label">Current Service Branch Location:</div>
-        <div class="col-xs-8">
-            <label id="lblServiceBranch"></label>
-        </div>
-    </div>
+	<div class="form-group">
+		<label class="col-xs-4 control-label">Current Plugins:</label>
+		<div class="col-xs-8">
+			<select class="form-control" id="dlPlugins">
+				<option value="">--Select Current Plugin--</option>
+			</select>
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-xs-offset-5 col-xs-2 control-label">OR</label>
+	</div>
+	<div class="form-group">
+		<label class="col-xs-4 control-label">Current Applications:</label>
+		<div class="col-xs-8">
+			<select class="form-control" id="dlApps">
+				<option value="">--Select Current Application--</option>
+			</select>
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-xs-4 control-label">Current Service:</label>
+		<div class="col-xs-8">
+			<select class="form-control" id="dlServices">
+				<option value="">--Select Current Service--</option>
+			</select>
+		</div>
+	</div>
+	<hr />
+	<div class="form-group infolabel pluginlabel">
+		<label class="col-xs-4 control-label">Current Plugin Branch Location:</label>
+		<div class="col-xs-8"><label id="lblPluginBranch"></label></div>
+	</div>
+	<div class="form-group infolabel applicationlabel">
+		<label class="col-xs-4 control-label">Current Application Branch Location:</label>
+		<div class="col-xs-8"><label id="lblApplicationBranch"></label></div>
+	</div>
+	<div class="form-group servicelabel">
+		<label class="col-xs-4 control-label">Current Service Branch Location:</label>
+		<div class="col-xs-8"><label id="lblServiceBranch"></label></div>
+	</div>
+</form>
 	<hr/>
     <div class="row">
         <div class="col-xs-12"><button class="btn btn-success pull-right" id="btnSave">Update</button></div>

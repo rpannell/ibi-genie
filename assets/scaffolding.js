@@ -25,14 +25,38 @@ function ucFirstAllWords( str )
 	return finish.replaceAll(" ", "").trim();
 }
 
-function LoadDatabases(){
+function LoadDatabases(currentServiceData){
 	if($('#dlDatabase option').length == 0){
 		jQuery.get("http://localhost:3000/", function (data) {
 			for (var i = 0; i < data.length; i++) {
 				$("#dlDatabase").append($("<option></option>").attr("value", data[i].DatabaseName).text(data[i].DatabaseName));
 			}
+			//set the value to the current value from the current service data
+			if(currentServiceData != undefined && currentServiceData != null && currentServiceData.DatabaseName != undefined && currentServiceData.DatabaseName != null && currentServiceData.DatabaseName != ""){
+				$("#dlDatabase").val(currentServiceData.DatabaseName);
+				LoadTables();
+			}
 		});
 	}
+}
+
+function LoadTables(){
+	$("#dlTable").empty();
+	$("#dlTable").append($("<option></option>").attr("value", "").text("-- Select Table --"));
+	jQuery.ajax({
+		type: "POST",
+		url: "http://localhost:3000/GetTables",
+		contentType: 'application/json; charset=utf-8',
+		dataType: "json",
+		data: JSON.stringify({ DatabaseName: $("#dlDatabase").val() }),
+		success: function (data) {
+			for (var i = 0; i < data.length; i++) {
+				$("#dlTable").append($("<option></option>").attr("value", data[i].TableName).text(data[i].TableName));
+			}
+			$("#dvTables").removeClass("hidden")
+		},
+		traditional: true
+	});
 }
 
 function ClearEntityInfo(){
@@ -91,6 +115,7 @@ function UpdateScaffoldJsonInfo(currentServiceData, entity){
 	}
 
 	currentServiceData.CurrentEntitiesInfo.push(entityInfo);
+	currentServiceData.DatabaseName = $("#dlDatabase").val();
 }
 
 function GetEntityFromJsonData(currentServiceData, entityName){
@@ -122,9 +147,19 @@ $(document).ready(function () {
 	$("#lblCurrentDatabase").html(configInfo.GetDatabaseName());
 	$("#lblCurrentService").html(configInfo.GetCurrentService());
 	$("#lblCodeLocation").html(configInfo.GetServiceSourceLocation());
-	$("#lblPluginLocation").html(configInfo.GetPluginSourceLocation());
 	$("#dvServiceLocation").html(configInfo.GetServiceSourceLocation());
-	$("#dvPluginLocation").html(configInfo.GetPluginSourceLocation());
+	
+	if(configInfo.IsPlugin()){
+		$(".plugininfo").removeClass("hidden");
+		$("#lblPluginLocation").html(configInfo.GetPluginSourceLocation());
+		$("#dvPluginLocation").html(configInfo.GetPluginSourceLocation());
+		$("#lblPluginCheckBoxLabel").append(" Add Entity to Plugin");
+	} else {
+		$(".appinfo").removeClass("hidden");
+		$("#lblApplication").html(configInfo.GetApplicationSourceLocation());
+		$("#dvApplicationLocation").html(configInfo.GetApplicationSourceLocation());
+		$("#lblPluginCheckBoxLabel").append(" Add Entity to Application");
+	}
 	
 	$("#table").bootstrapTable();
 	$("#tblEntityInfo").bootstrapTable();
@@ -138,7 +173,6 @@ $(document).ready(function () {
 		async: false,  //make sure we at least get the file and see
 		success: function (data) {
 			currentServiceData = data;
-			console.log(currentServiceData);
 			if(currentServiceData.CurrentEntitiesInfo == undefined || currentServiceData.CurrentEntitiesInfo == null){
 				currentServiceData = {
 					"CurrentEntitiesInfo": [ ],
@@ -156,26 +190,11 @@ $(document).ready(function () {
 	$("#btnScaffoldOptions").click(function () { $(".content").load( "options.html" ); });
 	$("#btnAddEntity").click(function(){
 		$('#mdlAdd').modal('show')
-		LoadDatabases();
+		LoadDatabases(currentServiceData);
 	});
 	
 	$("#dlDatabase").change(function () {
-		$("#dlTable").empty();
-		$("#dlTable").append($("<option></option>").attr("value", "").text("-- Select Table --"));
-		jQuery.ajax({
-			type: "POST",
-			url: "http://localhost:3000/GetTables",
-			contentType: 'application/json; charset=utf-8',
-			dataType: "json",
-			data: JSON.stringify({ DatabaseName: $("#dlDatabase").val() }),
-			success: function (data) {
-				for (var i = 0; i < data.length; i++) {
-					$("#dlTable").append($("<option></option>").attr("value", data[i].TableName).text(data[i].TableName));
-				}
-				$("#dvTables").removeClass("hidden")
-			},
-			traditional: true
-		});
+		LoadTables();
 	});
 	
 	$("#dlTable").change(function () {
@@ -270,7 +289,10 @@ $(document).ready(function () {
 		var args = {
 			ProjectName: configInfo.GetCurrentService(),
 			ServiceLocation: configInfo.GetCurrentServiceLocation(),
+			PluginName: configInfo.GetCurrentPlugin(),
 			PluginLocation: configInfo.GetPluginSourceLocation(),
+			ApplicationName: configInfo.GetCurrentApplication(),
+			ApplicationLocation: configInfo.GetApplicationSourceLocation(),
 			AddToPlugin: $("#chkScaffoldPlugin").prop('checked'),
 			Entities: []
 		};

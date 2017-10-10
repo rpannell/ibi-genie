@@ -15,9 +15,11 @@ var getFunction = function(){
             DatabasePassword: systemConstants.DEFAULTDEVPASSWORD,
             SourceControlLocation: "",
             CurrentPlugin: "",
+			CurrentApplication: "",
             CurrentService: "",
 			CurrentPluginSourceLocation: "",
-			CurrentServiceSourceLocation: ""
+			CurrentServiceSourceLocation: "",
+			CurrentApplicationSourceLocation: ""
         };
     }
 	return currentConfig;
@@ -59,10 +61,31 @@ exports.GetConfig = function() {
 	return getFunction();
 }
 
+exports.GetCurrentPlugin = function() {
+	var currentConfig = getFunction();
+	return currentConfig.CurrentPlugin != undefined && currentConfig.CurrentPlugin != null
+				? currentConfig.CurrentPlugin
+				: "";
+}
+
 exports.GetPluginSourceLocation = function() {
 	var currentConfig = getFunction();
 	return currentConfig.CurrentPluginSourceLocation != undefined && currentConfig.CurrentPluginSourceLocation != null
 				? currentConfig.CurrentPluginSourceLocation
+				: "";
+}
+
+exports.GetCurrentApplication = function() {
+	var currentConfig = getFunction();
+	return currentConfig.CurrentApplication != undefined && currentConfig.CurrentApplication != null
+				? currentConfig.CurrentApplication
+				: "";
+}
+
+exports.GetApplicationSourceLocation = function() {
+	var currentConfig = getFunction();
+	return currentConfig.CurrentApplicationSourceLocation != undefined && currentConfig.CurrentApplicationSourceLocation != null
+				? currentConfig.CurrentApplicationSourceLocation
 				: "";
 }
 
@@ -106,6 +129,28 @@ exports.GetDatabasePassword = function() {
 	return currentConfig.DatabasePassword != undefined && currentConfig.DatabasePassword != null
 				? currentConfig.DatabasePassword
 				: "";
+}
+
+exports.GetSourceLocation = function() {
+	var currentConfig = getFunction();
+	return currentConfig.SourceControlLocation != undefined && currentConfig.SourceControlLocation != null
+				? currentConfig.SourceControlLocation
+				: "";
+}
+
+
+exports.IsPlugin = function() {
+	var currentConfig = getFunction();
+	return currentConfig.CurrentPluginSourceLocation != undefined && currentConfig.CurrentPluginSourceLocation != null && currentConfig.CurrentPluginSourceLocation != ""
+				? true
+				: false;
+}
+
+exports.IsApplication = function() {
+	var currentConfig = getFunction();
+	return currentConfig.CurrentApplicationSourceLocation != undefined && currentConfig.CurrentApplicationSourceLocation != null && currentConfig.CurrentApplicationSourceLocation != ""
+				? true
+				: false;
 }
 
 exports.IsValid = function(config){

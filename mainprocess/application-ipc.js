@@ -68,8 +68,9 @@ ipcMain.on('run-scaffolding', (event, arg) => {
 	
 	if(arg.AddToPlugin != undefined && arg.AddToPlugin){
 		yeomanEnv.lookup(() => {
-			yeomanEnv.run('ibi-appframework:EFPlugin', { 'projectname': arg.ProjectName, 
-														 'location': 	arg.PluginLocation, 
+			yeomanEnv.run('ibi-appframework:EFPlugin', { 'projectname': arg.PluginName != "" ? arg.PluginName : arg.ApplicationName, 
+														 'location': 	arg.PluginLocation != "" ? arg.PluginLocation : arg.ApplicationLocation, 
+														 'isplugin': arg.PluginLocation != "" ? true : false, 
 														 'entityinfo': 	JSON.stringify(arg.Entities), 
 														 'force': 		true }, err => {
 				console.log('done');
@@ -109,6 +110,17 @@ ipcMain.on('get-plugin-folder-names', (event, arg) => {
     }
 });
 
+ipcMain.on('get-application-folder-names', (event, arg) => {
+    var currentConfig = config.GetConfig();
+    if (currentConfig == null || currentConfig == undefined || currentConfig.SourceControlLocation == "") {
+        event.returnValue = [];
+    } else {
+        var pluginPath = path.join(currentConfig.SourceControlLocation, "Applications");
+        var directories = fs.readdirSync(pluginPath).filter(file => fs.statSync(path.join(pluginPath, file)).isDirectory());
+        event.returnValue = directories;
+    }
+});
+
 ipcMain.on('get-service-folder-names', (event, arg) => {
     var currentConfig = config.GetConfig();
     if (currentConfig == null || currentConfig == undefined || currentConfig.SourceControlLocation == "") {
@@ -121,7 +133,11 @@ ipcMain.on('get-service-folder-names', (event, arg) => {
 });
 
 ipcMain.on('get-project-files', (event, arg) => {
-	var rootPath = path.join(arg.SourceLocation, arg.IsPlugin ? "Plugins" : "Services", arg.Name);
+	var rootPath = path.join(arg.SourceLocation, arg.IsPlugin != undefined && arg.IsPlugin 
+														? "Plugins" 
+														: arg.IsApplication != undefined && arg.IsApplication
+															? "Applications"
+															: "Services", arg.Name);
 	var files = glob.sync(path.join(rootPath, "**\\*.csproj"));
 	for(var i = 0; i < files.length; i++){
 		files[i] = files[i].replace(new RegExp("/", 'g'), "\\")
@@ -131,6 +147,13 @@ ipcMain.on('get-project-files', (event, arg) => {
 });
 
 ipcMain.on('get-folder-from-file', (event, arg) => {
-	var file = path.join(arg.SourceLocation, arg.IsPlugin ? "Plugins" : "Services", arg.Name, arg.File);
+	var file = path.join(arg.SourceLocation, 
+						 arg.IsPlugin 
+							? "Plugins" 
+							: arg.IsApplication
+								? "Applications"
+								: "Services", 
+						 arg.Name, 
+						 arg.File);
 	event.returnValue = path.dirname(file);
 });

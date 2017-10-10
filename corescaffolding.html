@@ -10,20 +10,24 @@
 <hr/>
 <form class="form-horizontal">
 	<div class="form-group">
-		<label class="col-xs-3 control-label">Current Service</label>
+		<label class="col-xs-3 control-label">Current Service:</label>
 		<div class="col-xs-9" id="lblCurrentService"></div>
 	</div>
 	<div class="form-group">
-		<label class="col-xs-3 control-label">Database</label>
+		<label class="col-xs-3 control-label">Database:</label>
 		<div class="col-xs-9" id="lblCurrentDatabase"></div>
 	</div>
 	<div class="form-group">
-		<label class="col-xs-3 control-label">Service Location</label>
+		<label class="col-xs-3 control-label">Service Location:</label>
 		<div class="col-xs-9" id="lblCodeLocation"></div>
 	</div>
-	<div class="form-group">
-		<label class="col-xs-3 control-label">Plugin Location</label>
+	<div class="form-group plugininfo hidden">
+		<label class="col-xs-3 control-label">Plugin Location:</label>
 		<div class="col-xs-9" id="lblPluginLocation"></div>
+	</div>
+	<div class="form-group appinfo hidden">
+		<label class="col-xs-3 control-label">Application Location:</label>
+		<div class="col-xs-9" id="lblApplication"></div>
 	</div>
 </form>
 <hr/>
@@ -61,15 +65,21 @@
 				<div class="row">
 					<div class="col-xs-3"><div class="pull-right">Service:</div></div>
 					<div class="col-xs-9" id="dvServiceLocation"></div>
-					<div class="col-xs-3"><div class="pull-right">Plugin:</div></div>
-					<div class="col-xs-9" id="dvPluginLocation"></div>
+					<div class="plugininfo hidden">
+						<div class="col-xs-3"><div class="pull-right">Plugin:</div></div>
+						<div class="col-xs-9" id="dvPluginLocation"></div>
+					</div>
+					<div class="appinfo hidden">
+						<div class="col-xs-3"><div class="pull-right">Application:</div></div>
+						<div class="col-xs-9" id="dvApplicationLocation"></div>
+					</div>
 				</div>
 				<div class="row" id="dvScaffoldPlugin">
 					<div class="col-xs-3"></div>
 					<div class="col-xs-9">
 						<div class="checkbox">
-							<label>
-								<input type="checkbox" id="chkScaffoldPlugin" checked="checked" /> Add Entity to Plugin
+							<label id="lblPluginCheckBoxLabel">
+								<input type="checkbox" id="chkScaffoldPlugin" checked="checked" /> 
 							</label>
 						</div>
 					</div>

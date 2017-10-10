@@ -5,9 +5,9 @@ var configInfo = require('./config');
 var currentConfig = configInfo.GetConfig();
 const dialog = require('electron').remote.dialog 
 
-function ShowBranchSelection(projFiles, isPlugin, name){
+function ShowBranchSelection(projFiles, isPlugin, name, isApplication){
 	$("#rdBranch").empty();
-	$("#rdIsPlugin").val(isPlugin ? "true" : "false");
+	$("#rdIsPlugin").val(isPlugin || isApplication ? "true" : "false");
 	$("#sourceName").val(name);
 	if(projFiles != undefined && projFiles != null && projFiles.length > 0){
 		for(var i = 0; i < projFiles.length; i++){
@@ -15,18 +15,24 @@ function ShowBranchSelection(projFiles, isPlugin, name){
 			$("#rdBranch").append("<div class=\"radio\"><label><input type=\"radio\" name=\"branchType\" value=\"" + projfile + "\" " +  (projfile.includes("Trunk") ? "checked=checked" : "")  + "/>" + projfile + "</label></div>");
 		}
 		if(projFiles.length == 1){
-			SetFolder(isPlugin);
+			SetFolder(isPlugin, isApplication);
 		} else {
 			$('#mdlRadioSelection').modal('show');
 		}
 	}
 }
 
-function SetFolder(isPlugin,){
+function SetFolder(isPlugin,isApplication){
 	var projectfile = $("input[type='radio'][name='branchType']:checked").val();
-	var folder = ipcRenderer.sendSync('get-folder-from-file', { SourceLocation: $("#txtSourceControlLocation").val(), Name: $("#sourceName").val(),  File: projectfile, IsPlugin: isPlugin});
-	if(isPlugin){	
+	var folder = ipcRenderer.sendSync('get-folder-from-file', { SourceLocation: $("#txtSourceControlLocation").val(), Name: $("#sourceName").val(),  File: projectfile, IsPlugin: isPlugin, IsApplication: isApplication});
+	if(isPlugin != undefined && isPlugin){	
 		$("#lblPluginBranch").html(folder);
+		$(".pluginlabel").removeClass("hidden");
+		$(".applicationlabel").addClass("hidden");
+	} else if (isApplication != undefined && isApplication){
+		$("#lblApplicationBranch").html(folder);
+		$(".applicationlabel").removeClass("hidden");
+		$(".pluginlabel").addClass("hidden");
 	} else {
 		$("#lblServiceBranch").html(folder);
 	}
@@ -35,13 +41,17 @@ function SetFolder(isPlugin,){
 }
 
 $(document).ready(function () {
+	$(".infolabel").addClass("hidden");
+    $("#txtDatabaseService").val(configInfo.GetDatabaseName());
+    $("#txtDatabaseUser").val(configInfo.GetDatabaseUser());
+	$("#txtDatabasePassword").val(configInfo.GetDatabasePassword());
+    $("#txtSourceControlLocation").val(configInfo.GetSourceLocation());
+	$("#lblPluginBranch").html(configInfo.GetPluginSourceLocation());
+	$("#lblServiceBranch").html(configInfo.GetCurrentServiceLocation());
+	$("#lblApplicationBranch").html(configInfo.GetApplicationSourceLocation());
 	
-    $("#txtDatabaseService").val(currentConfig.DatabaseName);
-    $("#txtDatabaseUser").val(currentConfig.DatabaseUser != undefined ? currentConfig.DatabaseUser : "Dwsvc");
-	$("#txtDatabasePassword").val(currentConfig.DatabasePassword);
-    $("#txtSourceControlLocation").val(currentConfig.SourceControlLocation);
-	$("#lblPluginBranch").html(currentConfig.CurrentPluginSourceLocation);
-	$("#lblServiceBranch").html(currentConfig.CurrentServiceSourceLocation);
+	if(configInfo.GetApplicationSourceLocation() != ""){ $(".applicationlabel").removeClass("hidden"); }
+	if(configInfo.GetPluginSourceLocation() != ""){ $(".pluginlabel").removeClass("hidden"); }
 	
 	$("#btnSelectSourceLocation").click(function(){
 		var path = dialog.showOpenDialog({
@@ -55,12 +65,32 @@ $(document).ready(function () {
 	});
 	
 	$("#dlPlugins").change(function(){
-		
+		if($("#dlPlugins").val() == ""){
+			$("#lblPluginBranch").html("");
+			return;
+		} else {
+			$("#lblApplicationBranch").html("");
+			$("#dlApps").val("");
+		}
 		var projfiles = ipcRenderer.sendSync('get-project-files', {	SourceLocation: $("#txtSourceControlLocation").val(), 
 																	IsPlugin: true, 
 																	Name: $("#dlPlugins").val()});
 																	
-		ShowBranchSelection(projfiles, true, $("#dlPlugins").val());
+		ShowBranchSelection(projfiles, true, $("#dlPlugins").val(), false);
+	});
+	
+	$("#dlApps").change(function(){
+		if($("#dlApps").val() == ""){
+			$("#lblApplicationBranch").html("");
+			return;
+		} else {
+			$("#lblPluginBranch").html("");
+			$("#dlPlugins").val("");
+		}
+		var projfiles = ipcRenderer.sendSync('get-project-files', {	SourceLocation: $("#txtSourceControlLocation").val(), 
+																	IsApplication: true,
+																	Name: $("#dlApps").val()});
+		ShowBranchSelection(projfiles, false, $("#dlApps").val(), true);
 	});
 	
 	$("#dlServices").change(function(){
@@ -69,7 +99,7 @@ $(document).ready(function () {
 																	IsPlugin: false, 
 																	Name: $("#dlServices").val()});
 																	
-		ShowBranchSelection(projfiles, false, $("#dlServices").val());
+		ShowBranchSelection(projfiles, false, $("#dlServices").val(), false);
 	});
 	
 	$("#btnRadioSelect").click(function(){
@@ -85,11 +115,13 @@ $(document).ready(function () {
         currentConfig.DatabaseName = $("#txtDatabaseService").val();
         currentConfig.DatabasePassword = $("#txtDatabasePassword").val();
         currentConfig.SourceControlLocation = $("#txtSourceControlLocation").val();
-        currentConfig.CurrentPlugin = $("#dlPlugins").val();
+        currentConfig.CurrentApplication = $("#dlApps").val();
+		currentConfig.CurrentPlugin = $("#dlPlugins").val();
         currentConfig.CurrentService = $("#dlServices").val();
 		currentConfig.DatabaseUser = $("#txtDatabaseUser").val();
 		currentConfig.CurrentPluginSourceLocation = $("#lblPluginBranch").html();
 		currentConfig.CurrentServiceSourceLocation = $("#lblServiceBranch").html();
+		currentConfig.CurrentApplicationSourceLocation = $("#lblApplicationBranch").html();
 		configInfo.UpdateConfig(currentConfig);
         $(".content").load("home.html");
     });
@@ -111,6 +143,15 @@ $(document).ready(function () {
     if (currentConfig.CurrentService != null && currentConfig.CurrentService != undefined && currentConfig.CurrentService != "") {
         $("#dlServices").val(currentConfig.CurrentService);
     }
+	
+	var applications = ipcRenderer.sendSync('get-application-folder-names');
+    for (var i = 0; i < applications.length; i++) {
+        $("#dlApps").append($("<option></option>").attr("value", applications[i]).text(applications[i]));
+    }
+	if (currentConfig.CurrentApplication != null && currentConfig.CurrentApplication != undefined && currentConfig.CurrentApplication != "") {
+        $("#dlApps").val(currentConfig.CurrentApplication);
+    }
+	
 	
 	$("#btnCancel").click(function(){
 		$('#mdlRadioSelection').modal('hide');
