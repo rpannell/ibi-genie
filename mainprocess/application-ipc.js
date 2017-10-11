@@ -105,8 +105,12 @@ ipcMain.on('get-plugin-folder-names', (event, arg) => {
         event.returnValue = [];
     } else {
         var pluginPath = path.join(currentConfig.SourceControlLocation, "Plugins");
-        var directories = fs.readdirSync(pluginPath).filter(file => fs.statSync(path.join(pluginPath, file)).isDirectory());
-        event.returnValue = directories;
+		if(fs.existsSync(pluginPath)){
+			var directories = fs.readdirSync(pluginPath).filter(file => fs.statSync(path.join(pluginPath, file)).isDirectory());
+			event.returnValue = directories;	
+		} else {
+			event.returnValue = [];
+		}
     }
 });
 
@@ -116,8 +120,12 @@ ipcMain.on('get-application-folder-names', (event, arg) => {
         event.returnValue = [];
     } else {
         var pluginPath = path.join(currentConfig.SourceControlLocation, "Applications");
-        var directories = fs.readdirSync(pluginPath).filter(file => fs.statSync(path.join(pluginPath, file)).isDirectory());
-        event.returnValue = directories;
+		if(fs.existsSync(pluginPath)){
+			var directories = fs.readdirSync(pluginPath).filter(file => fs.statSync(path.join(pluginPath, file)).isDirectory());
+			event.returnValue = directories;	
+		} else {
+			event.returnValue = [];
+		}
     }
 });
 
