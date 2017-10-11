@@ -3,7 +3,7 @@
 const {ipcRenderer} = require('electron');
 var configInfo = require('./config');
 var currentConfig = configInfo.GetConfig();
-const dialog = require('electron').remote.dialog 
+const {dialog} = require('electron').remote;
 
 function ShowBranchSelection(projFiles, isPlugin, name, isApplication){
 	$("#rdBranch").empty();
@@ -59,9 +59,11 @@ $(document).ready(function () {
 			defaultPath: $("#txtSourceControlLocation").val()
 		});
 		
-		if(path != undefined){
+		if(path[0] != undefined){
 			$("#txtSourceControlLocation").val(path[0]);
 		}
+		
+		
 	});
 	
 	$("#dlPlugins").change(function(){
