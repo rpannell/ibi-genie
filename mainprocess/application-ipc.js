@@ -6,8 +6,8 @@ var config = require('../assets/config');
 var yeoman = require('yeoman-environment');
 var yeomanEnv = yeoman.createEnv();
 var glob = require('glob');
-const log = require('electron-log');
 const logger = require('winston');  
+
 ipcMain.on('update-config', (event, arg) => {
     config.UpdateConfig(arg);
     event.returnValue = 'saved';
@@ -57,15 +57,12 @@ ipcMain.on('run-templates', (event, arg) => {
 
 ipcMain.on('run-scaffolding', (event, arg) => {
 	logger.info("--Scaffolding Arguments---", arg);
-	log.info("---Scaffolding Arguments---");
-	log.info(arg);
-	log.info("---Scaffolding Arguments---");
 	yeomanEnv.lookup(() => {
 		yeomanEnv.run('ibi-appframework:EFWebApiService', { 'projectname': 	arg.ProjectName, 
 															'location': 	arg.ServiceLocation, 
 															'entityinfo': 	JSON.stringify(arg.Entities), 
 															'force': 		true }, err => {
-			console.log('done');
+			logger.info("Finished Scaffolding The Web Service");
 		});
 		
 		
@@ -78,7 +75,7 @@ ipcMain.on('run-scaffolding', (event, arg) => {
 														 'isplugin': arg.PluginLocation != "" ? true : false, 
 														 'entityinfo': 	JSON.stringify(arg.Entities), 
 														 'force': 		true }, err => {
-				console.log('done');
+				logger.info("Finished Scaffolding The Plugin/Application");
 			});	
 		});
 	}
