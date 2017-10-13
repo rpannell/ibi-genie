@@ -55,6 +55,8 @@ ipcMain.on('run-templates', (event, arg) => {
 });
 
 ipcMain.on('run-scaffolding', (event, arg) => {
+	console.log("All Entities");
+	console.log(arg.Entities);
 	yeomanEnv.lookup(() => {
 		yeomanEnv.run('ibi-appframework:EFWebApiService', { 'projectname': 	arg.ProjectName, 
 															'location': 	arg.ServiceLocation, 
