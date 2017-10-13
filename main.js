@@ -11,11 +11,23 @@ let mainWindow = null;
 const {autoUpdater} = require("electron-updater");
 const log = require('electron-log');
 const { exec } = require('child_process');
+const winston = require('winston');  
 autoUpdater.logger = log;
 autoUpdater.logger.transports.file.level = 'info';
 
 const localRedis = require('./mainprocess/Controllers/RedisController');
 
+var logFolder = path.join(app.getPath("userData"), "logs");
+var logFile = 'app.log';
+winston.configure({
+	transports: [
+	  new (winston.transports.File)({ filename: path.join(logFolder, logFile) })
+	]
+});
+if (!fs.existsSync(path.join(logFolder))) {
+    fs.mkdirSync(path.join(logFolder));
+}
+console.log(path.join(logFolder, logFile));
 function initialize() {
     var shouldQuit = makeSingleInstance();
     if (shouldQuit) return app.quit();
@@ -24,6 +36,8 @@ function initialize() {
     require(path.join(__dirname, 'mainprocess/application-webapi.js'));
     require(path.join(__dirname, 'mainprocess/application-ipc.js'));
 
+	winston.info("Start");
+	
     app.on('ready', function(){
 		var windowOptions = {
             width: 1200,
