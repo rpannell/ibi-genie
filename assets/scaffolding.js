@@ -135,7 +135,7 @@ function GetEntityFromJsonData(currentServiceData, entityName){
 }
 
 $(document).ready(function () {
-	if(!configInfo.IsValid() && !configInfo.IsServiceSetup){
+	if(!configInfo.IsValid() && !configInfo.IsServiceSetup()){
 		$("#dvAlert").removeClass("hidden");
 	} else {
 		$("#dvAlert").addClass("hidden");

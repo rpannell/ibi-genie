@@ -159,7 +159,7 @@ exports.IsValid = function(config){
 	}
 	if(config == null) return false;
 		
-	if(config.SourceControlLocation == undefined || config.SourceControlLocation == null ||
+	if(config.SourceControlLocation == undefined || config.SourceControlLocation == null || config.SourceControlLocation == "" ||
 	   config.DatabaseName == undefined || config.DatabaseName == null ||
 	   config.DatabaseUser == undefined || config.DatabaseUser == null ||
 	   config.DatabasePassword == undefined || config.DatabasePassword == null){
@@ -176,11 +176,11 @@ exports.IsServiceSetup = function(config){
 	
 	if(config == null) return false;
 	
-	if(config.CurrentService == undefined || config.CurrentService == null){
+	if(config.CurrentService == undefined || config.CurrentService == null || config.CurrentService == ""){
 		return false;
 	}
 	
-	if(config.CurrentServiceSourceLocation == undefined || config.CurrentServiceSourceLocation == null){
+	if(config.CurrentServiceSourceLocation == undefined || config.CurrentServiceSourceLocation == null || config.CurrentServiceSourceLocation == ""){
 		return false;
 	}
 	

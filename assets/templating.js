@@ -1,4 +1,5 @@
 ﻿require('jquery-validation');
+var configInfo = require('./config');
 const {ipcRenderer} = require('electron');
 
 /*
@@ -76,6 +77,12 @@ function SetupValidation(){
 }
 
 $(document).ready(function () {
+	if(!configInfo.IsValid() && !configInfo.IsServiceSetup()){
+		$("#dvAlert").removeClass("hidden");
+	} else {
+		$("#dvAlert").addClass("hidden");
+	}
+
     var templateConfig = ipcRenderer.sendSync('get-config');
 	SetupValidation();
 	
