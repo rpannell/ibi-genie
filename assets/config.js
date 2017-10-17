@@ -176,11 +176,9 @@ exports.IsServiceSetup = function(config){
 	
 	if(config == null) return false;
 	
-	if(config.CurrentService == undefined || config.CurrentService == null || config.CurrentService == ""){
-		return false;
-	}
-	
-	if(config.CurrentServiceSourceLocation == undefined || config.CurrentServiceSourceLocation == null || config.CurrentServiceSourceLocation == ""){
+	if(config.CurrentService == undefined || config.CurrentService == null || config.CurrentService == "" ||
+	   config.CurrentServiceSourceLocation == undefined || config.CurrentServiceSourceLocation == null || 
+	   config.CurrentServiceSourceLocation == ""){
 		return false;
 	}
 	

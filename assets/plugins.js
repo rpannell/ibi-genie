@@ -390,8 +390,6 @@ function ReloadTable(){
 $(document).ready(function () {
 	if(!configInfo.IsValid()){
 		$("#dvAlert").removeClass("hidden");
-	} else {
-		$("#dvAlert").addClass("hidden");
 	}
 	$("#tblPlugins").bootstrapTable();
 	$("#btnAddPlugin").click(function(){
