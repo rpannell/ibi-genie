@@ -24,10 +24,19 @@ winston.configure({
 	  new (winston.transports.File)({ filename: path.join(logFolder, logFile) })
 	]
 });
+
+//on the first run of the application the user data folder 
+//hasn't been created by this point, so create the userData
+//folder before creating the log folder
+if (!fs.existsSync(app.getPath("userData"))) {
+    fs.mkdirSync(app.getPath("userData"));
+}
+
+//create the log folder
 if (!fs.existsSync(path.join(logFolder))) {
     fs.mkdirSync(path.join(logFolder));
 }
-console.log(path.join(logFolder, logFile));
+
 function initialize() {
     var shouldQuit = makeSingleInstance();
     if (shouldQuit) return app.quit();
@@ -40,23 +49,23 @@ function initialize() {
 	
     app.on('ready', function(){
 		var windowOptions = {
-            width: 1200,
+            width: 1400,
             minWidth: 600,
-            height: 840,
-            title: app.getName()
-        }
-        windowOptions.icon = path.join(__dirname, '/images/favicon.ico')
-
+            height: 968,
+            title: "Genie",
+            icon: path.join(__dirname, '/images/favicon.ico')
+        };
         mainWindow = new BrowserWindow(windowOptions)
         mainWindow.loadURL(url.format({
             pathname: path.join(__dirname, 'index.html'),
             protocol: 'file:',
             slashes: true
         }))
+        mainWindow.setTitle("Genie");
         mainWindow.on('closed', function () {
             mainWindow = null
         })
-		
+		mainWindow.maximize();
 		autoUpdater.checkForUpdates();
 	});
     app.on('window-all-closed', function () {
