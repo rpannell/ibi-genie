@@ -21,7 +21,9 @@ ipcMain.on('run-extended', (event, arg) => {
 																	'serviceLocation': 	arg.ServiceLocation,
 																	'pluginLocation': 	arg.PluginLocation,
 																	'functionInfo': 	arg.FunctionInfo,
-																	'isList': 			arg.ReturnsList
+																	'isList': 			arg.ReturnsList,
+																	'isPost': 			arg.IsPost,
+																	'force': 			true 
 																}, err => { 
 																	console.log(err);
 				event.sender.send('run-extended-reply', err);

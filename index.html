@@ -11,28 +11,34 @@
 	<link href="./assets/xeditable/xeditable.css" rel="stylesheet"/>
 </head>
 <body>
-	<nav class="navigation">
-		<header class="navigation-header"> 
-			<h1 class="navigation-title">Genie</h1>
-			<i class="navigation-header-icon icon-genie-icon" aria-hidden="true"></i>
-		</header> 
-		<div class="navigation-item">
-			<h5 id="btnCreatePlugin" class="navigation-category"><i class="navigation-icon fa fa-plug" aria-hidden="true"></i>Create New Plugins/Services</h5>
-		</div>
-		<div class="navigation-item">
-			<h5 id="btnCoreSaffolding" class="navigation-category"><i class="navigation-icon fa fa-database" aria-hidden="true"></i>Entity Scaffolding</h5>
-		</div>
-		<div class="navigation-item">
-			<h5 id="btnPlugins" class="navigation-category"><i class="navigation-icon fa fa-plug" aria-hidden="true"></i>Plugin/Application Registration</h5>
-		</div>
-		<div class="navigation-item">
-			<h5 id="btnCustomRoute" class="navigation-category"><i class="navigation-icon fa fa-map-signs" aria-hidden="true"></i>Custom Routes</h5>
-		</div>
-		<div class="navigation-item">
-			<h5 id="btnOptions" class="navigation-category"><i class="navigation-icon fa fa-cog" aria-hidden="true"></i>Manage Configuration</h5>
-		</div>
 
-	</nav>
+	<nav class="navbar navbar-inverse sidebar" role="navigation">
+			<div class="container-fluid">
+				<!-- Brand and toggle get grouped for better mobile display -->
+				<div class="navbar-header">
+									
+						</center><button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-sidebar-navbar-collapse-1">
+						<span class="sr-only">Toggle navigation</span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>
+				<center>
+							<img src="assets/img/genie_logo.png" style="width: 200px; margin-top:10px;margin-bottom:10px;">
+				</div>
+				<!-- Collect the nav links, forms, and other content for toggling -->
+				<div class="collapse navbar-collapse" id="bs-sidebar-navbar-collapse-1">
+					<ul class="nav navbar-nav">
+						<li class="active"><a href="javascript:void(0);" id="btnHome">Home<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-home"></span></a></li>
+						<li ><a href="javascript:void(0);" id="btnCreatePlugin">New Plugins/Services<span style="font-size:16px;" class="pull-right hidden-xs showopacity fa fa-plug"></span></a></li>
+						<li ><a href="javascript:void(0);" id="btnCoreSaffolding">Entity Scaffolding<span style="font-size:16px;" class="pull-right hidden-xs showopacity fa fa-database"></span></a></li>
+						<li><a href="javascript:void(0);"id="btnPlugins" >Plugin/Application Registration<span style="font-size:16px;" class="pull-right hidden-xs showopacity fa fa-upload"></span></a></li>
+						<li><a href="javascript:void(0);"id="btnCustomRoute" >Custom Routes<span style="font-size:16px;" class="pull-right hidden-xs showopacity fa fa-map-signs"></span></a></li>
+						<li ><a href="javascript:void(0);" id="btnOptions" >Manage Configuration<span style="font-size:16px;" class="pull-right hidden-xs showopacity fa fa-cog"></span></a></li>
+					</ul>
+				</div>
+			</div>
+		</nav>
 	<div id="mainView">
 		<div id="dvMessage" class="hidden alert alert-danger" role="alert"></div>
 		<div class="content"></div>
@@ -53,8 +59,37 @@
 		$("#dvMessage").removeClass("hidden");
 	})
 	
+
+
+	function htmlbodyHeightUpdate(){
+		var height3 = $( window ).height()
+		var height1 = $('.nav').height()+50
+		height2 = $('.main').height()
+		if(height2 > height3){
+			$('html').height(Math.max(height1,height3,height2)+10);
+			$('body').height(Math.max(height1,height3,height2)+10);
+		}
+		else
+		{
+			$('html').height(Math.max(height1,height3,height2));
+			$('body').height(Math.max(height1,height3,height2));
+		}
+		
+	}
+	$(document).ready(function () {
+		htmlbodyHeightUpdate()
+		$( window ).resize(function() {
+			htmlbodyHeightUpdate()
+		});
+		$( window ).scroll(function() {
+			height2 = $('.main').height()
+  			htmlbodyHeightUpdate()
+		});
+	});
+
     $(document).ready(function () {
 		$(".content").load( "home.html" );
+		$("#btnHome").click(function () { $(".content").load( "home.html" ); });
         $("#btnCreatePlugin").click(function () { $(".content").load( "templating.html" ); });
         $("#btnCoreSaffolding").click(function () { $(".content").load( "corescaffolding.html" ); });
 		$("#btnOptions").click(function () { $(".content").load( "options.html" ); });

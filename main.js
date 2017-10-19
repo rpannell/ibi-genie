@@ -53,7 +53,7 @@ function initialize() {
             minWidth: 600,
             height: 968,
             title: "Genie",
-            icon: path.join(__dirname, '/images/favicon.ico')
+            icon: path.join(__dirname, '/assets/img/favicon.ico')
         };
         mainWindow = new BrowserWindow(windowOptions)
         mainWindow.loadURL(url.format({
