@@ -26,8 +26,12 @@
 			<h5 id="btnPlugins" class="navigation-category"><i class="navigation-icon fa fa-plug" aria-hidden="true"></i>Plugin/Application Registration</h5>
 		</div>
 		<div class="navigation-item">
+			<h5 id="btnCustomRoute" class="navigation-category"><i class="navigation-icon fa fa-map-signs" aria-hidden="true"></i>Custom Routes</h5>
+		</div>
+		<div class="navigation-item">
 			<h5 id="btnOptions" class="navigation-category"><i class="navigation-icon fa fa-cog" aria-hidden="true"></i>Manage Configuration</h5>
 		</div>
+
 	</nav>
 	<div id="mainView">
 		<div id="dvMessage" class="hidden alert alert-danger" role="alert"></div>
@@ -55,6 +59,7 @@
         $("#btnCoreSaffolding").click(function () { $(".content").load( "corescaffolding.html" ); });
 		$("#btnOptions").click(function () { $(".content").load( "options.html" ); });
 		$("#btnPlugins").click(function () { $(".content").load( "plugins.html" ); });
+		$("#btnCustomRoute").click(function () { $(".content").load( "ContentFiles/CustomRoute.html" ); });
     });
 </script>
 
