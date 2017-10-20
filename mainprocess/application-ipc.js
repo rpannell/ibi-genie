@@ -13,6 +13,27 @@ ipcMain.on('update-config', (event, arg) => {
     event.returnValue = 'saved';
 });
 
+ipcMain.on('run-extended', (event, arg) => {
+	try{
+		yeomanEnv.lookup(() => {
+			yeomanEnv.run('ibi-appframework:ExtendWebApiService', { 'entityname': 		arg.EntityName, 
+																	'functionname': 	arg.FunctionName, 
+																	'serviceLocation': 	arg.ServiceLocation,
+																	'pluginLocation': 	arg.PluginLocation,
+																	'functionInfo': 	arg.FunctionInfo,
+																	'isList': 			arg.ReturnsList,
+																	'isPost': 			arg.IsPost,
+																	'force': 			true 
+																}, err => { 
+																	console.log(err);
+				event.sender.send('run-extended-reply', err);
+			});
+		});
+	} catch (err){
+		console.log(err);
+	}
+});
+
 ipcMain.on('run-templates', (event, arg) => {
 	
 	if(arg.StandardPlugin) {
@@ -166,4 +187,15 @@ ipcMain.on('get-folder-from-file', (event, arg) => {
 						 arg.Name, 
 						 arg.File);
 	event.returnValue = path.dirname(file);
+});
+
+ipcMain.on('get-entities-from-service', (event, arg) => {
+	var file = path.join(arg.SourceLocation, "Entities","Base");
+	var files = glob.sync(path.join(file, "*.cs"));
+	for(var i = 0; i < files.length; i++){
+		files[i] = files[i].replace(new RegExp("/", 'g'), "\\")
+		files[i] = files[i].replace(file + "\\", "");
+		files[i] = files[i].replace(".cs", "");
+	}
+	event.returnValue = files;
 });

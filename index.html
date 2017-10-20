@@ -13,6 +13,7 @@
 	<link href="./assets/xeditable/xeditable.css" rel="stylesheet"/>
 </head>
 <body>
+
 	<nav class="navbar navbar-inverse sidebar" role="navigation">
 			<div class="container-fluid">
 				<!-- Brand and toggle get grouped for better mobile display -->
@@ -34,6 +35,7 @@
 						<li ><a href="javascript:void(0);" id="btnCreatePlugin">New Plugin/Service<span style="font-size:16px;" class="pull-right hidden-xs showopacity fa fa-plug"></span></a></li>
 						<li ><a href="javascript:void(0);" id="btnCoreSaffolding">Entity Scaffolding<span style="font-size:16px;" class="pull-right hidden-xs showopacity fa fa-database"></span></a></li>
 						<li><a href="javascript:void(0);"id="btnPlugins" >Plugin/Application Registration<span style="font-size:16px;" class="pull-right hidden-xs showopacity fa fa-upload"></span></a></li>
+						<li><a href="javascript:void(0);"id="btnCustomRoute" >Custom Routes<span style="font-size:16px;" class="pull-right hidden-xs showopacity fa fa-map-signs"></span></a></li>
 						<li ><a href="javascript:void(0);" id="btnOptions" >Manage Configuration<span style="font-size:16px;" class="pull-right hidden-xs showopacity fa fa-cog"></span></a></li>
 					</ul>
 				</div>
@@ -96,6 +98,7 @@
         $("#btnCoreSaffolding").click(function () { $(".content").load( "corescaffolding.html" ); });
 		$("#btnOptions").click(function () { $(".content").load( "options.html" ); });
 		$("#btnPlugins").click(function () { $(".content").load( "plugins.html" ); });
+		$("#btnCustomRoute").click(function () { $(".content").load( "ContentFiles/CustomRoute.html" ); });
     });
 </script>
 

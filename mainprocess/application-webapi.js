@@ -148,8 +148,7 @@ webApi.post('/GetTables', function (req, res) {
     var db = req.body.DatabaseName;
     mssql.close();
     mssql.connect(config).then(pool => {
-        return pool.request()
-            .query("SELECT TABLE_SCHEMA + '.' + TABLE_NAME AS TableName FROM " + db + ".INFORMATION_SCHEMA.TABLES WHERE TABLE_CATALOG='" + db + "' UNION SELECT TABLE_SCHEMA + '.' + TABLE_NAME AS TableName FROM " + db + ".INFORMATION_SCHEMA.VIEWS WHERE TABLE_CATALOG='" + db + "' ORDER BY TableName");
+        return pool.request().query("SELECT TABLE_SCHEMA + '.' + TABLE_NAME AS TableName FROM " + db + ".INFORMATION_SCHEMA.TABLES WHERE TABLE_CATALOG='" + db + "' UNION SELECT TABLE_SCHEMA + '.' + TABLE_NAME AS TableName FROM " + db + ".INFORMATION_SCHEMA.VIEWS WHERE TABLE_CATALOG='" + db + "' ORDER BY TableName");
     }).then(result => {
         res.send(result.recordset);
     }).catch(err => {

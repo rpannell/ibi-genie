@@ -1,0 +1,87 @@
+<div class="row hidden" id="dvAlert">
+    <div class="col-xs-12">
+        <div class="alert alert-danger" role="alert">
+            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>&nbsp;&nbsp;The configuration isn't correct for this functionality. Please go and update the configuration
+            to ensure there is a valid source control location before continuing.</div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-10">
+        <h3>Create a custom route</h3>
+    </div>
+    <div class="col-xs-2">
+        <button type="button" id="btnTemplateOptions" class="btn btn-default pull-right">
+            <i class="fa fa-cog"></i>
+        </button>
+    </div>
+</div>
+<form class="form-horizontal" id="frmExtend" method="post" enctype="multipart/form-data" novalidate="novalidate">
+    <div class="form-group">
+        <label class="col-xs-3 control-label">Current Service:</label>
+        <div class="col-xs-9" id="lblCurrentService"></div>
+    </div>
+    <div class="form-group">
+        <label class="col-xs-3 control-label">Service Location:</label>
+        <div class="col-xs-9" id="lblCodeLocation"></div>
+    </div>
+    <div class="form-group plugininfo hidden">
+        <label class="col-xs-3 control-label">Plugin Location:</label>
+        <div class="col-xs-9" id="lblPluginLocation"></div>
+    </div>
+    <div class="form-group appinfo hidden">
+        <label class="col-xs-3 control-label">Application Location:</label>
+        <div class="col-xs-9" id="lblApplication"></div>
+    </div>
+    <div class="form-group">
+        <label class="col-xs-3 control-label">Current Entities:</label>
+        <div class="col-xs-9">
+            <select class="form-control" id="dlEntities">
+                <option value="">--Select Entity--</option>
+            </select>
+        </div>
+    </div>
+    <div id="dvEntityAction" class="hidden">
+        <div class="form-group">
+            <label class="col-xs-3 control-label">Type of Action:</label>
+            <div class="col-xs-3">
+                <select class="form-control" id="dlAction">
+                    <option value="get">GET</option>
+                    <option value="post">POST</option>
+                </select>
+            </div>
+            <label class="col-xs-3 control-label">Returns:</label>
+            <div class="col-xs-3">
+                <select class="form-control" id="dlReturn">
+                    <option value="single">Single Entity</option>
+                    <option value="list">List of Entities</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <div id="dvEntityParameters" class="hidden">
+        <div class="form-group">
+            <label class="col-xs-3 control-label">Function Name:</label>
+            <div class="col-xs-9">
+                <input type="text" class="form-control" id="txtFunctionName" name="txtFunctionName"/>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-xs-12">
+                <button type="button" class="btn btn-success pull-right" id="btnPlus"><i class="fa fa-plus" />&nbsp;&nbsp;Add URL Parameter</button>
+            </div>
+        </div>
+        <div class="col-xs-12">
+            <div class="list-group" id="lgItems"></div>
+        </div>
+    </div>
+    <div class="col-xs-12">
+        <button type="submit" id="btnSubmit" class="btn btn-primary pull-right">Add</button>
+        <button type="button" id="btnCancel" class="btn btn-default pull-right">Cancel</button>
+    </div>
+</form>
+<script>
+    // You can also require other files to run in this process
+    delete require.cache[require.resolve('./assets/customroute')]
+    require('./assets/customroute');
+</script>

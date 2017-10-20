@@ -88,7 +88,10 @@ pluginRouter.post('/', function (req, res) {
 	mssql.close();
 	mssql.connect(config).then(pool => {
 		return pool.request().query(query);
-	}).then(result => { cacheController.removeAllPlugins();  res.send(""); })
+	}).then(result => { 
+		console.log(result); 
+		cacheController.removeAllPlugins(); 
+		res.send(result); })
 	  .catch(err => { res.send(""); })
 });
 
