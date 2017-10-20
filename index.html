@@ -6,7 +6,9 @@
 	<!-- <link rel="stylesheet" href="assets/css/nav.css"> -->
     <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.css" />
     <link rel="stylesheet" href="node_modules/bootstrap-table/dist/bootstrap-table.css" />
-    <link rel="stylesheet" href="node_modules/font-awesome/css/font-awesome.css" />
+	<link rel="stylesheet" href="node_modules/font-awesome/css/font-awesome.css" />
+	<link rel="stylesheet" href="node_modules/materialize-css/dist/css/materialize.css" />
+	
     <link rel="stylesheet" href="content/css/Site.css" />
 	<link href="./assets/xeditable/xeditable.css" rel="stylesheet"/>
 </head>
@@ -29,7 +31,7 @@
 				<div class="collapse navbar-collapse" id="bs-sidebar-navbar-collapse-1">
 					<ul class="nav navbar-nav">
 						<li class="active"><a href="javascript:void(0);" id="btnHome">Home<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-home"></span></a></li>
-						<li ><a href="javascript:void(0);" id="btnCreatePlugin">New Plugins/Services<span style="font-size:16px;" class="pull-right hidden-xs showopacity fa fa-plug"></span></a></li>
+						<li ><a href="javascript:void(0);" id="btnCreatePlugin">New Plugin/Service<span style="font-size:16px;" class="pull-right hidden-xs showopacity fa fa-plug"></span></a></li>
 						<li ><a href="javascript:void(0);" id="btnCoreSaffolding">Entity Scaffolding<span style="font-size:16px;" class="pull-right hidden-xs showopacity fa fa-database"></span></a></li>
 						<li><a href="javascript:void(0);"id="btnPlugins" >Plugin/Application Registration<span style="font-size:16px;" class="pull-right hidden-xs showopacity fa fa-upload"></span></a></li>
 						<li ><a href="javascript:void(0);" id="btnOptions" >Manage Configuration<span style="font-size:16px;" class="pull-right hidden-xs showopacity fa fa-cog"></span></a></li>
@@ -51,7 +53,9 @@
     require('bootstrap-table');
 	require('./assets/xeditable/xeditable');
 	require('./assets/js/bootstrapeditable');
-	
+	require('hammerjs');
+	require('materialize-css');
+
 	require('electron').ipcRenderer.on('message', function(event, text) {
 		$("#dvMessage").html(text);
 		$("#dvMessage").removeClass("hidden");

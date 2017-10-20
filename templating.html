@@ -4,96 +4,125 @@
 	</div>
 </div>
 <div class="row">
-	<div class="col-xs-10"><h3>Plugin Source Creator</h3></div>
+	<div class="col-xs-10"><h4><span class="fa fa-plug" style="font-size: xx-large;margin-right: 10px;"></span>New Plugin/Service <small>Generate a the source code to begin developing your Plugin/Service.</small></h4></div>
 	<div class="col-xs-2"><button type="button" id="btnTemplateOptions" class="btn btn-default pull-right"><i class="fa fa-cog"></i></button></div>
 </div>
+<div class="card-panel hoverable">
+		
 	<div class="form-group">
         <div class="col-xs-12 col-xs-3 control-label">Source Code Location:</div>
         <div class="col-xs-12 col-xs-9">
 			<label id="lblSourceLocation"></label>
         </div>
-    </div>
+	</div>
+	
+	</div>
+	<div class="card-panel hoverable">
+			
 	<form id="frmTemplating" method="post" enctype="multipart/form-data" novalidate="novalidate" >
-		<div class="form-group">
-			<div class="col-xs-12 col-md-3 control-label">Name of Plugin/Service:</div>
-			<div class="col-xs-12 col-md-9">
-				<input type="text" class="form-control" id="txtName" name="txtName" />
-				<!-- <label class="error" for="txtName">Name is required</label> -->
+		<div class="container">
+			<div class="input-field col s6">
+				<input  id="txtName" type="text" class="validate">
+				<label for="txtName">Plugin/Service Name</label>
 			</div>
-		</div>
-		<div class="form-group">
-			<div class="col-xs-6 control-label">Plugin:</div>
-			<div class="col-xs-6 control-label">Service:</div>
-			<div class="col-xs-6">
-				<div class="radio">
-					<label>
-						<input type="radio" name="pluginType" id="standardPlugin" value="sp" /> Plugin
-					</label>
-				</div>
-				<div class="radio">
-					<label>
-						<input type="radio" name="pluginType" id="standardApplication" value="app" /> Application
-					</label>
-				</div>
-				<div class="radio">
-					<label>
-						<input type="radio" name="pluginType" value="NA" checked="checked" />N/A
-					</label>
-				</div>
+
+		  <div class="form-group">
+			  <div class="col-xs-6">
+				<h5>Plugin Type</h5>
+				<p>
+				<input class="with-gap" type="radio" name="pluginType" id="standardPlugin" value="sp" /> 
+				<label for="standardPlugin">Plugin</label>
+				
+				</p>
+				<p>
+				<input class="with-gap" type="radio" name="pluginType" id="standardApplication" value="app" /> 
+				<label for="standardApplication">Application</label>
+				
+				</p>
+				<p>
+				<input class="with-gap" type="radio" name="pluginType" value="NA" checked="checked" id="naPlug" />
+				<label for="naPlug">N/A</label>
+				
+				</p>
 			</div>
 			<div class="col-xs-6">
-				<div class="radio">
-					<label>
-						<input type="radio" name="serviceType" id="standardService" value="ss" /> Entity Framework Service
-					</label>
-				</div>
-				<!-- <div class="radio"> -->
-					<!-- <label> -->
-						<!-- <input type="radio" name="serviceType" id="coreService" value="cs" /> Core Service -->
-					<!-- </label> -->
-				<!-- </div> -->
-				<div class="radio">
-					<label>
-						<input type="radio" name="serviceType" value="NA" checked="checked" />N/A
-					</label>
-				</div>
+		        <h5>Service Type</h5>
+				<p>
+				<input class="with-gap" type="radio" name="serviceType" id="standardService" value="ss" /> 
+				<label for="standardService">Entity Framework Service</label>
+				
+				</p>
+				<p>
+				<input class="with-gap" type="radio" name="serviceType" value="NA" checked="checked" id="naService" />
+				<label for="naService">N/A</label>
+				
+				</p>
 			</div>
 		</div>
-		<div class="form-group"><div class="row"><div class="col-xs-12"><hr /></div></div></div>
+		<div class="col-xs-12"><hr /></div>
+
 		<div class="form-group">
 			<div class="col-xs-6 ">
 				<div class="row hidden dvPluginInfo">
-					<div class="col-xs-12 col-md-6 control-label">Plugin/Application Info:</div>
-					<div class="col-xs-12">Web Service URL</div>
-					<div class="col-xs-12"><input type="text" class="form-control" id="txtWebServiceURL" name="txtWebServiceURL" value="http://localhost:63143/" /></div>
-					<div class="col-xs-12">Test Web Service URL</div>
-					<div class="col-xs-12"><input type="text" class="form-control" id="txtTestWebServiceURL" name="txtTestWebServiceURL" value="http://webservices2.interlinebrands.com:8906/" /></div>
-					<div class="col-xs-12">Production Web Service URL</div>
-					<div class="col-xs-12"><input type="text" class="form-control" id="txtProdWebServiceURL" name="txtProdWebServiceURL" value="http://webservices2.interlinebrands.com:8906/" /></div>
+						<h5>Plugin/Application Info</h5>
+						
+					<div class="input-field col s12">
+							<input  id="txtWebServiceURL" name="txtWebServiceURL" value="http://localhost:63143/" type="text" class="validate">
+							<label class="active" for="txtWebServiceURL">Web Service URL</label>
+					</div>
+					<div class="input-field col s12">
+							<input  id="txtTestWebServiceURL" name="txtTestWebServiceURL" value="http://webservices2.interlinebrands.com:8906/" type="text" class="validate">
+							<label class="active" for="txtTestWebServiceURL">Test Web Service URL</label>
+					</div>
+					<div class="input-field col s12">
+							<input  id="txtProdWebServiceURL" name="txtProdWebServiceURL" value="http://webservices2.interlinebrands.com:8906/" type="text" class="validate">
+							<label class="active" for="txtProdWebServiceURL">Production Web Service URL</label>
+					</div>
 				</div>
 			</div>
 			<div class="col-xs-6 ">
 				<div class="row hidden dvSericeInfo">
-					<div class="col-xs-12 control-label">Service Info:</div>
-					<div class="col-xs-12">Database Name</div>
-					<div class="col-xs-12"><input type="text" class="form-control" id="txtDatabaseName" name="txtDatabaseName" /></div>
-					<div class="col-xs-12">Database Server</div>
-					<div class="col-xs-12"><input type="text" class="form-control" id="txtDatabaesServer" name="txtDatabaesServer" value="jaxdwdv01" /></div>
-					<div class="col-xs-12">Database User</div>
-					<div class="col-xs-12"><input type="text" class="form-control" id="txtDatabaseUser" name="txtDatabaseUser" value="Dwsvc"  /></div>
-					<div class="col-xs-12">Database Password</div>
-					<div class="col-xs-12"><input type="text" class="form-control" id="txtDatabasePassword" name="txtDatabasePassword" value="Pass@word1"  /></div>
-					<div class="col-xs-12">Production Database Server</div>
-					<div class="col-xs-12"><input type="text" class="form-control" id="txtProdDatabaesServer" name="txtProdDatabaesServer" value="SQL02P"  /></div>
-					<div class="col-xs-12">Production Database User</div>
-					<div class="col-xs-12"><input type="text" class="form-control" id="txtProdDatabaseUser" name="txtProdDatabaseUser" value="Dwsvc"  /></div>
-					<div class="col-xs-12">Production Database Password</div>
-					<div class="col-xs-12"><input type="text" class="form-control" id="txtProdDatabasePassword" name="txtProdDatabasePassword" value="Pass@word1"   /></div>
+					<h5>Service Info</h5>
+					<div class="input-field col s12">
+						<input id="txtDatabaseName" name="txtDatabaseName" type="text" class="validate">
+						<label for="txtDatabaseName">Database Name</label>
+					</div>
+					<div class="input-field col s12">
+						<input id="txtDatabaseServer" name="txtDatabaesServer" value="jaxdwdv01" type="text" class="validate">
+						<label class="active" for="txtDatabaseServer">Database Server</label>
+					</div>
+				
+					<div class="input-field col s12">
+						<input id="txtDatabaseUser" name="txtDatabaseUser" value="Dwsvc" type="text" class="validate">
+						<label class="active" for="txtDatabaseUser">Database User</label>
+					</div>
+
+					<div class="input-field col s12">
+						<input id="txtDatabasePassword" name="txtDatabasePassword" value="Pass@word1" type="text" class="validate">
+						<label class="active" for="txtDatabasePassword">Database Password</label>
+					</div>
+				
+					<div class="input-field col s12">
+						<input id="txtProdDatabaesServer" name="txtProdDatabaesServer" value="SQL02P" type="text" class="validate">
+						<label class="active" for="txtProdDatabaesServer">Production Database Server</label>
+					</div>
+				
+					<div class="input-field col s12">
+						<input id="txtProdDatabaseUser" name="txtProdDatabaseUser" value="Dwsvc" type="text" class="validate">
+						<label class="active" for="txtProdDatabaseUser">Production Database User</label>
+					</div>
+				
+					<div class="input-field col s12">
+						<input id="txtProdDatabasePassword" name="txtProdDatabasePassword" value="Pass@word1" type="text" class="validate">
+						<label class="active" for="txtProdDatabasePassword">Production Database Password</label>
+					</div>
+				
 				</div>
 			</div>
 			
 		</div>
-		<div class="form-group"><div class="row"><div class="col-xs-12"><hr /></div></div></div>
+		
+		<div class="col-xs-12"><hr /></div>
 		<div class="form-group">
 			<div class="row">
 				<div class="col-xs-2 col-xs-offset-8"><button type="button" class="btn btn-primary pull-right" id="btnCancel">Cancel</button></div>
@@ -103,7 +132,10 @@
 				</div>
 			</div>
 		</div>
+		
+		
 	</form>
+
 <script>
     // You can also require other files to run in this process
 	delete require.cache[require.resolve('./assets/templating')]
