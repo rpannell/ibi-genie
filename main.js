@@ -65,7 +65,7 @@ function initialize() {
         mainWindow.on('closed', function () {
             mainWindow = null
         })
-		mainWindow.maximize();
+		//mainWindow.maximize();
 		autoUpdater.checkForUpdates();
 	});
     app.on('window-all-closed', function () {

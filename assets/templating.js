@@ -49,7 +49,7 @@ function SetupValidation(){
 		standardServiceDataRequired: true,
 		messages: { standardServiceDataRequired: "The name of the database is required"}
 	});
-	$( "#txtDatabaesServer" ).rules( "add", {
+	$( "#txtDatabaseServer" ).rules( "add", {
 		standardServiceDataRequired: true,
 		messages: { standardServiceDataRequired: "The development database server is required"}
 	});
@@ -126,7 +126,7 @@ $(document).ready(function () {
 				webServiceTestUrl: $("#txtTestWebServiceURL").val(),
 				webServiceProdUrl: $("#txtProdWebServiceURL").val(),
 				DatabaseName: $("#txtDatabaseName").val(),
-				DatabaseServer: $("#txtDatabaesServer").val(),
+				DatabaseServer: $("#txtDatabaseServer").val(),
 				DatabaseUser: $("#txtDatabaseUser").val(),
 				DatabasePassword: $("#txtDatabasePassword").val(),
 				DatabaseProdServer: $("#txtProdDatabaesServer").val(),
