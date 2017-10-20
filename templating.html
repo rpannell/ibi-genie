@@ -44,27 +44,9 @@
 				<label for="naPlug">N/A</label>
 				
 				</p>
-			</div>
-			<div class="col-xs-6">
-		        <h5>Service Type</h5>
-				<p>
-				<input class="with-gap" type="radio" name="serviceType" id="standardService" value="ss" /> 
-				<label for="standardService">Entity Framework Service</label>
-				
-				</p>
-				<p>
-				<input class="with-gap" type="radio" name="serviceType" value="NA" checked="checked" id="naService" />
-				<label for="naService">N/A</label>
-				
-				</p>
-			</div>
-		</div>
-		<div class="col-xs-12"><hr /></div>
-
-		<div class="form-group">
-			<div class="col-xs-6 ">
 				<div class="row hidden dvPluginInfo">
-						<h5>Plugin/Application Info</h5>
+						<div class="col-xs-12"><hr /></div>
+						<h5>Plugin Config</h5>
 						
 					<div class="input-field col s12">
 							<input  id="txtWebServiceURL" name="txtWebServiceURL" value="http://localhost:63143/" type="text" class="validate">
@@ -80,9 +62,23 @@
 					</div>
 				</div>
 			</div>
-			<div class="col-xs-6 ">
+			<div class="col-xs-6">
+		        <h5>Service Type</h5>
+				<p>
+				<input class="with-gap" type="radio" name="serviceType" id="standardService" value="ss" /> 
+				<label for="standardService">Entity Framework Service</label>
+				
+				</p>
+				<p>
+				<input class="with-gap" type="radio" name="serviceType" value="NA" checked="checked" id="naService" />
+				<label for="naService">N/A</label>
+				
+				</p>
+				<br>
+				<br>
 				<div class="row hidden dvSericeInfo">
-					<h5>Service Info</h5>
+						<div class="col-xs-12"><hr /></div>
+					<h5>Service Config</h5>
 					<div class="input-field col s12">
 						<input id="txtDatabaseName" name="txtDatabaseName" type="text" class="validate">
 						<label for="txtDatabaseName">Database Name</label>
@@ -119,17 +115,18 @@
 				
 				</div>
 			</div>
-			
 		</div>
+	
+
+	
 		
 		<div class="col-xs-12"><hr /></div>
 		<div class="form-group">
-			<div class="row">
-				<div class="col-xs-2 col-xs-offset-8"><button type="button" class="btn btn-primary pull-right" id="btnCancel">Cancel</button></div>
-				<div class="col-xs-2">
-					<button type="submit" class="btn btn-success pull-right" id="btnCreate">Create Code</button>
-					
+			<div class="col-xs-12">
+				<div>
+					<button type="submit" class="btn btn-success pull-right" style="margin-left:20px;" id="btnCreate">Create Code</button>	
 				</div>
+				<div><button type="button" class="btn btn-primary pull-right" id="btnCancel">Cancel</button></div>
 			</div>
 		</div>
 		
