@@ -6,15 +6,10 @@
     </div>
 </div>
 <div class="row">
-    <div class="col-xs-10">
-        <h3>Create a custom route</h3>
-    </div>
-    <div class="col-xs-2">
-        <button type="button" id="btnTemplateOptions" class="btn btn-default pull-right">
-            <i class="fa fa-cog"></i>
-        </button>
-    </div>
-</div>
+		<div class="col-xs-10"><h4><span class="fa fa-road" style="font-size: xx-large;margin-right: 10px;"></span>Create a custom route</h4></div>
+		<div class="col-xs-2"><button type="button" id="btnTemplateOptions" class="btn btn-default pull-right"><i class="fa fa-cog"></i></button></div>
+	</div>
+<div class="card-panel hoverable">
 <form class="form-horizontal" id="frmExtend" method="post" enctype="multipart/form-data" novalidate="novalidate">
     <div class="form-group">
         <label class="col-xs-3 control-label">Current Service:</label>
@@ -75,11 +70,14 @@
             <div class="list-group" id="lgItems"></div>
         </div>
     </div>
-    <div class="col-xs-12">
-        <button type="submit" id="btnSubmit" class="btn btn-primary pull-right">Add</button>
+    <div class="row">
+    <div class="col s12">
+        <button type="submit" id="btnSubmit" class="btn btn-primary pull-right" style="margin-left:10px;">Add</button>
         <button type="button" id="btnCancel" class="btn btn-default pull-right">Cancel</button>
     </div>
+</div>
 </form>
+</div>
 <script>
     // You can also require other files to run in this process
     delete require.cache[require.resolve('./assets/customroute')]

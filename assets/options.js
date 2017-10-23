@@ -12,12 +12,13 @@ function ShowBranchSelection(projFiles, isPlugin, name, isApplication){
 	if(projFiles != undefined && projFiles != null && projFiles.length > 0){
 		for(var i = 0; i < projFiles.length; i++){
 			var projfile = projFiles[i];
-			$("#rdBranch").append("<div class=\"radio\"><label><input type=\"radio\" name=\"branchType\" value=\"" + projfile + "\" " +  (projfile.includes("Trunk") ? "checked=checked" : "")  + "/>" + projfile + "</label></div>");
+			$("#rdBranch").append("<p><input class=\"with-gap\" type=\"radio\" name=\"branchType\" id=\"Branch_"+i+ "\" value=\"" + projfile + "\" " +  (projfile.includes("Trunk") ? "checked=checked" : "")  + "/><label for=\"Branch_"+i+"\">" + projfile + "</label></p>");
+			//$("#rdBranch").append("<div class=\"radio\"><label><input type=\"radio\" name=\"branchType\" value=\"" + projfile + "\" " +  (projfile.includes("Trunk") ? "checked=checked" : "")  + "/>" + projfile + "</label></div>");			
 		}
 		if(projFiles.length == 1){
 			SetFolder(isPlugin, isApplication);
 		} else {
-			$('#mdlRadioSelection').modal('show');
+			$('#mdlRadioSelection').modal('open');
 		}
 	}
 }
@@ -36,7 +37,7 @@ function SetFolder(isPlugin,isApplication){
 	} else {
 		$("#lblServiceBranch").html(folder);
 	}
-	$('#mdlRadioSelection').modal('hide');
+	$('#mdlRadioSelection').modal('close');
 	console.log(folder);
 }
 
@@ -156,7 +157,9 @@ $(document).ready(function () {
 	
 	
 	$("#btnCancel").click(function(){
-		$('#mdlRadioSelection').modal('hide');
+		$('#mdlRadioSelection').modal('close');
 		$("#rdBranch").empty();
 	});
+
+	$('.modal').modal();
 });

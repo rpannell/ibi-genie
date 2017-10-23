@@ -26,15 +26,18 @@ function ucFirstAllWords( str )
 }
 
 function LoadDatabases(currentServiceData){
-	if($('#dlDatabase option').length == 0){
+	if($('#dlDatabase option').length == 1){
 		jQuery.get("http://localhost:3000/", function (data) {
 			for (var i = 0; i < data.length; i++) {
 				$("#dlDatabase").append($("<option></option>").attr("value", data[i].DatabaseName).text(data[i].DatabaseName));
 			}
+			$('select').material_select();
+			
 			//set the value to the current value from the current service data
 			if(currentServiceData != undefined && currentServiceData != null && currentServiceData.DatabaseName != undefined && currentServiceData.DatabaseName != null && currentServiceData.DatabaseName != ""){
 				$("#dlDatabase").val(currentServiceData.DatabaseName);
 				LoadTables();
+
 			}
 		});
 	}
@@ -42,7 +45,7 @@ function LoadDatabases(currentServiceData){
 
 function LoadTables(){
 	$("#dlTable").empty();
-	$("#dlTable").append($("<option></option>").attr("value", "").text("-- Select Table --"));
+//	$("#dlTable").append($("<option></option>").attr("value", "").text("-- Select Table --"));
 	jQuery.ajax({
 		type: "POST",
 		url: "http://localhost:3000/GetTables",
@@ -54,6 +57,8 @@ function LoadTables(){
 				$("#dlTable").append($("<option></option>").attr("value", data[i].TableName).text(data[i].TableName));
 			}
 			$("#dvTables").removeClass("hidden")
+			$('select').material_select();
+			
 		},
 		traditional: true
 	});
@@ -187,7 +192,7 @@ $(document).ready(function () {
 	
 	$("#btnScaffoldOptions").click(function () { $(".content").load( "options.html" ); });
 	$("#btnAddEntity").click(function(){
-		$('#mdlAdd').modal('show')
+		$('#mdlAdd').modal('open')
 		LoadDatabases(currentServiceData);
 	});
 	
@@ -200,6 +205,7 @@ $(document).ready(function () {
 		$("#hdSchema").val(databaseTableName[0]);
 		$("#hdTableName").val(databaseTableName[1]);
 		$("#txtEntityName").val(ucFirstAllWords(databaseTableName[1]));
+		Materialize.updateTextFields();
 			
 	});
 	
@@ -251,7 +257,7 @@ $(document).ready(function () {
 	
 	$("#btnCancel").click(function(){
 		ClearEntityInfo();
-		$('#mdlAdd').modal('hide')
+		$('#mdlAdd').modal('close')
 	});
 	
 	$("#btnAddNewEntity").click(function(){
@@ -273,15 +279,27 @@ $(document).ready(function () {
 		entityInfo.push(tableInfo);
 		$('#table').bootstrapTable('load', entityInfo);
 		ClearEntityInfo();
-		$('#mdlAdd').modal('hide')
+		$('#mdlAdd').modal('close');
+			$('.dropdown-button').dropdown({
+				inDuration: 300,
+				outDuration: 225,
+				constrainWidth: true, // Does not change width of dropdown to that of the activator
+				hover: false, // Activate on hover
+				gutter: 0, // Spacing from edge
+				belowOrigin: true, // Displays dropdown below the button
+				alignment: 'left', // Displays dropdown with edge aligned to the left of button
+				stopPropagation: false // Stops event propagation
+			  });
+	
+		
 	});
 	
 	$("#btnWriteScaffolding").click(function(){
-		$("#mdlConfirm").modal('show')
+		$("#mdlConfirm").modal('open')
 	});
 	
 	$("#btnOk").click(function(){
-		$("#mdlConfirm").modal('hide');
+		$('#mdlConfirm').modal('close');
 		var answer = ""
 		var data = entityInfo;
 		var args = {
@@ -326,4 +344,21 @@ $(document).ready(function () {
 		}
 	});
 	
+	
+
+	$('.modal').modal({
+		dismissible: false, // Modal can be dismissed by clicking outside of the modal
+		opacity: .5, // Opacity of modal background
+		inDuration: 300, // Transition in duration
+		outDuration: 200, // Transition out duration
+		startingTop: '4%', // Starting top style attribute
+		endingTop: '10%', // Ending top style attribute
+		ready: function(modal, trigger) { // Callback for Modal open. Modal and trigger parameters available.
+		
+		},
+		complete: function() {
+			
+		} // Callback for Modal close
+	  });
+	  $('select').material_select();
 });

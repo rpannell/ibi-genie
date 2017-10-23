@@ -32,10 +32,10 @@
 				<div class="collapse navbar-collapse" id="bs-sidebar-navbar-collapse-1">
 					<ul class="nav navbar-nav">
 						<li class="active"><a href="javascript:void(0);" id="btnHome">Home<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-home"></span></a></li>
-						<li ><a href="javascript:void(0);" id="btnCreatePlugin">New Plugin/Service<span style="font-size:16px;" class="pull-right hidden-xs showopacity fa fa-plug"></span></a></li>
+						<li ><a href="javascript:void(0);" id="btnCreatePlugin">New Module/Service<span style="font-size:16px;" class="pull-right hidden-xs showopacity fa fa-plug"></span></a></li>
 						<li ><a href="javascript:void(0);" id="btnCoreSaffolding">Entity Scaffolding<span style="font-size:16px;" class="pull-right hidden-xs showopacity fa fa-database"></span></a></li>
-						<li><a href="javascript:void(0);"id="btnPlugins" >Plugin/Application Registration<span style="font-size:16px;" class="pull-right hidden-xs showopacity fa fa-upload"></span></a></li>
-						<li><a href="javascript:void(0);"id="btnCustomRoute" >Custom Routes<span style="font-size:16px;" class="pull-right hidden-xs showopacity fa fa-map-signs"></span></a></li>
+						<li><a href="javascript:void(0);"id="btnPlugins" >Module Registration<span style="font-size:16px;" class="pull-right hidden-xs showopacity fa fa-upload"></span></a></li>
+						<li><a href="javascript:void(0);"id="btnCustomRoute" >Custom Routes<span style="font-size:16px;" class="pull-right hidden-xs showopacity fa fa-road"></span></a></li>
 						<li ><a href="javascript:void(0);" id="btnOptions" >Manage Configuration<span style="font-size:16px;" class="pull-right hidden-xs showopacity fa fa-cog"></span></a></li>
 					</ul>
 				</div>
@@ -51,7 +51,7 @@
     window.$ = window.jQuery = require('jquery');
     require('jquery-migrate');
 	require('jquery-ui');
-    require('bootstrap');
+     require('bootstrap');
     require('bootstrap-table');
 	require('./assets/xeditable/xeditable');
 	require('./assets/js/bootstrapeditable');
@@ -97,8 +97,12 @@
         $("#btnCreatePlugin").click(function () { $(".content").load( "templating.html" ); });
         $("#btnCoreSaffolding").click(function () { $(".content").load( "corescaffolding.html" ); });
 		$("#btnOptions").click(function () { $(".content").load( "options.html" ); });
-		$("#btnPlugins").click(function () { $(".content").load( "plugins.html" ); });
+		$("#btnPlugins").click(function () { $(".content").load( "plugins.html" ); 
+		
+		});
 		$("#btnCustomRoute").click(function () { $(".content").load( "ContentFiles/CustomRoute.html" ); });
+
+
     });
 </script>
 
