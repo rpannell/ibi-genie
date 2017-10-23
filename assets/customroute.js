@@ -64,6 +64,7 @@ function RunTemplate() {
         ReturnsList: $("#dlReturn").val() == "list",
         IsPost: $("#dlAction").val() == "post"
     };
+    console.log(templateParameters);
     ipcRenderer.send('run-extended', templateParameters);
 }
 
@@ -200,6 +201,7 @@ $(document).ready(function () {
     $("#frmExtend").submit(function(event){
 		event.preventDefault();
 		if ($(this).valid()) {
+            console.log("run-template");
             RunTemplate();
             $("#btnSubmit").attr("disabled", "disabled");
 		}

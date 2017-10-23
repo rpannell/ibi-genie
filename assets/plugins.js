@@ -213,7 +213,7 @@ function GetPluginRolesByPluginId(pluginId){
 			for(var i = 0; i < data.length; i++){
 				$("#dvPluginRoles").append("<button data-pluginroleid=\"" + data[i].PluginRoleId + "\" type=\"button\" class=\"editpluginrole list-group-item\">" + data[i].Description + "</button>");
 			}
-			$('#mdlPluginRoleAdd').modal('show');
+			$('#mdlPluginRoleAdd').modal('open');
 		},
 		error: function (error) {
 			console.log("Error:");
@@ -299,7 +299,9 @@ function GetPlugin(pluginId){
 				$("#chkIsExternal").prop('checked', data[0].IsExternal);
 				$("#chkIsShowInHome").prop('checked', data[0].ShowInHome);
 				$("#frmPlugin").validate().resetForm();
-				$('#mdlPluginAdd').modal('show')
+				$('#mdlPluginAdd').modal('open')
+				Materialize.updateTextFields();
+				$('#txtDescription').trigger('autoresize');
 			}
 		},
 		error: function (error) {
@@ -321,7 +323,7 @@ function UpdatePlugin(pluginId){
 		success: function () {
 			ClearPluginInfo();
 			ReloadTable();
-			$('#mdlPluginAdd').modal('hide');
+			$('#mdlPluginAdd').modal('close');
 		},
 		error: function (error) {
 			console.log("Error:");
@@ -340,7 +342,7 @@ function AddPlugin(){
 		success: function () {
 			ClearPluginInfo();
 			ReloadTable();
-			$('#mdlPluginAdd').modal('hide');
+			$('#mdlPluginAdd').modal('close');
 		},
 		error: function (error) {
 			console.log("Error:");
@@ -359,7 +361,7 @@ function AddPluginRole(){
 		data: JSON.stringify(plugindata),
 		success: function () {
 			ClearPluginRoleInfo();
-			$('#mdlPluginRoleAdd').modal('hide');
+			$('#mdlPluginRoleAdd').modal('open');
 		},
 		error: function (error) {
 			console.log("Error:");
@@ -394,10 +396,11 @@ $(document).ready(function () {
 	$("#tblPlugins").bootstrapTable();
 	$("#btnAddPlugin").click(function(){
 		ClearPluginInfo();
-		$('#mdlPluginAdd').modal('show');
+		$('#mdlPluginAdd').modal('open');
+		Materialize.updateTextFields();
 	});	
-	$('[data-toggle="tooltip"]').tooltip();
-	$("#btnPluginOptions").click(function () { $(".content").load( "options.html" ); });
+	$('.tooltipped').tooltip({delay: 50});
+		$("#btnPluginOptions").click(function () { $(".content").load( "options.html" ); });
 	SetupValidation();
 	SetupPluginRoleValidation();
 	ReloadTable();
@@ -423,6 +426,38 @@ $(document).ready(function () {
 	
 	$("#btnCancel").click(function(){
 		ClearPluginInfo();
-		$('#mdlPluginAdd').modal('hide');
+		$('#mdlPluginAdd').modal('close');
 	});
+
+
+	$('#tblPlugins').on('reset-view.bs.table', function (name, args) {
+		$('.dropdown-button').dropdown({
+			inDuration: 300,
+			outDuration: 225,
+			constrainWidth: true, // Does not change width of dropdown to that of the activator
+			hover: false, // Activate on hover
+			gutter: 0, // Spacing from edge
+			belowOrigin: true, // Displays dropdown below the button
+			alignment: 'left', // Displays dropdown with edge aligned to the left of button
+			stopPropagation: false // Stops event propagation
+		  });
+	});
+
+	$('.modal').modal({
+		dismissible: false, // Modal can be dismissed by clicking outside of the modal
+		opacity: .5, // Opacity of modal background
+		inDuration: 300, // Transition in duration
+		outDuration: 200, // Transition out duration
+		startingTop: '4%', // Starting top style attribute
+		endingTop: '10%', // Ending top style attribute
+		ready: function(modal, trigger) { // Callback for Modal open. Modal and trigger parameters available.
+		
+		},
+		complete: function() {
+			
+		} // Callback for Modal close
+	  });
+	   
+
+
 });

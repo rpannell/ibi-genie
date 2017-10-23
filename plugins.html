@@ -4,13 +4,16 @@
 	</div>
 </div>
 <div class="row">
-	<div class="col-xs-10"><h3>Edit Plugin/Application Registrations</h3></div>
-	<div class="col-xs-2"><button type="button" id="btnPluginOptions" class="btn btn-default pull-right"><i class="fa fa-cog"></i></button></div>
-</div>
+		<div class="col-xs-10"><h4><span class="fa fa-upload" style="font-size: xx-large;margin-right: 10px;"></span>Edit/Register Modules</h4></div>
+		<div class="col-xs-2"><button type="button" id="btnPluginOptions" class="btn btn-default pull-right"><i class="fa fa-cog"></i></button></div>
+	</div>
+<div class="card-panel hoverable">
 <div class="row">
 	<div class="col-xs-12">
-		<div id="custom-toolbar">
-			<button id="btnAddPlugin" class="btn btn-default"><i class="fa fa-plus"></i>&nbsp;&nbsp;New</button>
+		<div id="custom-toolbar" style="margin-bottom:10px;">
+			
+  <!-- Modal Trigger -->
+  <button id="btnAddPlugin" class="btn"><i class="fa fa-plus"></i>&nbsp;&nbsp;New</button>
 		</div>
 		<table id="tblPlugins" data-toggle="table" data-show-footer="false" style="min-height: 300px;">
 			<thead>
@@ -26,158 +29,135 @@
 		</table>
 	</div>
 </div>
+</div>
 
-
-<div class="modal fade in" data-backdrop="static" data-keyboard="false" id="mdlPluginRoleAdd">
-	<div class="modal-dialog modal-lg">
+  <!-- Modal Structure -->
+  <div id="mdlPluginRoleAdd" class="modal modal-fixed-footer">
 		<div class="modal-content">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-				<h4 class="modal-title">Roles</h4>
+		  <h4>Roles</h4>
+		  <form class="form-horizontal" id="frmPluginRole" method="post" enctype="multipart/form-data" novalidate="novalidate">
+			<input type="hidden" id="hdPluginRoleId" />
+			<input type="hidden" id="hdPluginRolePluginId" />
+			<div class="row">
+					<div class="input-field col s12">
+							<input id="txtPluginRoleName" name="txtPluginRoleName" type="text" class="tooltipped validate" data-position="bottom" data-delay="50" data-tooltip="Name of the role">
+							<label for="txtPluginRoleName">Role</label>
+							<button type="submit" id="btnAddNewPluginRole" class="btn btn-primary pull-right">Create</button>
+						</div>
 			</div>
+
+			<div class="row">
+				<div class="col-xs-12"><hr /></div>
+				<div class="col-xs-12">
+					<div class="list-group" id="dvPluginRoles"></div>
+				</div>
+			</div>
+		</form>
+		</div>
+		<div class="modal-footer">
+				<a href="javascript:void(0);" class="modal-action modal-close waves-effect waves-red btn-flat ">Ok</a>
+		</div>
+	  </div>
+			  
+
+	<!-- Modal Structure -->
+	<div id="mdlPluginAdd" class="modal modal-fixed-footer">
+		<form class="form-horizontal" id="frmPlugin" method="post" enctype="multipart/form-data" novalidate="novalidate">
+	  <div class="modal-content">
+		  <h4> Register Module</h4>
+			<input type="hidden" id="hdPluginId" />
+				<div class="row">
+						<div class="input-field col s6">
+								<input id="txtPluginName" name="txtPluginName" type="text" class="tooltipped validate" data-position="bottom" data-delay="50" data-tooltip="The Name of the Module">
+								<label for="txtPluginName">Module Name</label>
+							</div>
+							  <div class="input-field col s6">
+									<input id="txtAreaPrefix" type="text" name="txtAreaPrefix" class=" tooltipped validate" data-position="bottom" data-delay="50" data-tooltip="The area of the plugin" >
+									<label for="txtAreaPrefix">Area Prefix</label>
+								</div>
+				</div>
+			 <div class="row">
+					<div class="input-field col s12">
+						<input id="txtDisplayName" name="txtDisplayName" type="text" class="tooltipped validate" data-position="bottom" data-delay="50" data-tooltip="The name displayed on the home page">
+						<label for="txtDisplayName">Display Name</label>
+					</div>
+				</div>
+					<div class="row">
+					<div class="input-field col s12">
+						<textarea id="txtDescription" name="txtDescription" class="tooltipped materialize-textarea" data-position="bottom" data-delay="50" data-tooltip="The description of the Module"></textarea>	
+						<label for="txtDescription">Description</label>
+						
+				</div>
+				<div class="row">
+						<div class="input-field col s6">
+								<input id="txtCssIcon" name="txtCssIcon" type="text" class="tooltipped validate" data-position="bottom" data-delay="50" data-tooltip="The font-awesome icon for the home page">
+								<label for="txtCssIcon">Module Icon</label>
+							  </div>
+							  <div class="input-field col s6">
+									<input id="txtCategory" type="text" name="txtCategory" class=" tooltipped validate" data-position="bottom" data-delay="50" data-tooltip="The category of the plugin" >
+									<label for="txtCategory">Category</label>
+								  </div>
+					</div>
+				</div>
+				<div class="row">
+						<div class="input-field col s6">
+								<input id="txtMainUrl" name="txtMainUrl" type="text" class="tooltipped validate" data-position="bottom" data-delay="50" data-tooltip="The home url of a plugin or the full url of an application">
+								<label for="txtMainUrl">Main Url</label>
+							  </div>
+							  <div class="input-field col s6">
+									<input id="txtTrainingUrl" type="text" name="txtTrainingUrl" class=" tooltipped validate" data-position="bottom" data-delay="50" data-tooltip="The url of the Training Video" >
+									<label for="txtTrainingUrl">Training Url</label>
+								  </div>
+				</div>
+				<div class="row">
+						<div class="input-field col s6">
+								<input id="txtAnonymousRole" name="txtAnonymousRole" type="text" class="tooltipped validate" data-position="bottom" data-delay="50" data-tooltip="The role for anonymous access">
+								<label for="txtAnonymousRole">Anonymous Role</label>
+							</div>
+							  <div class="input-field col s6">
+									<input id="txtOutputDirectory" type="text" name="txtOutputDirectory" class="validate">
+									<label for="txtOutputDirectory">Output Directory</label>
+								</div>
+				</div>
+				<div class="row">
+						<div class="input-field col s6">
+								<input id="txtSortIndex" name="txtSortIndex" type="number" min="1" max="10" step="1"  class="validate">
+								<label for="txtSortIndex">Anonymous Role</label>
+							</div>	
+							<div class="col s3" style="margin-top: 20px;">
+							<input type="checkbox" class="filled-in" id="chkIsExternal" />
+							<label for="chkIsExternal">Is Application</label>
+					</div>
+					<div class="col s3" style="margin-top: 20px;">
+						<input type="checkbox" class="filled-in" id="chkIsShowInHome" />
+						<label for="chkIsShowInHome">Show In Home</label>
+				</div>
+				</div>
 			
-				<div class="modal-body">
-					<form class="form-horizontal" id="frmPluginRole" method="post" enctype="multipart/form-data" novalidate="novalidate">
-						<input type="hidden" id="hdPluginRoleId" />
-						<input type="hidden" id="hdPluginRolePluginId" />
-						<div class="row">
-							<label class="col-xs-12 col-md-2 control-label">Role:</label>
-							<div class="col-xs-12 col-md-10">
-								<input type="text" class="form-control" id="txtPluginRoleName" name="txtPluginRoleName" placeholder="Name of the role" />
-							</div>
-						</div>
-						<div class="row">
-							<div class="col-xs-12 col-md-offset-2 col-md-10">
-								<button type="submit" id="btnAddNewPluginRole" class="btn btn-primary">New</button>
-							</div>
-						</div>
-						<div class="row">
-							<div class="col-xs-12"><hr /></div>
-							<div class="col-xs-12">
-								<div class="list-group" id="dvPluginRoles"></div>
-							</div>
-						</div>
-					</form>
-				</div>
-				<div class="modal-footer">
-					<button type="button" data-dismiss="modal" class="btn btn-default">Ok</button>
-				</div>
-		</div>
+	  </div>
+	  <div class="modal-footer">
+		<a href="javascript:void(0);" id="btnCancel" class="modal-action  waves-effect waves-red btn-flat ">Close</a>
+		<button id="btnAddNewPlugin" type="submit" class="modal-action waves-effect waves-green btn-flat ">Register</button>
+	  </div>	
+	</form>
 	</div>
-</div>
-
-
-<div class="modal fade in" data-backdrop="static" data-keyboard="false" id="mdlPluginAdd">
-	<div class="modal-dialog modal-lg">
-		<div class="modal-content">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-				<h4 class="modal-title">Plugin / Application</h4>
-			</div>
-			<form class="form-horizontal" id="frmPlugin" method="post" enctype="multipart/form-data" novalidate="novalidate">
-				<input type="hidden" id="hdPluginId" />
-				<div class="modal-body">
-					<div class="row">
-						<label class="col-xs-12 col-md-2 control-label">Name:</label>
-						<div class="col-xs-12 col-md-4">
-							<input type="text" class="form-control" id="txtPluginName" name="txtPluginName" data-toggle="tooltip" data-placement="top" title="The Name of the Application or Plugin" placeholder="Name of the Plugin/Application" />
-						</div>
-						<label class="col-xs-12 col-md-2 control-label">Area PreFix:</label>
-						<div class="col-xs-12 col-md-4">
-							<input type="text" class="form-control" id="txtAreaPrefix" name="txtAreaPrefix" placeholder="The area of the plugin" />
-						</div>
-					</div>
-					<div class="row">
-						<label class="col-xs-12 col-md-2 control-label">Display Name:</label>
-						<div class="col-xs-12 col-md-10">
-							<input type="text" class="form-control" id="txtDisplayName" name="txtDisplayName" placeholder="The name displayed on the home page" />
-						</div>
-					</div>
-					<div class="row">
-						<label class="col-xs-12 col-md-2 control-label">Description:</label>
-						<div class="col-xs-12 col-md-10">
-							<textarea rows="5" class="form-control" id="txtDescription" name="txtDescription" placeholder="The description of the plugin/application" />
-						</div>
-					</div>
-					<div class="row">
-						<label class="col-xs-12 col-md-2 control-label">Icon:</label>
-						<div class="col-xs-12 col-md-4">
-							<input type="text" class="form-control" id="txtCssIcon" name="txtCssIcon" placeholder="The font-awesome icon for the home page" />
-						</div>
-						<label class="col-xs-12 col-md-2 control-label">Category:</label>
-						<div class="col-xs-12 col-md-4">
-							<input type="text" class="form-control" id="txtCategory" name="txtCategory" placeholder="The category of the plugin" />
-						</div>
-					</div>
-					<div class="row">
-						<label class="col-xs-12 col-md-2 control-label">Main Url:</label>
-						<div class="col-xs-12 col-md-4">
-							<input type="text" class="form-control" id="txtMainUrl" name="txtMainUrl" placeholder="The home url of a plugin or the full url of an application" />
-						</div>
-						<label class="col-xs-12 col-md-2 control-label">Training Url:</label>
-						<div class="col-xs-12 col-md-4">
-							<input type="text" class="form-control" id="txtTrainingUrl" name="txtTrainingUrl" placeholder="The url of the Training Video" />
-						</div>
-					</div>
-					<div class="row">
-						<label class="col-xs-12 col-md-2 control-label">Anon Role:</label>
-						<div class="col-xs-12 col-md-4">
-							<input type="text" class="form-control" id="txtAnonymousRole" name="txtAnonymousRole" placeholder="The role for anonymous access" />
-						</div>
-						<label class="col-xs-12 col-md-2 control-label">Output Directory:</label>
-						<div class="col-xs-12 col-md-4">
-							<input type="text" class="form-control" id="txtOutputDirectory" name="txtOutputDirectory" placeholder="" />
-						</div>
-					</div>
-					<div class="row">
-						<label class="col-xs-12 col-md-2 control-label">Sort Index:</label>
-						<div class="col-xs-12 col-md-4">
-							<input type="number" class="form-control" id="txtSortIndex" name="txtSortIndex" min="1" max="10" step="1" />
-						</div>
-					</div>
-					<div class="row">
-						<label class="col-xs-12 col-md-2 control-label">Is Application:</label>
-						<div class="col-xs-12 col-md-4">
-							<div class="checkbox">
-								<label>
-									<input type="checkbox" id="chkIsExternal" />
-								</label>
-							</div>
-						</div>
-						<label class="col-xs-12 col-md-2 control-label">Show In Home:</label>
-						<div class="col-xs-12 col-md-4">
-							<div class="checkbox">
-								<label>
-									<input type="checkbox" id="chkIsShowInHome" />
-								</label>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="modal-footer">
-					<button type="button" id="btnCancel" class="btn btn-default">Cancel</button>
-					<button type="submit" id="btnAddNewPlugin" class="btn btn-primary">Add</button>
-				</div>
-			</form>
-		</div>
-	</div>
-</div>
 
 <script>
 // You can also require other files to run in this process
 	function OperateFormatter(value, row, index) {
 		var htmlString = "";
-		htmlString = '<div class="btn-group">' +
-						'<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true">' +
-						'<label>Actions</label><span class="caret"></span></button>' +
-						'<ul class="dropdown-menu dropdown-menu-right" role="menu">' +
-							'<li class="btn_edit"><a>Edit</a></li>' +
-							'<li class="btn_roles"><a>Roles</a></li>' +
-						'</ul>' +
-					'</div>';
-		return [htmlString].join('');
+					htmlString =   '<a class="dropdown-button btn" href="javascript:void(0);"  data-activates="dropdown'+row.PluginId+'"> Actions <span class="caret" style="margin-left:5px;"></span></a>' +
+					  '<ul id="dropdown'+row.PluginId+'"  class="dropdown-content">' +
+						'<li><a class="btn_edit" href="javascript:void(0);">Edit</a></li>'+
+						'<li><a class="btn_roles" href="javascript:void(0);">Roles</a></li>'+
+					 '</ul>'
+						return [htmlString].join('');
+				
+        
 	}
 
 	delete require.cache[require.resolve('./assets/plugins')]
-    require('./assets/plugins');
+	require('./assets/plugins');
+
+
 </script>
