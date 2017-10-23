@@ -43,7 +43,6 @@
     "electron-updater": "^2.14.1",
     "express": "^4.16.2",
     "font-awesome": "^4.7.0",
-    "generator-ibi-appframework": "file:generator-ibi-appframework.tgz",
     "hammerjs": "^2.0.8",
     "jquery": "^3.2.1",
     "jquery-migrate": "^3.0.1",
