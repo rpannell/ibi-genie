@@ -81,10 +81,13 @@
             <h5>Fields</h5>
         </div>
         <div class="col s2">
-            <a class="btn waves-effect waves-light red">
+            <a class="btn waves-effect waves-light red" id="btnAddField">
                 <i class="fa fa-plus right"></i>Add Field</a>
         </div>
-        <div class="col s12" id="tblFields"></div>
+        <div class="col s12" >
+            <ul class="collection" id="tblFields">
+            </ul>
+        </div>
     </div>
     <div id="tbHtml" class="col s12">
         <div class="col s10"></div>
@@ -100,7 +103,36 @@
     </div>
 </div>
 
-
+<!-- Modal Structure -->
+<div id="mdlAddField" class="modal modal-fixed-footer">
+    <div class="modal-content">
+        <h4>Roles</h4>
+        <div class="row">
+            <div class="input-field col s6">
+                <input id="txtFieldName" name="txtFieldName" type="text" class="tooltipped validate" data-position="bottom" data-delay="50"
+                    data-tooltip="Name of the field from the database">
+                <label for="txtFieldName">Field Name</label>
+            </div>
+            <div class="input-field col s6">
+                <input id="txtColumnName" name="txtColumnName" type="text" class="tooltipped validate" data-position="bottom" data-delay="50"
+                    data-tooltip="Name of the column">
+                <label for="txtColumnName">Column Name</label>
+            </div>
+            <div class="col s6">
+                <input id="chkSortableField" type="checkbox" class="validate" />
+                <label class="tooltipped active" for="chkSortableField" data-position="bottom" data-delay="50" data-tooltip="Check to make this a sortable field">Sortable</label>
+            </div>
+            <div class="col s6">
+                <input id="chkSearchableField" type="checkbox" class="validate" />
+                <label class="tooltipped active" for="chkSearchableField" data-position="bottom" data-delay="50" data-tooltip="Check to make this a searchable field when not using server-side pagination">Searchable</label>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button id="btnCancel" class="modal-action modal-close waves-effect waves-red btn-flat ">Close</button>
+        <button id="btnAddNewField" type="button" class="modal-action waves-effect waves-green btn-flat ">Add</button>
+    </div>
+</div>
 
 <script>
     // You can also require other files to run in this process

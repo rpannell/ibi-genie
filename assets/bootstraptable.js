@@ -1,5 +1,7 @@
 const {clipboard} = require('electron');
 var currentTable = "";
+var tableFields = [];
+var fieldCnt = 0;
 function escapeHtml(text) {
     var div = document.createElement('div');
     div.innerText = text;
@@ -21,7 +23,6 @@ function GetDataUlr(){
 }
 
 function CreateTable(){
-    console.log("bing");
     var data = "";
     if($("#chkToolbar").is(":checked")){
         data += "<div id=\"custom-toolbar\">" + "\n";
@@ -60,9 +61,10 @@ function CreateTable(){
     data += "       data-toggle=\"table\">" + "\n";
     data += "   <thead>" + "\n";
     data += "       <tr>" + "\n";
-    data += "" + "\n";
-    data += "" + "\n";
-    data += "" + "\n";
+    for(var i = 0; i < tableFields.length; i++){
+        var field = tableFields[i];
+        data += "           <th" + (field.Sortable ? " data-sortable=\"true\"" : "") + (field.Searchable ? " data-search=\"true\"" : "") + " data-valign=\"middle\" data-halign=\"center\" data-field=\"" + field.FieldName  + "\">" + field.ColumnName + "</th>" + "\n";
+    }
     if($("#chkOperations").is(":checked")){
         data += "           <th data-halign=\"center\" data-align=\"center\" data-valign=\"middle\" data-field=\"Actions\" data-formatter=\"OperateFormatter\" data-events=\"operateEvents\">Actions</th>" + "\n";
     }
@@ -121,8 +123,62 @@ $(document).ready(function () {
     $("input").change(function(){
         CreateTable();
     });
-
+    $('.tooltipped').tooltip({delay: 50});
     $("#btnClip").click(function(){
         clipboard.writeText(currentTable);
     });
+    $("#btnAddField").click(function(){
+        $("#txtFieldName").val("");
+        $("#txtColumnName").val("");
+        $('#mdlAddField').modal('open');
+    });
+
+    $("#btnAddNewField").click(function(){
+        $('#mdlAddField').modal('close');
+        tableFields.push({
+            Id: fieldCnt,
+            FieldName: $("#txtFieldName").val(),
+            ColumnName: $("#txtColumnName").val(),
+            Searchable: $("#chkSearchableField").is(":checked"),
+            Sortable: $("#chkSortableField").is(":checked")
+        });
+        var newLi = "<li class=\"collection-item removeField avatar\" rel-id=\"" + fieldCnt + "\">";
+        newLi += "<span class=\"title\">Column Name: " + $("#txtColumnName").val() + "</span>";
+        newLi += "<p>Field: " + $("#txtFieldName").val() + "<br/>";
+        newLi += "Searchable: " + ($("#chkSearchableField").is(":checked") ? "Yes" : "No") + "<br/>";
+        newLi += "Sortable: " + ($("#chkSortableField").is(":checked") ? "Yes" : "No") + "</p>";
+        newLi += "<a href=\"#!\" class=\"secondary-content btn waves-effect waves-light teal\">";
+        newLi += "  <i class=\"material-icons fa fa-minus\"></i>";
+        newLi += "</a>";
+        newLi += "</li>";
+        $("#tblFields").append(newLi);
+        fieldCnt++;
+        CreateTable();
+    });
+
+    $(".content").on("click", ".removeField", function () {
+        var fieldId = $(this).attr("rel-id");
+        for(var i = 0; i < tableFields.length; i++){
+            if(tableFields[i].Id == fieldId){
+                tableFields.splice(i, 1);
+            }
+        }
+        $(this).remove();
+        CreateTable();
+    });
+
+    $('.modal').modal({
+		dismissible: false, // Modal can be dismissed by clicking outside of the modal
+		opacity: .5, // Opacity of modal background
+		inDuration: 300, // Transition in duration
+		outDuration: 200, // Transition out duration
+		startingTop: '4%', // Starting top style attribute
+		endingTop: '10%', // Ending top style attribute
+		ready: function(modal, trigger) { // Callback for Modal open. Modal and trigger parameters available.
+		
+		},
+		complete: function() {
+			
+		} // Callback for Modal close
+	  });
 });
