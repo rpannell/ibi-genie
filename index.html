@@ -37,6 +37,7 @@
 						<li><a href="javascript:void(0);"id="btnPlugins" >Module Registration<span style="font-size:16px;" class="pull-right hidden-xs showopacity fa fa-upload"></span></a></li>
 						<li><a href="javascript:void(0);"id="btnCustomRoute" >Custom Routes<span style="font-size:16px;" class="pull-right hidden-xs showopacity fa fa-road"></span></a></li>
 						<li ><a href="javascript:void(0);" id="btnOptions" >Manage Configuration<span style="font-size:16px;" class="pull-right hidden-xs showopacity fa fa-cog"></span></a></li>
+						<li><a href="javascript:void(0);"id="btnBootstrapTable" >Bootstrap Table<span style="font-size:16px;" class="pull-right hidden-xs showopacity fa fa-th"></span></a></li>
 					</ul>
 				</div>
 			</div>
@@ -97,12 +98,9 @@
         $("#btnCreatePlugin").click(function () { $(".content").load( "templating.html" ); });
         $("#btnCoreSaffolding").click(function () { $(".content").load( "corescaffolding.html" ); });
 		$("#btnOptions").click(function () { $(".content").load( "options.html" ); });
-		$("#btnPlugins").click(function () { $(".content").load( "plugins.html" ); 
-		
-		});
+		$("#btnPlugins").click(function () { $(".content").load( "plugins.html" ); });
 		$("#btnCustomRoute").click(function () { $(".content").load( "ContentFiles/CustomRoute.html" ); });
-
-
+		$("#btnBootstrapTable").click(function () { $(".content").load( "ContentFiles/BootstrapTableEditor.html" ); });
     });
 </script>
 
