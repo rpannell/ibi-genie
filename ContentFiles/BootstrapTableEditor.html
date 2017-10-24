@@ -8,6 +8,93 @@
         </button>
     </div>
 </div>
+<div class="row">
+    <div class="col s12">
+        <ul class="tabs">
+            <li class="tab col s6">
+                <a class="active" href="#tbOptions">Options</a>
+            </li>
+            <li class="tab col s6">
+                <a href="#tbHtml">HTML</a>
+            </li>
+        </ul>
+    </div>
+    <div id="tbOptions" class="col s12">
+        <div class="col s12">
+            <h5>Form Properties</h5>
+        </div>
+        <div class="input-field col s12">
+            <input id="txtTableId" name="txtTableId" value="tbl1" type="text" class="validate" />
+            <label class="active" for="txtTableId">Table Id</label>
+        </div>
+
+        <div class="input-field col s4">
+            <input id="txtArea" name="txtArea" value="" type="text" class="validate" />
+            <label class="active" for="txtArea">Plugin Name</label>
+        </div>
+        <div class="input-field col s4">
+            <input id="txtController" name="txtController" value="Home" type="text" class="validate" />
+            <label class="active" for="txtController">Controller Name</label>
+        </div>
+        <div class="input-field col s4">
+            <input id="txtAction" name="txtAction" value="GetPage" type="text" class="validate" />
+            <label class="active" for="txtAction">Action</label>
+        </div>
+        <div class="col s12">
+            <h5>Options</h5>
+        </div>
+        <div class="col s3">
+            <input id="chkServerSidePaging" checked="checked" type="checkbox" />
+            <label class="active" for="chkServerSidePaging">Server Side Paging?</label>
+        </div>
+        <div class="col s3">
+            <input id="chkToolbar" checked="checked" type="checkbox" />
+            <label class="active" for="chkToolbar">Custom Tool Bar</label>
+        </div>
+        <div class="col s3">
+            <input id="chkOperations" type="checkbox" />
+            <label class="active" for="chkOperations">Operations Column</label>
+        </div>
+        <div class="col s3">
+            <input id="chkDetails" type="checkbox" />
+            <label class="active" for="chkDetails">Details</label>
+        </div>
+
+        <div class="col s3">
+            <input id="chkSearch"checked="checked" type="checkbox" />
+            <label class="active" for="chkSearch">Search Box</label>
+        </div>
+        <div class="col s3">
+            <input id="chkExport" checked="checked" type="checkbox" />
+            <label class="active" for="chkExport">Export</label>
+        </div>
+        <div class="col s3">
+            <input id="chkShowColumns" checked="checked" type="checkbox" />
+            <label class="active" for="chkShowColumns">Show Column</label>
+        </div>
+        <div class="col s3">
+            <input id="chkRefresh" checked="checked" type="checkbox" />
+            <label class="active" for="chkRefresh">Refresh</label>
+        </div>
+
+        <div class="col s10">
+            <h5>Fields</h5>
+        </div>
+        <div class="col s2">
+            <a class="btn waves-effect waves-light red">
+                <i class="fa fa-plus right"></i>Add Field</a>
+        </div>
+        <div class="col s12" id="tblFields"></div>
+    </div>
+    <div id="tbHtml" class="col s12">
+        <pre>
+                        <code id="codeBlock" class="html javascript">
+                        </code>
+                    </pre>
+    </div>
+</div>
+
+
 
 <script>
     // You can also require other files to run in this process
