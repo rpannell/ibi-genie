@@ -1,7 +1,14 @@
+const {clipboard} = require('electron');
+var currentTable = "";
 function escapeHtml(text) {
     var div = document.createElement('div');
     div.innerText = text;
     return div.innerHTML;
+}
+
+function htmlDecode(input){
+  var doc = new DOMParser().parseFromString(input, "text/html");
+  return doc.documentElement.textContent;
 }
 
 function GetDataUlr(){
@@ -100,6 +107,7 @@ function CreateTable(){
     $('pre code').each(function(i, block) {
         hljs.highlightBlock(block);
     });
+    currentTable = data;
 }
 
 require("./js/highlight.pack.js");
@@ -112,5 +120,9 @@ $(document).ready(function () {
     CreateTable();
     $("input").change(function(){
         CreateTable();
+    });
+
+    $("#btnClip").click(function(){
+        clipboard.writeText(currentTable);
     });
 });
