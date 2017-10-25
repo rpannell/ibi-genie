@@ -1,132 +1,157 @@
-﻿<div class="row hidden" id="dvAlert">
+﻿<style>
+	.modal {
+		height: 85% !important;
+		max-height: 85% !important;
+		width: 90% !important;
+	}
+</style>
+<div class="row hidden" id="dvAlert">
 	<div class="col-xs-12">
-		<div class="alert alert-danger" role="alert"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>&nbsp;&nbsp;The configuration isn't correct for this functionality.  Please go and update the configuration to ensure there is a valid service and valid database info before continuing.</div>
+		<div class="alert alert-danger" role="alert">
+			<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>&nbsp;&nbsp;The configuration isn't correct for this functionality. Please go and update the configuration to ensure
+			there is a valid service and valid database info before continuing.</div>
 	</div>
 </div>
 
 <div class="row">
-		<div class="col-xs-10"><h4><span class="fa fa-database" style="font-size: xx-large;margin-right: 10px;"></span>WebApi Service Scaffolder</h4></div>
-		<div class="col-xs-2"><button type="button" id="btnScaffoldOptions" class="btn btn-default pull-right"><i class="fa fa-cog"></i></button></div>
+	<div class="col-xs-10">
+		<h4>
+			<span class="fa fa-database" style="font-size: xx-large;margin-right: 10px;"></span>WebApi Service Scaffolder</h4>
 	</div>
+	<div class="col-xs-2">
+		<button type="button" id="btnScaffoldOptions" class="btn btn-default pull-right">
+			<i class="fa fa-cog"></i>
+		</button>
+	</div>
+</div>
 
 
 <hr/>
 <div class="card-panel hoverable">
-<form class="form-horizontal">
-	<div class="form-group">
-		<label class="col-xs-3 control-label">Current Service:</label>
-		<div class="col-xs-9" id="lblCurrentService"></div>
-	</div>
-	<div class="form-group">
-		<label class="col-xs-3 control-label">Database:</label>
-		<div class="col-xs-9" id="lblCurrentDatabase"></div>
-	</div>
-	<div class="form-group">
-		<label class="col-xs-3 control-label">Service Location:</label>
-		<div class="col-xs-9" id="lblCodeLocation"></div>
-	</div>
-	<div class="form-group plugininfo hidden">
-		<label class="col-xs-3 control-label">Plugin Location:</label>
-		<div class="col-xs-9" id="lblPluginLocation"></div>
-	</div>
-	<div class="form-group appinfo hidden">
-		<label class="col-xs-3 control-label">Application Location:</label>
-		<div class="col-xs-9" id="lblApplication"></div>
-	</div>
-</form>
-<hr/>
-<div class="row">
-	<div class="col-xs-12">
-		<div id="custom-toolbar" style="margin-bottom:10px;">
-				<button  id="btnAddEntity" class="btn"><i class="fa fa-plus"></i>&nbsp;&nbsp;Add Entity</button>
-			<button id="btnWriteScaffolding" class="btn btn-default"><i class="fa fa-code"></i>&nbsp;&nbsp;Finish</button>
+	<form class="form-horizontal">
+		<div class="form-group">
+			<label class="col-xs-3 control-label">Current Service:</label>
+			<div class="col-xs-9" id="lblCurrentService"></div>
 		</div>
-		<table id="table" data-toggle="table" data-show-footer="false" style="min-height: 300px;">
-			<thead>
-				<tr>
-					<th data-field="PropertyName">Name</th>
-					<th data-field="TableName">DB</th>
-					<th data-formatter="CountFormatter">Column Count</th>
-					<th data-formatter="OperateFormatter" data-events="operateEvents">Options</th>
-				</tr>
-			</thead>
-		</table>
-	</div>
-</div>
-</div>
-
-
-
-
-  <!-- Modal Structure -->
-  <div id="mdlConfirm" class="modal modal-fixed-footer">
-    <div class="modal-content">
-      <h4>Confirm</h4>
-	  <div class="row">
-		<div class="col-xs-12">
-			Are you sure you want to add these entities to service and the plugin below?  If you don't want to add to the plugin uncheck the checkbox below
+		<div class="form-group">
+			<label class="col-xs-3 control-label">Database:</label>
+			<div class="col-xs-9" id="lblCurrentDatabase"></div>
 		</div>
-	</div>
+		<div class="form-group">
+			<label class="col-xs-3 control-label">Service Location:</label>
+			<div class="col-xs-9" id="lblCodeLocation"></div>
+		</div>
+		<div class="form-group plugininfo hidden">
+			<label class="col-xs-3 control-label">Plugin Location:</label>
+			<div class="col-xs-9" id="lblPluginLocation"></div>
+		</div>
+		<div class="form-group appinfo hidden">
+			<label class="col-xs-3 control-label">Application Location:</label>
+			<div class="col-xs-9" id="lblApplication"></div>
+		</div>
+	</form>
+	<hr/>
 	<div class="row">
-		<div class="col-xs-3"><div class="pull-right">Service:</div></div>
-		<div class="col-xs-9" id="dvServiceLocation"></div>
-		<div class="plugininfo hidden">
-			<div class="col-xs-3"><div class="pull-right">Plugin:</div></div>
-			<div class="col-xs-9" id="dvPluginLocation"></div>
-		</div>
-		<div class="appinfo hidden">
-			<div class="col-xs-3"><div class="pull-right">Application:</div></div>
-			<div class="col-xs-9" id="dvApplicationLocation"></div>
+		<div class="col-xs-12">
+			<div id="custom-toolbar" style="margin-bottom:10px;">
+				<button id="btnAddEntity" class="btn">
+					<i class="fa fa-plus"></i>&nbsp;&nbsp;Add Entity</button>
+				<button id="btnWriteScaffolding" class="btn btn-default">
+					<i class="fa fa-code"></i>&nbsp;&nbsp;Finish</button>
+			</div>
+			<table id="table" data-toggle="table" data-show-footer="false" style="min-height: 300px;">
+				<thead>
+					<tr>
+						<th data-field="PropertyName">Name</th>
+						<th data-field="TableName">DB</th>
+						<th data-formatter="CountFormatter">Column Count</th>
+						<th data-formatter="OperateFormatter" data-events="operateEvents">Options</th>
+					</tr>
+				</thead>
+			</table>
 		</div>
 	</div>
-	<div class="row" id="dvScaffoldPlugin">
-		<div class="col-xs-3"></div>
-		<div class="col-xs-9">
+</div>
+
+
+
+
+<!-- Modal Structure -->
+<div id="mdlConfirm" class="modal modal-fixed-footer">
+	<div class="modal-content">
+		<h4>Confirm</h4>
+		<div class="row">
+			<div class="col-xs-12">
+				Are you sure you want to add these entities to service and the plugin below? If you don't want to add to the plugin uncheck
+				the checkbox below
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-xs-3">
+				<div class="pull-right">Service:</div>
+			</div>
+			<div class="col-xs-9" id="dvServiceLocation"></div>
+			<div class="plugininfo hidden">
+				<div class="col-xs-3">
+					<div class="pull-right">Plugin:</div>
+				</div>
+				<div class="col-xs-9" id="dvPluginLocation"></div>
+			</div>
+			<div class="appinfo hidden">
+				<div class="col-xs-3">
+					<div class="pull-right">Application:</div>
+				</div>
+				<div class="col-xs-9" id="dvApplicationLocation"></div>
+			</div>
+		</div>
+		<div class="row" id="dvScaffoldPlugin">
+			<div class="col-xs-3"></div>
+			<div class="col-xs-9">
 				<input type="checkbox" class="filled-in" id="chkScaffoldPlugin" checked="checked">
 				<label for="chkScaffoldPlugin">Add Entity to Plugin</label>
-			<!-- <div class="checkbox">
+				<!-- <div class="checkbox">
 				<label id="lblPluginCheckBoxLabel">
 					<input type="checkbox" id="chkScaffoldPlugin" checked="checked" /> 
 				</label>
 			</div> -->
+			</div>
 		</div>
 	</div>
-    </div>
-    <div class="modal-footer">
-			<a href="javascript:void(0);" class="modal-action modal-close waves-effect waves-green btn-flat ">Cancel</a>		
-      <a href="javascript:void(0);" id="btnOk" class="modal-action modal-close waves-effect waves-green btn-flat ">Ok</a>
-    </div>
-  </div>
+	<div class="modal-footer">
+		<a href="javascript:void(0);" class="modal-action modal-close waves-effect waves-green btn-flat ">Cancel</a>
+		<a href="javascript:void(0);" id="btnOk" class="modal-action modal-close waves-effect waves-green btn-flat ">Ok</a>
+	</div>
+</div>
 
 
 
-  
-	<!-- Modal Structure -->
-	<div id="mdlAdd" class="modal modal-fixed-footer">
-	  <div class="modal-content">
+
+<!-- Modal Structure -->
+<div id="mdlAdd" class="modal modal-fixed-footer">
+	<div class="modal-content">
 		<h4>Entity Info</h4>
-			<form class="form-horizontal">
-					<input type="hidden" id="hdSchema" />
-					<input type="hidden" id="hdTableName" />
-				<div class="row">
+		<form class="form-horizontal">
+			<input type="hidden" id="hdSchema" />
+			<input type="hidden" id="hdTableName" />
+			<div class="row">
 				<div class="col s6">
-						<div class="input-field col s12">
-								<select id="dlDatabase">
-								  <option value="" disabled selected>Choose your Database</option>								 
-								</select>
-								<label>Database Name</label>
-					     </div>
+					<div class="input-field col s12">
+						<select id="dlDatabase">
+							<option value="" disabled selected>Choose your Database</option>
+						</select>
+						<label>Database Name</label>
+					</div>
 				</div>
 				<div class="col s6">
-						<div class="input-field col s12">
-								<select id="dlTable">
-								  <option value="" disabled selected>Choose your Table</option>								 
-								</select>
-								<label>Table Name</label>
-					     </div>
+					<div class="input-field col s12">
+						<select id="dlTable">
+							<option value="" disabled selected>Choose your Table</option>
+						</select>
+						<label>Table Name</label>
+					</div>
 
 				</div>
-<!-- 
+				<!-- 
 					<label class="col-xs-12 col-md-2 control-label">Database:</label>
 					<div class="col-xs-12 col-md-4">
 						<select class="form-control" id="dlDatabase"></select>
@@ -135,55 +160,59 @@
 					<div class="col-xs-12 col-md-4">
 						<select class="form-control" id="dlTable"></select>
 					</div> -->
-				</div>
-				<div class="row">
-						<div class="col s12">
-							<div class="input-field col s12">
-								<input id="txtEntityName" type="text" class="validate">
-								<label for="txtEntityName">Entity Name</label>
-								
-							</div>
-							
-							<div class="col s12 ">
-									<div class="pull-right">
-																<input type="checkbox" class="filled-in" id="chkReadOnly">
-																<label for="chkReadOnly">Is Read Only</label>
-																<button type="button" id="btnGo" class="btn btn-default" style="margin-left: 10px;">Load</button>
-									</div>
-															</div>
-						</div>
-							
-				</div>
+			</div>
+			<div class="row">
+				<div class="col s12">
+					<div class="input-field col s12">
+						<input id="txtEntityName" type="text" class="validate">
+						<label for="txtEntityName">Entity Name</label>
 
-				<div class="row"><div class="col-xs-12"><hr/></div></div>
-				<div class="row">
-					<div class="col-xs-12">
-						<table id="tblEntityInfo" data-toggle="table" data-show-footer="false" style="min-height: 300px;">
-							<thead>
-								<tr>
-									<th data-field="ColumnName">Column</th>
-									<th data-field="DataType">Data Type</th>
-									<th data-field="MaxLength">String Length</th>
-									<th data-field="PropertyName" data-editable="true">Property</th>
-									<th data-field="PropertyType" data-editable="true" data-editable-type="select" data-editable-sourceCache="true" data-editable-source="http://localhost:3000/GetPropertyType" >Property Type</th>
-									<th data-field="IsPrimaryKey" data-title="PK" data-radio="true" data-check-box-header="true">PK</th>
-									<th data-field="Ignore" data-editable="true" data-editable-type="select" data-editable-sourceCache="true" data-editable-source="http://localhost:3000/GetYesNo">Ignore</th>
-									<th data-field="IsInsertOnly" data-editable="true" data-editable-type="select" data-editable-sourceCache="true" data-editable-source="http://localhost:3000/GetYesNo">Ins Only</th>
-									<th data-field="IsAutoComplete" data-editable="true" data-editable-type="select" data-editable-sourceCache="true" data-editable-source="http://localhost:3000/GetYesNo">Auto Compl</th>
-									<th data-field="Search" data-editable="true" data-editable-type="select" data-editable-sourceCache="true" data-editable-source="http://localhost:3000/GetSearchType">Search</th>
-								</tr>
-							</thead>
-						</table>
+					</div>
+
+					<div class="col s12 ">
+						<div class="pull-right">
+							<input type="checkbox" class="filled-in" id="chkReadOnly">
+							<label for="chkReadOnly">Is Read Only</label>
+							<button type="button" id="btnGo" class="btn btn-default" style="margin-left: 10px;">Load</button>
+						</div>
 					</div>
 				</div>
-			</form>
+
+			</div>
+
+			<div class="row">
+				<div class="col-xs-12">
+					<hr/>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-xs-12">
+					<table id="tblEntityInfo" data-toggle="table" data-show-footer="false" style="min-height: 300px;">
+						<thead>
+							<tr>
+								<th data-field="ColumnName">Column</th>
+								<th data-field="DataType">Data Type</th>
+								<th data-field="MaxLength">String Length</th>
+								<th data-field="PropertyName" data-editable="true">Property</th>
+								<th data-field="PropertyType" data-editable="true" data-editable-type="select" data-editable-sourceCache="true" data-editable-source="http://localhost:3000/GetPropertyType">Property Type</th>
+								<th data-field="IsPrimaryKey" data-title="PK" data-radio="true" data-check-box-header="true">PK</th>
+								<th data-field="Ignore" data-editable="true" data-editable-type="select" data-editable-sourceCache="true" data-editable-source="http://localhost:3000/GetYesNo">Ignore</th>
+								<th data-field="IsInsertOnly" data-editable="true" data-editable-type="select" data-editable-sourceCache="true" data-editable-source="http://localhost:3000/GetYesNo">Ins Only</th>
+								<th data-field="IsAutoComplete" data-editable="true" data-editable-type="select" data-editable-sourceCache="true" data-editable-source="http://localhost:3000/GetYesNo">Auto Compl</th>
+								<th data-field="Search" data-editable="true" data-editable-type="select" data-editable-sourceCache="true" data-editable-source="http://localhost:3000/GetSearchType">Search</th>
+							</tr>
+						</thead>
+					</table>
+				</div>
+			</div>
+		</form>
 	</div>
-	  <div class="modal-footer">
-			<a href="javascript:void(0);" id="btnCancel" class="modal-action  waves-effect waves-green btn-flat ">Cancel</a>	
+	<div class="modal-footer">
+		<a href="javascript:void(0);" id="btnCancel" class="modal-action  waves-effect waves-green btn-flat ">Cancel</a>
 		<a href="javascript:void(0);" id="btnAddNewEntity" class="modal-action  waves-effect waves-green btn-flat ">Add</a>
-	  </div>
 	</div>
-			
+</div>
+
 
 <!-- 
 <div class="modal fade in" data-backdrop="static" data-keyboard="false" id="mdlAdd">
@@ -249,41 +278,46 @@
 </div> -->
 <script>
 	$.fn.editable.defaults.mode = 'inline';
+
 	function CountFormatter(value, row) {
-        return row.Columns.length;
-    }
+		return row.Columns.length;
+	}
 
 	// You can also require other files to run in this process
 	function OperateFormatter(value, row, index) {
 		var htmlString = "";
-/* 		htmlString = '<div class="btn-group">' +
-						'<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true">' +
-						'<label>Actions</label><span class="caret"></span></button>' +
-						'<ul class="dropdown-menu dropdown-menu-right" role="menu">' +
-							'<li class="btn_del"><a>Remove</a></li>' +
-							'<li class="btn_edit"><a>Edit</a></li>' +
-						'</ul>' +
-					'</div>';
- */
+		/* 		htmlString = '<div class="btn-group">' +
+								'<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true">' +
+								'<label>Actions</label><span class="caret"></span></button>' +
+								'<ul class="dropdown-menu dropdown-menu-right" role="menu">' +
+									'<li class="btn_del"><a>Remove</a></li>' +
+									'<li class="btn_edit"><a>Edit</a></li>' +
+								'</ul>' +
+							'</div>';
+		 */
 
 
-					htmlString =   '<a class="dropdown-button btn" href="javascript:void(0);"  data-activates="dropdown_'+row.PropertyName+'"> Actions <span class="caret" style="margin-left:5px;"></span></a>' +
-					  '<ul id="dropdown_'+row.PropertyName+'"  class="dropdown-content">' +
-						'<li><a class="btn_del" href="javascript:void(0);">Remove</a></li>'+
-						'<li><a class="btn_edit" href="javascript:void(0);">Edit</a></li>'+
-					 '</ul>'
+		htmlString = '<a class="dropdown-button btn" href="javascript:void(0);"  data-activates="dropdown_' + row.PropertyName +
+			'"> Actions <span class="caret" style="margin-left:5px;"></span></a>' +
+			'<ul id="dropdown_' + row.PropertyName + '"  class="dropdown-content">' +
+			'<li><a class="btn_del" href="javascript:void(0);">Remove</a></li>' +
+			'<li><a class="btn_edit" href="javascript:void(0);">Edit</a></li>' +
+			'</ul>'
 		return [htmlString].join('');
 	}
 
 	window.operateEvents = {
 		'click .btn_del': function (e, value, row, index) {
-			$("#table").bootstrapTable('remove', {field: 'PropertyName', values: [row.PropertyName]});
+			$("#table").bootstrapTable('remove', {
+				field: 'PropertyName',
+				values: [row.PropertyName]
+			});
 			console.log(row.PropertyName);
 		},
 		'click .btn_edit': function (e, value, row, index) {
 			$("#tblEntityInfo").bootstrapTable('load', row.Columns);
 			$("#txtEntityName").val(row.PropertyName);
-			if(row.IsReadOnly){
+			if (row.IsReadOnly) {
 				$("#chkReadOnly").prop("checked", "checked");
 			}
 			$("#dlTable").val(row.Schema + "." + row.TableName);
@@ -293,5 +327,5 @@
 		}
 	};
 	delete require.cache[require.resolve('./assets/scaffolding')]
-    require('./assets/scaffolding');
+	require('./assets/scaffolding');
 </script>

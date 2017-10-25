@@ -24,6 +24,14 @@ function GetDataUlr(){
 
 function CreateTable(){
     var data = "";
+    var displayBooleanFormatter = false;
+
+    for(var i = 0; i < tableFields.length; i++){
+        if(tableFields[i].Boolean){
+            displayBooleanFormatter = true;
+        }
+    }
+
     if($("#chkToolbar").is(":checked")){
         data += "<div id=\"custom-toolbar\">" + "\n";
         data += "   <button class=\"btn btn-primary\" id=\"btnNew\" style=\"margin-bottom: 10px;margin-top: 10px;\">" + "\n";
@@ -63,7 +71,7 @@ function CreateTable(){
     data += "       <tr>" + "\n";
     for(var i = 0; i < tableFields.length; i++){
         var field = tableFields[i];
-        data += "           <th" + (field.Sortable ? " data-sortable=\"true\"" : "") + (field.Searchable ? " data-search=\"true\"" : "") + " data-valign=\"middle\" data-halign=\"center\" data-field=\"" + field.FieldName  + "\">" + field.ColumnName + "</th>" + "\n";
+        data += "           <th" + (field.Sortable ? " data-sortable=\"true\"" : "") + (field.Searchable ? " data-search=\"true\"" : "") + (field.Boolean ? " data-formatter=\"booleanFormatter\"" : "") + " data-valign=\"middle\" data-halign=\"center\" data-field=\"" + field.FieldName  + "\">" + field.ColumnName + "</th>" + "\n";
     }
     if($("#chkOperations").is(":checked")){
         data += "           <th data-halign=\"center\" data-align=\"center\" data-valign=\"middle\" data-field=\"Actions\" data-formatter=\"OperateFormatter\" data-events=\"operateEvents\">Actions</th>" + "\n";
@@ -76,6 +84,14 @@ function CreateTable(){
     data += "   function SearchParams(params) {" + "\n";
     data += "       return params;" + "\n";
     data += "   }" + "\n";
+    if(displayBooleanFormatter){
+        data += "   function booleanFormatter(value, row, index) {" + "\n";
+        data += "       return value" + "\n";
+        data += "               ? [\"<span class=\"label label-primary\"><span class=\"fa fa-check\"></span></span>\"].join('')" + "\n";
+        data += "               : return [\"\"].join('');" + "\n";
+        data += "   }" + "\n";
+    }
+
     if($("#chkDetails").is(":checked")){
         data += "   //Used to display data when a row is expanded." + "\n";
         data += "   function DetailFormatter(index, row, element) {" + "\n";
@@ -120,39 +136,42 @@ $(document).ready(function () {
 
     $('ul.tabs').tabs();
     CreateTable();
-    $("input").change(function(){
-        CreateTable();
-    });
+    $("input").change(function(){ CreateTable(); });
     $('.tooltipped').tooltip({delay: 50});
-    $("#btnClip").click(function(){
-        clipboard.writeText(currentTable);
-    });
+    $("#btnClip").click(function(){ clipboard.writeText(currentTable); });
     $("#btnAddField").click(function(){
         $("#txtFieldName").val("");
         $("#txtColumnName").val("");
+        $("#chkSortableField").removeAttr("checked");
+        $("#chkSearchableField").removeAttr("checked");
+        $("#chkBooleanFormatter").removeAttr("checked");
         $('#mdlAddField').modal('open');
     });
 
     $("#btnAddNewField").click(function(){
         $('#mdlAddField').modal('close');
-        tableFields.push({
-            Id: fieldCnt,
+        var newField = {
+            Id: fieldCnt, //used as a primary key
             FieldName: $("#txtFieldName").val(),
             ColumnName: $("#txtColumnName").val(),
             Searchable: $("#chkSearchableField").is(":checked"),
-            Sortable: $("#chkSortableField").is(":checked")
-        });
-        var newLi = "<li class=\"collection-item removeField avatar\" rel-id=\"" + fieldCnt + "\">";
-        newLi += "<span class=\"title\">Column Name: " + $("#txtColumnName").val() + "</span>";
-        newLi += "<p>Field: " + $("#txtFieldName").val() + "<br/>";
-        newLi += "Searchable: " + ($("#chkSearchableField").is(":checked") ? "Yes" : "No") + "<br/>";
-        newLi += "Sortable: " + ($("#chkSortableField").is(":checked") ? "Yes" : "No") + "</p>";
-        newLi += "<a href=\"#!\" class=\"secondary-content btn waves-effect waves-light teal\">";
+            Sortable: $("#chkSortableField").is(":checked"),
+            Boolean:  $("#chkBooleanFormatter").is(":checked"),
+        };
+        tableFields.push(newField);
+        var newLi = "<li class=\"collection-item removeField avatar\" rel-id=\"" + newField.Id + "\">";
+        newLi += "<span class=\"title\">Column Name: " + newField.ColumnName + "</span>";
+        newLi += "<p>Field: " + newField.FieldName + "<br/>";
+        newLi += "Searchable: " + (newField.Searchable ? "Yes" : "No") + "<br/>";
+        newLi += "Sortable: " + (newField.Sortable ? "Yes" : "No") + "<br/>";
+        newLi += "Boolean: " + (newField.Boolean ? "Yes" : "No") + "</p>";
+        newLi += "<a href=\"#!\" class=\"secondary-content btn waves-effect waves-light red\">";
         newLi += "  <i class=\"material-icons fa fa-minus\"></i>";
         newLi += "</a>";
         newLi += "</li>";
         $("#tblFields").append(newLi);
         fieldCnt++;
+        //update the html
         CreateTable();
     });
 
@@ -164,9 +183,11 @@ $(document).ready(function () {
             }
         }
         $(this).remove();
+        //update the html
         CreateTable();
     });
 
+    //set all of the modals to be a materialize-css modal
     $('.modal').modal({
 		dismissible: false, // Modal can be dismissed by clicking outside of the modal
 		opacity: .5, // Opacity of modal background

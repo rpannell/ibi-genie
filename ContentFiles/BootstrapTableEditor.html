@@ -1,3 +1,12 @@
+<style>
+    .clipBoard {
+        position: absolute;
+        top: 0;
+        right: 0;
+        cursor: pointer;
+    }
+    .modal { height: 75% !important ; width: 75% !important; }
+</style>
 <div class="row">
     <div class="col-xs-10">
         <h3>Create a Bootstrap Table</h3>
@@ -81,21 +90,19 @@
             <h5>Fields</h5>
         </div>
         <div class="col s2">
-            <a class="btn waves-effect waves-light red" id="btnAddField">
+            <a class="btn waves-effect waves-light green" id="btnAddField">
                 <i class="fa fa-plus right"></i>Add Field</a>
         </div>
-        <div class="col s12" >
+        <div class="col s12">
             <ul class="collection" id="tblFields">
             </ul>
         </div>
     </div>
     <div id="tbHtml" class="col s12">
-        <div class="col s10"></div>
-        <div class="col s2">
-            <a class="btn waves-effect waves-light red" id="btnClip">
-                <i class="fa fa-copy right"></i>Copy To Clipboard</a>
-        </div>
-        <div class="col s12">
+        <div class="col s12" style="position: relative;">
+            <a class="btn waves-effect waves-light red clipBoard" id="btnClip">
+                <i class="fa fa-copy right"></i>
+            </a>
             <pre>
                 <code id="codeBlock" class="html javascript"></code>
             </pre>
@@ -106,7 +113,7 @@
 <!-- Modal Structure -->
 <div id="mdlAddField" class="modal modal-fixed-footer">
     <div class="modal-content">
-        <h4>Roles</h4>
+        <h4>Field</h4>
         <div class="row">
             <div class="input-field col s6">
                 <input id="txtFieldName" name="txtFieldName" type="text" class="tooltipped validate" data-position="bottom" data-delay="50"
@@ -120,11 +127,15 @@
             </div>
             <div class="col s6">
                 <input id="chkSortableField" type="checkbox" class="validate" />
-                <label class="tooltipped active" for="chkSortableField" data-position="bottom" data-delay="50" data-tooltip="Check to make this a sortable field">Sortable</label>
+                <label class="tooltipped active" for="chkSortableField" data-position="right" data-delay="50" data-tooltip="Check to make this a sortable field">Sortable</label>
             </div>
             <div class="col s6">
                 <input id="chkSearchableField" type="checkbox" class="validate" />
-                <label class="tooltipped active" for="chkSearchableField" data-position="bottom" data-delay="50" data-tooltip="Check to make this a searchable field when not using server-side pagination">Searchable</label>
+                <label class="tooltipped active" for="chkSearchableField" data-position="left" data-delay="50" data-tooltip="Check to make this a searchable field when not using server-side pagination">Searchable</label>
+            </div>
+            <div class="col s6">
+                <input id="chkBooleanFormatter" type="checkbox" class="validate" />
+                <label class="tooltipped active" for="chkBooleanFormatter" data-position="right" data-delay="50" data-tooltip="Used to display a checkbox for true and nothing for false">Boolean</label>
             </div>
         </div>
     </div>
