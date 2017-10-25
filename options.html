@@ -4,49 +4,48 @@
 	</div>
 
 	<div class="card-panel hoverable">
+		<div class="container">
 <form class="form-horizontal">
+		<div class="input-field col s12">
+				<input id="txtDatabaseService" name="txtDatabaseService" type="text" class="validate">
+				<label for="txtDatabaseService">Database Server</label>
+			</div>
+			<div class="input-field col s12">
+					<input id="txtDatabaseUser" name="txtDatabaseUser" type="text" class="validate">
+					<label for="txtDatabaseUser">Database User</label>
+				</div>
+				<div class="input-field col s12">
+						<input id="txtDatabasePassword" name="txtDatabasePassword" type="text" class="validate">
+						<label for="txtDatabasePassword">Database Password</label>
+					</div>
+					<div class="input-field col s12">
+					<div class="">
+							<input id="txtSourceControlLocation" name="txtSourceControlLocation" readonly="readonly" type="text" class="validate">
+							<label for="txtSourceControlLocation">Source Control Location</label>
+							<button id="btnSelectSourceLocation" type="button" class="btn btn-default pull-right">Select</button>
+					</div>					
+				</div>
+
+
 	<div class="form-group">
-		<label class="col-xs-4 control-label">Database Server:</label>
-		<div class="col-xs-8">
-			<input type="text" class="form-control" id="txtDatabaseService" />
+		<div class="col-xs-12">
+			<hr />
 		</div>
-	</div>
-	<div class="form-group">
-		<label class="col-xs-4 control-label">Database User:</label>
-		<div class="col-xs-8">
-			<input type="text" class="form-control" id="txtDatabaseUser" />
-		</div>
-	</div>
-	<div class="form-group">
-		<label class="col-xs-4 control-label">Database Password:</label>
-		<div class="col-xs-8">
-			<input type="text" class="form-control" id="txtDatabasePassword" />
-		</div>
-	</div>
-	<div class="form-group">
-		<label class="col-xs-4 control-label">Source Control Location:</label>
-		<div class="col-xs-6">
-			<input type="text" class="form-control" id="txtSourceControlLocation" readonly="readonly"/>
-		</div>
-		<div class="col-xs-2">
-			<button id="btnSelectSourceLocation" type="button" class="btn btn-default pull-right">Select</button>
-		</div>
-	</div>
-	<hr />
-	<div class="form-group">
 		<label class="col-xs-4 control-label">Current Plugins:</label>
-		<div class="col-xs-8">
+		<div class="col-xs-4">
 			<select class="form-control" id="dlPlugins">
 				<option value="">--Select Current Plugin--</option>
 			</select>
 		</div>
 	</div>
 	<div class="form-group">
-		<label class="col-xs-offset-5 col-xs-2 control-label">OR</label>
+		<center>
+		<label class="control-label">OR</label>
+	</center>
 	</div>
 	<div class="form-group">
 		<label class="col-xs-4 control-label">Current Applications:</label>
-		<div class="col-xs-8">
+		<div class="col-xs-4">
 			<select class="form-control" id="dlApps">
 				<option value="">--Select Current Application--</option>
 			</select>
@@ -54,14 +53,16 @@
 	</div>
 	<div class="form-group">
 		<label class="col-xs-4 control-label">Current Service:</label>
-		<div class="col-xs-8">
+		<div class="col-xs-4">
 			<select class="form-control" id="dlServices">
 				<option value="">--Select Current Service--</option>
 			</select>
 		</div>
 	</div>
 	<hr />
-	<div class="form-group infolabel pluginlabel">
+	<div class="form-group">
+
+
 		<label class="col-xs-4 control-label">Current Plugin Branch Location:</label>
 		<div class="col-xs-8"><label id="lblPluginBranch"></label></div>
 	</div>
@@ -72,12 +73,13 @@
 	<div class="form-group servicelabel">
 		<label class="col-xs-4 control-label">Current Service Branch Location:</label>
 		<div class="col-xs-8"><label id="lblServiceBranch"></label></div>
-	</div>
+	</div> 
 </form>
 	<hr/>
     <div class="row">
         <div class="col-xs-12"><button class="btn btn-success pull-right" id="btnSave">Update</button></div>
     </div>
+</div>
 </div>
 
 
@@ -102,31 +104,6 @@
 		</div>
 	  </div>
 
-
-<!-- 	<div class="modal fade in" data-backdrop="static" data-keyboard="false" id="mdlRadioSelection">
-		<div class="modal-dialog modal-lg">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-					<h4 class="modal-title">Select Branch</h4>
-				</div>
-				<div class="modal-body">
-						<form class="form-horizontal">
-							<input type="hidden" id="rdIsPlugin" value="false" />
-							<input type="hidden" id="sourceName" />
-							<div class="row">
-								<label class="col-xs-12 bold">What branch?</label>
-								<div class="col-xs-12" id="rdBranch" ></div>
-							</div>
-						</form>
-				</div>
-				<div class="modal-footer">
-					<button type="button" id="btnCancel" class="btn btn-default">Cancel</button>
-					<button type="button" id="btnRadioSelect" class="btn btn-primary">Ok</button>
-				</div>
-			</div>
-		</div>
-	</div> -->
 <script>
     // You can also require other files to run in this process
 	delete require.cache[require.resolve('./assets/options')]

@@ -1,22 +1,17 @@
 <style>
     .clipBoard {
         position: absolute;
-        top: 0;
-        right: 0;
+        top: 10;
+        right: 20;
         cursor: pointer;
     }
     .modal { height: 75% !important ; width: 75% !important; }
 </style>
 <div class="row">
-    <div class="col-xs-10">
-        <h3>Create a Bootstrap Table</h3>
-    </div>
-    <div class="col-xs-2">
-        <button type="button" id="btnTemplateOptions" class="btn btn-default pull-right">
-            <i class="fa fa-cog"></i>
-        </button>
-    </div>
+    <div class="col-xs-10"><h4><span class="fa fa-table" style="font-size: xx-large;margin-right: 10px;"></span>Create a BootstrapTable</h4></div>
+    <div class="col-xs-2"><button type="button" id="btnTemplateOptions" class="btn btn-default pull-right"><i class="fa fa-cog"></i></button></div>
 </div>
+<div class="card-panel hoverable">
 <div class="row">
     <div class="col s12">
         <ul class="tabs">
@@ -28,7 +23,7 @@
             </li>
         </ul>
     </div>
-    <div id="tbOptions" class="col s12">
+    <div id="tbOptions" class="col s12" style="margin-top:10px;">
         <div class="col s12">
             <h5>Form Properties</h5>
         </div>
@@ -85,31 +80,32 @@
             <input id="chkRefresh" checked="checked" type="checkbox" />
             <label class="active" for="chkRefresh">Refresh</label>
         </div>
+        <div class="col s9">
+                <h5>Fields</h5>
+            </div>
+        <div class="col s3">
+                <a class="btn waves-effect waves-light green pull-right" id="btnAddField">
+                    <span class="fa fa-plus" style="margin-right: 5px;"></span>Add Field</a>
+            </div>
 
-        <div class="col s10">
-            <h5>Fields</h5>
-        </div>
-        <div class="col s2">
-            <a class="btn waves-effect waves-light green" id="btnAddField">
-                <i class="fa fa-plus right"></i>Add Field</a>
-        </div>
         <div class="col s12">
             <ul class="collection" id="tblFields">
             </ul>
         </div>
     </div>
     <div id="tbHtml" class="col s12">
-        <div class="col s12" style="position: relative;">
-            <a class="btn waves-effect waves-light red clipBoard" id="btnClip">
+        <div class="col s12" style=margin-top:10px;">
+
+            <pre> 
+                <a class="btn waves-effect waves-light red pull-right" id="btnClip">
                 <i class="fa fa-copy right"></i>
             </a>
-            <pre>
-                <code id="codeBlock" class="html javascript"></code>
+                <code id="codeBlock" style="margin-top: 10px;" class="html javascript"></code>
             </pre>
         </div>
     </div>
 </div>
-
+</div>
 <!-- Modal Structure -->
 <div id="mdlAddField" class="modal modal-fixed-footer">
     <div class="modal-content">
