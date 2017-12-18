@@ -6,6 +6,10 @@ String.prototype.replaceAll = function(search, replacement) {
     return target.replace(new RegExp(search, 'g'), replacement);
 };
 
+String.prototype.startsWith = function (str) {
+	return this.slice(0, str.length) == str;
+};
+
 String.prototype.clearNull = function() {
     return target == undefined || target == null ? "" : target;
 };
@@ -22,7 +26,9 @@ function ucFirstAllWords( str )
 		pieces[i] = j + pieces[i].substr(1).toLowerCase();
 	}
 	var finish = pieces.join(" ");
-	return finish.replaceAll(" ", "").trim();
+	finish = finish.replaceAll(" ", "").trim();
+	if(finish.startsWith("Vw")) finish = finish.substr(2); //remove "vw" from the entity name of views
+	return finish;
 }
 
 function LoadDatabases(currentServiceData){

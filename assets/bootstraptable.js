@@ -42,6 +42,7 @@ function CreateTable(){
     data += "<table id=\"" + $("#txtTableId").val() + "\"" + "\n";
     data += "       class=\"table table-striped\"" + "\n";
     if($("#chkServerSidePaging").is(":checked")){
+        data += "       data-pagination =\"true\"" + "\n";
         data += "       data-side-pagination=\"server\"" + "\n";
         data += "       data-page-size=\"20\"" + "\n";
         data += "       data-url=\"" + GetDataUlr() + "\"" + "\n";
