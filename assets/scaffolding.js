@@ -14,6 +14,25 @@ String.prototype.clearNull = function() {
     return target == undefined || target == null ? "" : target;
 };
 
+function CheckOutFile(path){
+	var checkoutAnswer = ipcRenderer.sendSync('checkout', { FilePath: path });
+	return checkoutAnswer == "checkedout";
+}
+
+function DisplayCheckoutError(errorMessage){
+	$(".mdlErrorMessage").html(errorMessage);
+	$("#mdlErrorCheckout").modal('open')
+}
+
+function RunScaffolding(args){
+	answer = ipcRenderer.sendSync('run-scaffolding', args);	
+	if(answer == "saved"){ 
+		window.setTimeout(function(){
+			$(".content").load("home.html");
+		}, 500);
+	}
+}
+
 function ucFirstAllWords( str )
 {
 	str = str.replace(/([a-z])([A-Z])/g, '$1 $2');
@@ -303,7 +322,9 @@ $(document).ready(function () {
 	$("#btnWriteScaffolding").click(function(){
 		$("#mdlConfirm").modal('open')
 	});
-	
+	$("#btnErrorOk").click(function(){
+		$('#mdlErrorCheckout').modal('close');
+	});
 	$("#btnOk").click(function(){
 		$('#mdlConfirm').modal('close');
 		var answer = ""
@@ -341,16 +362,28 @@ $(document).ready(function () {
 			UpdateScaffoldJsonInfo(currentServiceData, entity);
 			WriteJsonFile(currentServiceData, configInfo.GetServiceSourceLocation());
 		}
-		
-		answer = ipcRenderer.sendSync('run-scaffolding', args);	
-		if(answer == "saved"){ 
-			window.setTimeout(function(){
-				$(".content").load("home.html");
-			}, 500);
+		if(CheckOutFile(args.ServiceLocation)){
+			if(args.AddToPlugin && args.PluginLocation != null && args.PluginLocation != ""){
+				if(CheckOutFile(args.PluginLocation)){
+					RunScaffolding(args);
+				} else {
+					DisplayCheckoutError("Error checking out plugin project " + args.PluginLocation);
+				}
+			} else if(args.AddToPlugin && args.ApplicationLocation != null && args.ApplicationLocation != ""){
+				if(CheckOutFile(args.ApplicationLocation)){
+					RunScaffolding(args);
+				} else {
+					DisplayCheckoutError("Error checking out application project " + args.ApplicationLocation);
+				}
+			} else {
+				//move on
+				RunScaffolding(args);
+			}
+		} else {
+			DisplayCheckoutError("Error checking out service project at " + args.ServiceLocation);
 		}
 	});
-	
-	
+
 
 	$('.modal').modal({
 		dismissible: false, // Modal can be dismissed by clicking outside of the modal

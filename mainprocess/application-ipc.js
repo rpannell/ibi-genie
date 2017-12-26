@@ -3,10 +3,24 @@ var elecConfig = require("electron-config");
 const fs = require('fs');
 const path = require('path');
 var config = require('../assets/config');
+var tfs = require('../assets/tfs-unlock');
 var yeoman = require('yeoman-environment');
 var yeomanEnv = yeoman.createEnv();
 var glob = require('glob');
 const logger = require('winston');  
+tfs.init({
+	"visualStudioPath": tfs.vs2017.bit64
+});
+ipcMain.on('checkout', (event, arg) => {
+	var files = glob.sync(path.join(arg.FilePath, "*.csproj"));
+    tfs.checkout(files).then(function(){
+		console.log("Done");
+		event.returnValue = "checkedout";
+	}, function(error){
+		console.log(error);
+		event.returnValue = 'error: ' + error;
+	});
+});
 
 ipcMain.on('update-config', (event, arg) => {
     config.UpdateConfig(arg);
