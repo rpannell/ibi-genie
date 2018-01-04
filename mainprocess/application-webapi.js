@@ -1,4 +1,6 @@
-﻿/*
+﻿
+
+/*
  * Used to set a string to title case
  */
 String.prototype.titlecase = function (lang, withLowers = false) {
@@ -56,8 +58,11 @@ const path = require('path');
 const fs = require('fs');
 const jsonfile = require('jsonfile');
 var elecConfig = require("electron-config");
+var tfs = require('../assets/tfs-unlock');
 var config = new elecConfig();
-
+tfs.init({
+	"visualStudioPath": tfs.vs2017.bit64
+});
 /*
  * Used to help with the body of a web-api call
  */
@@ -178,8 +183,12 @@ webApi.post('/GetCurrentJson', function (req, res) {
 webApi.post('/SetJson', function (req, res) {
 	var currLoc = req.body.CurrentLocation;
 	var updatedData = req.body.JsonData;
-	var realPath = path.join(currLoc, "scaffoldinginfo.json");
-	jsonfile.writeFileSync(realPath, JSON.parse(updatedData), {spaces: 2, flag : 'w'})
+    var realPath = path.join(currLoc, "scaffoldinginfo.json");
+    var files = [];
+    files.push(realPath);
+    tfs.checkout(files).then(function(){
+        jsonfile.writeFileSync(realPath, JSON.parse(updatedData), {spaces: 2, flag : 'w'})
+    });
 });
 
 /*

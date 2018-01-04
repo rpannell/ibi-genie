@@ -4,8 +4,6 @@ const fs = require('fs');
 const path = require('path');
 var config = require('../assets/config');
 var tfs = require('../assets/tfs-unlock');
-var yeoman = require('yeoman-environment');
-var yeomanEnv = yeoman.createEnv();
 var glob = require('glob');
 const logger = require('winston');  
 tfs.init({
@@ -29,6 +27,8 @@ ipcMain.on('update-config', (event, arg) => {
 
 ipcMain.on('run-extended', (event, arg) => {
 	try{
+		var yeoman = require('yeoman-environment');
+		var yeomanEnv = yeoman.createEnv();
 		yeomanEnv.lookup(() => {
 			yeomanEnv.run('ibi-appframework:ExtendWebApiService', { 'entityname': 		arg.EntityName, 
 																	'functionname': 	arg.FunctionName, 
@@ -49,7 +49,8 @@ ipcMain.on('run-extended', (event, arg) => {
 });
 
 ipcMain.on('run-templates', (event, arg) => {
-	
+	var yeoman = require('yeoman-environment');
+	var yeomanEnv = yeoman.createEnv();
 	if(arg.StandardPlugin) {
 		yeomanEnv.lookup(() => {
 			yeomanEnv.run('ibi-appframework:StandardPlugin', { 'pluginName': 			arg.Name, 
@@ -91,6 +92,8 @@ ipcMain.on('run-templates', (event, arg) => {
 });
 
 ipcMain.on('run-scaffolding', (event, arg) => {
+	var yeoman = require('yeoman-environment');
+	var yeomanEnv = yeoman.createEnv();
 	logger.info("--Scaffolding Arguments---", arg);
 	yeomanEnv.lookup(() => {
 		yeomanEnv.run('ibi-appframework:EFWebApiService', { 'projectname': 	arg.ProjectName, 
