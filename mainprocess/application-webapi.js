@@ -186,9 +186,15 @@ webApi.post('/SetJson', function (req, res) {
     var realPath = path.join(currLoc, "scaffoldinginfo.json");
     var files = [];
     files.push(realPath);
-    tfs.checkout(files).then(function(){
+    var stats = fs.statSync(realPath);
+    if(stats["mode"] & 2){
+        //file is already writable
         jsonfile.writeFileSync(realPath, JSON.parse(updatedData), {spaces: 2, flag : 'w'})
-    });
+    } else {
+        tfs.checkout(files).then(function(){
+            jsonfile.writeFileSync(realPath, JSON.parse(updatedData), {spaces: 2, flag : 'w'})
+        });
+    }      
 });
 
 /*
