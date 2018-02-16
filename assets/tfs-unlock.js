@@ -10,6 +10,7 @@
 
 var _handlePaths,
 	findVisualStudioPath,
+	isFileWritable,
 	fs = require('fs'),
 	messages = {
 		"shell": {
@@ -133,6 +134,12 @@ _handlePaths = function (paths, command) {
 		return deferred.promise;
 	}));
 };
+
+isFileWritable = function(filePath){
+	var stats = fs.statSync(filePath);
+	return (stats["mode"] & 2);
+};
+
 findVisualStudioPath = function () {
 	var wd;
 
@@ -180,7 +187,18 @@ exports.init = function (param) {
 
 // TFS `command-line http://msdn.microsoft.com/en-us/library/z51z7zy0(v=vs.100).aspx
 exports.checkout = function (paths) {
-	return tfs(paths, 'checkout');
+	var notWritableFiles = [];
+	for(var i = 0; i < paths.length; i++){
+		if(!isFileWritable(paths[i])){
+			notWritableFiles.push(paths[i])		;
+		}
+	}
+
+	if(notWritableFiles.length > 0)
+		return tfs(paths, 'checkout');
+	else {
+		return new Promise(function(resolve){resolve()});
+	}
 };
 exports.undo = function (paths) {
 	return tfs(paths, 'undo /noprompt');

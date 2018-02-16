@@ -149,6 +149,11 @@
 <div id="mdlAdd" class="modal modal-fixed-footer">
 	<div class="modal-content">
 		<h4>Entity Info</h4>
+		<div class="row hidden" id="dvPrimaryKeyAlert">
+			<div class="col-xs-12">
+				<div class="alert alert-danger" role="alert"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>&nbsp;&nbsp;The entity must have column set to the primary key and cannot have more than 1 as the primary key</div>
+			</div>
+		</div>
 		<form class="form-horizontal">
 			<input type="hidden" id="hdSchema" />
 			<input type="hidden" id="hdTableName" />
@@ -214,7 +219,7 @@
 								<th data-field="MaxLength">String Length</th>
 								<th data-field="PropertyName" data-editable="true">Property</th>
 								<th data-field="PropertyType" data-editable="true" data-editable-type="select" data-editable-sourceCache="true" data-editable-source="http://localhost:3000/GetPropertyType">Property Type</th>
-								<th data-field="IsPrimaryKey" data-title="PK" data-radio="true" data-check-box-header="true">PK</th>
+								<th data-field="IsPrimaryKey" data-editable="true" data-editable-type="select" data-editable-sourceCache="true" data-editable-source="http://localhost:3000/GetYesNo">PK</th>
 								<th data-field="Ignore" data-editable="true" data-editable-type="select" data-editable-sourceCache="true" data-editable-source="http://localhost:3000/GetYesNo">Ignore</th>
 								<th data-field="IsInsertOnly" data-editable="true" data-editable-type="select" data-editable-sourceCache="true" data-editable-source="http://localhost:3000/GetYesNo">Ins Only</th>
 								<th data-field="IsAutoComplete" data-editable="true" data-editable-type="select" data-editable-sourceCache="true" data-editable-source="http://localhost:3000/GetYesNo">Auto Compl</th>

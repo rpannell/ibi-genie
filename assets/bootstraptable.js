@@ -22,6 +22,14 @@ function GetDataUlr(){
     return (area != "" ? ("/" + area) : "") + (controller != "" ? ("/" + controller) : "") + (action != "" ? ("/" + action) : "")
 }
 
+function GetAdvancedSearchSpacing(str){
+    if($("#chkAdvancedSearch").is(":checked")){
+        return "                    " + str + "\n";
+    }
+
+    return str + "\n";
+}
+
 function CreateTable(){
     var data = "";
     var displayBooleanFormatter = false;
@@ -31,95 +39,160 @@ function CreateTable(){
             displayBooleanFormatter = true;
         }
     }
-
-    if($("#chkToolbar").is(":checked")){
-        data += "<div id=\"custom-toolbar\">" + "\n";
-        data += "   <button class=\"btn btn-primary\" id=\"btnNew\" style=\"margin-bottom: 10px;margin-top: 10px;\">" + "\n";
-        data += "       <span class=\"glyphicon glyphicon-plus\" aria-hidden=\"true\" style=\"margin-right: 5px;\"></span>New" + "\n";
-        data += "   </button>" + "\n";
-        data += "</div>" + "\n";
+    if($("#chkAdvancedSearch").is(":checked")){
+        data += "<section id=\"widget-grid\">" + "\n";
+        data += "   <div class=\"col-xs-12\" style=\"margin-top:20px;\">" + "\n";
+        data += "       <div class=\"jarviswidget jarviswidget-color-blueDark\" id=\"wid-id-" + $("#txtTableId").val() + "\" data-widget-colorbutton=\"false\" data-widget-editbutton=\"false\" data-widget-togglebutton=\"false\" data-widget-deletebutton=\"false\">" + "\n";
+        data += "           <header><h2>Master List</h2></header>" + "\n";
+        data += "           <div>" + "\n";
+        data += "               <div class=\"widget-body\">" + "\n";
+        data += "                   <div class=\"widget-body-toolbar\">" + "\n";
+        data += "                       <div class=\"panel-group smart-accordion-default\" id=\"divAdvSearch\">" + "\n";
+        data += "                           <div class=\"panel panel-default\">" + "\n";
+        data += "                               <div class=\"panel-heading\"><h4 class=\"panel-title\"><a data-toggle=\"collapse\" data-parent=\"#divAdvSearch\" href=\"#divAdvSearchInfo\" aria-expanded=\"false\" class=\"collapsed\"> <i class=\"fa fa-lg fa-angle-down pull-right\"></i> <i class=\"fa fa-lg fa-angle-up pull-right\"></i><span> <i class=\"fa fa-search\"></i> </span>Advanced Search</a></h4></div>" + "\n";
+        data += "                               <div id=\"divAdvSearchInfo\" class=\"panel-collapse collapse\" aria-expanded=\"false\" style=\"height: 0px;\">" + "\n";
+        data += "                                   <div class=\"panel-body\">" + "\n";
+        data += "                                       <div class=\"smart-form\">" + "\n";
+        data += "                                           <div class=\"row\">" + "\n";
+        data += "                                               <section class=\"col col-12\">" + "\n";
+        data += "                                                   <label class=\"label\">Search:</label>" + "\n";
+        data += "                                                   <label class=\"input\"><input type=\"text\" class=\"form-control\" id=\"txtSearchValue\" /></label>" + "\n";
+        data += "                                               </section>" + "\n";
+        data += "                                           </div>" + "\n";
+        data += "                                       </div>" + "\n";
+        data += "                                   </div>" + "\n";
+        data += "                                   <div class=\"panel-footer text-right\">" + "\n";
+        data += "                                       <button type=\"button\" id=\"btnResetSearch\" class=\"btn btn-labeled btn-primary\"><span class=\"btn-label\"><i class=\"glyphicon glyphicon-remove\"></i></span>Reset</button>" + "\n";
+        data += "                                       <button type=\"button\" id=\"btnSearch\" class=\"btn btn-labeled btn-primary\"> <span class=\"btn-label\"><i class=\"glyphicon glyphicon-search\"></i></span>Search</button>" + "\n";
+        data += "                                   </div>" + "\n";
+        data += "                               </div>" + "\n";
+        data += "                           </div>" + "\n";
+        data += "                       </div>" + "\n";
+        data += "                   </div>" + "\n";
     }
-    data += "<table id=\"" + $("#txtTableId").val() + "\"" + "\n";
-    data += "       class=\"table table-striped\"" + "\n";
+    data += GetAdvancedSearchSpacing("<div class=\"well col-xs-12\" style=\"margin-bottom:20px;\">");
+    if($("#chkToolbar").is(":checked")){
+        data += GetAdvancedSearchSpacing("   <div id=\"custom-toolbar\">");
+        data += GetAdvancedSearchSpacing("       <button class=\"btn btn-primary\" id=\"btnNew\" style=\"margin-bottom: 10px;margin-top: 10px;\">");
+        data += GetAdvancedSearchSpacing("           <span class=\"glyphicon glyphicon-plus\" aria-hidden=\"true\" style=\"margin-right: 5px;\"></span>New");
+        data += GetAdvancedSearchSpacing("       </button>");
+        data += GetAdvancedSearchSpacing("   </div>");
+    }
+    data += GetAdvancedSearchSpacing("   <table id=\"" + $("#txtTableId").val() + "\"");
+    data += GetAdvancedSearchSpacing("           class=\"table table-striped\"");
     if($("#chkServerSidePaging").is(":checked")){
-        data += "       data-pagination =\"true\"" + "\n";
-        data += "       data-side-pagination=\"server\"" + "\n";
-        data += "       data-page-size=\"20\"" + "\n";
-        data += "       data-url=\"" + GetDataUlr() + "\"" + "\n";
+        data += GetAdvancedSearchSpacing("           data-pagination =\"true\"");
+        data += GetAdvancedSearchSpacing("           data-side-pagination=\"server\"");
+        data += GetAdvancedSearchSpacing("           data-page-size=\"20\"");
+        data += GetAdvancedSearchSpacing("           data-url=\"" + GetDataUlr() + "\"");
     }
     if($("#chkToolbar").is(":checked")){
-        data += "       data-toolbar=\"#custom-toolbar\"" + "\n";
+        data += GetAdvancedSearchSpacing("           data-toolbar=\"#custom-toolbar\"");
     }
     if($("#chkSearch").is(":checked")){
-        data += "       data-search=\"true\"" + "\n";
+        data += GetAdvancedSearchSpacing("           data-search=\"true\"");
     }
     if($("#chkExport").is(":checked")){
-        data += "       data-show-export=\"true\"" + "\n";
+        data += GetAdvancedSearchSpacing("           data-show-export=\"true\"");
     }
     if($("#chkShowColumns").is(":checked")){
-        data += "       data-show-columns=\"true\"" + "\n";
+        data += GetAdvancedSearchSpacing("           data-show-columns=\"true\"");
     }
     if($("#chkRefresh").is(":checked")){
-        data += "       data-show-refresh=\"true\"" + "\n";
+        data += GetAdvancedSearchSpacing("           data-show-refresh=\"true\"");
     }        
     if($("#chkDetails").is(":checked")){
-        data += "       data-detail-view=\"true\"" + "\n";
-        data += "       data-detail-formatter=\"DetailFormatter\"" + "\n";
+        data += GetAdvancedSearchSpacing("           data-detail-view=\"true\"");
+        data += GetAdvancedSearchSpacing("           data-detail-formatter=\"DetailFormatter\"");
     }        
-    data += "       data-query-params=\"SearchParams\"" + "\n";
-    data += "       data-toggle=\"table\">" + "\n";
-    data += "   <thead>" + "\n";
-    data += "       <tr>" + "\n";
+    data += GetAdvancedSearchSpacing("           data-query-params=\"SearchParams\"");
+    data += GetAdvancedSearchSpacing("           data-toggle=\"table\">");
+    data += GetAdvancedSearchSpacing("       <thead>");
+    data += GetAdvancedSearchSpacing("           <tr>");
     for(var i = 0; i < tableFields.length; i++){
         var field = tableFields[i];
-        data += "           <th" + (field.Sortable ? " data-sortable=\"true\"" : "") + (field.Searchable ? " data-search=\"true\"" : "") + (field.Boolean ? " data-formatter=\"booleanFormatter\"" : "") + " data-valign=\"middle\" data-halign=\"center\" data-field=\"" + field.FieldName  + "\">" + field.ColumnName + "</th>" + "\n";
+        data += GetAdvancedSearchSpacing("               <th" + (field.Sortable ? " data-sortable=\"true\"" : "") + (field.Searchable ? " data-search=\"true\"" : "") + (field.Boolean ? " data-formatter=\"booleanFormatter\"" : "") + " data-valign=\"middle\" data-halign=\"center\" data-field=\"" + field.FieldName  + "\">" + field.ColumnName + "</th>");
     }
     if($("#chkOperations").is(":checked")){
-        data += "           <th data-halign=\"center\" data-align=\"center\" data-valign=\"middle\" data-field=\"Actions\" data-formatter=\"OperateFormatter\" data-events=\"operateEvents\">Actions</th>" + "\n";
+        data += GetAdvancedSearchSpacing("               <th data-halign=\"center\" data-align=\"center\" data-valign=\"middle\" data-field=\"Actions\" data-formatter=\"OperateFormatter\" data-events=\"operateEvents\">Actions</th>");
     }
-    data += "       </tr>" + "\n";
-    data += "   </thead>" + "\n";
-    data += "</table>" + "\n";
-    data += "<script>" + "\n";
-    data += "   //Used to alter search params before sending data to the controller." + "\n";
-    data += "   function SearchParams(params) {" + "\n";
-    data += "       return params;" + "\n";
-    data += "   }" + "\n";
+    data += GetAdvancedSearchSpacing("           </tr>");
+    data += GetAdvancedSearchSpacing("       </thead>");
+    data += GetAdvancedSearchSpacing("   </table>");
+    data += GetAdvancedSearchSpacing("</div>");
+
+    if($("#chkAdvancedSearch").is(":checked")){
+        data += "               </div>" + "\n";
+        data += "           </div>" + "\n";
+        data += "       </div>" + "\n";
+        data += "   </div>" + "\n";
+        data += "</section>" + "\n";
+    }
+    
+    data += "@section scripts{" + "\n";
+    data += "   <script>" + "\n";
+    data += "       //Used to alter search params before sending data to the controller." + "\n";
+    data += "       function SearchParams(params) {" + "\n";
+    data += "           return params;" + "\n";
+    data += "       }" + "\n";
     if(displayBooleanFormatter){
-        data += "   function booleanFormatter(value, row, index) {" + "\n";
-        data += "       return value" + "\n";
-        data += "               ? [\"<span class=\"label label-primary\"><span class=\"fa fa-check\"></span></span>\"].join('')" + "\n";
-        data += "               : return [\"\"].join('');" + "\n";
-        data += "   }" + "\n";
+        data += "       function booleanFormatter(value, row, index) {" + "\n";
+        data += "        return value" + "\n";
+        data += "                   ? [\"<span class=\"label label-primary\"><span class=\"fa fa-check\"></span></span>\"].join('')" + "\n";
+        data += "                   : return [\"\"].join('');" + "\n";
+        data += "       }" + "\n";
     }
 
     if($("#chkDetails").is(":checked")){
-        data += "   //Used to display data when a row is expanded." + "\n";
-        data += "   function DetailFormatter(index, row, element) {" + "\n";
-        data += "       return 'This is code generated by the DetailFormatter Javascript function found in the View';" + "\n";
-        data += "   }" + "\n";
+        data += "       //Used to display data when a row is expanded." + "\n";
+        data += "       function DetailFormatter(index, row, element) {" + "\n";
+        data += "           return \"<div id='detailSource-\" + index + \"'></div>\";" + "\n";
+        data += "       }" + "\n";
     }
     if($("#chkOperations").is(":checked")){
-        data += "   var operateEvents = {" + "\n";
-        data += "       'click .edit_btn': function (e, value, row, index) {" + "\n";
-        data += "           //EDIT BUTTON FUNCTION GOES HERE" + "\n";
-        data += "       }," + "\n";
-        data += "       'click .delete_btn': function (e, value, row, index) {" + "\n";
-        data += "           //DELETE BUTTON FUNCTION GOES HERE" + "\n";
+        data += "       var operateEvents = {" + "\n";
+        data += "           'click .edit_btn': function (e, value, row, index) {" + "\n";
+        data += "               //EDIT BUTTON FUNCTION GOES HERE" + "\n";
+        data += "           }," + "\n";
+        data += "           'click .delete_btn': function (e, value, row, index) {" + "\n";
+        data += "               //DELETE BUTTON FUNCTION GOES HERE" + "\n";
+        data += "           }" + "\n";
+        data += "           //MORE CLICK ACTION CAN BE DETECTED HERE" + "\n";
+        data += "       };" + "\n";
+        data += "       function OperateFormatter(index, row, element) {" + "\n";
+        data += "           return [" + "\n";
+        data += "               '<div class=\"btn-group\">' +" + "\n";
+        data += "                   '<button type=\"button\" class=\"btn btn-default edit_btn\">Edit</button>' +" + "\n";
+        data += "                   '<button type=\"button\" class=\"btn btn-default delete_btn\">Delete</button>' +" + "\n";
+        data += "                   //MORE CAN BE ADDED HERE" + "\n";
+        data += "               '</div>'" + "\n";
+        data += "           ].join('');" + "\n";
         data += "       }" + "\n";
-        data += "       //MORE CLICK ACTION CAN BE DETECTED HERE" + "\n";
-        data += "   };" + "\n";
-        data += "   function OperateFormatter(index, row, element) {" + "\n";
-        data += "       return [" + "\n";
-        data += "           '<div class=\"btn-group\">' +" + "\n";
-        data += "               '<button type=\"button\" class=\"btn btn-default edit_btn\">Edit</button>' +" + "\n";
-        data += "               '<button type=\"button\" class=\"btn btn-default delete_btn\">Delete</button>' +" + "\n";
-        data += "               //MORE CAN BE ADDED HERE" + "\n";
-        data += "           '</div>'" + "\n";
-        data += "       ].join('');" + "\n";
-        data += "   }" + "\n";
     }
-    data += "</script>" + "\n";
+
+    data += "       $(document).ready(function () {" + "\n";
+    if($("#chkAdvancedSearch").is(":checked")){
+        data += "           $(\"#btnResetSearch\").click(function () {" + "\n";
+        data += "               //Add the code to reset the search" + "\n";
+        data += "               IBI.UI.SetTextBoxValue(\"txtSearchValue\", \"\");" + "\n";
+        data += "               IBI.BootstrapTable.Refresh(\"" + $("#txtTableId").val() + "\");" + "\n";
+        data += "           });" + "\n";
+        data += "           $(\"#btnSearch\").click(function () {" + "\n";
+        data += "               IBI.BootstrapTable.Refresh(\"" + $("#txtTableId").val() + "\");" + "\n";
+        data += "           });" + "\n";
+    }
+    if($("#chkDetails").is(":checked")){
+        data += "           $('#" + $("#txtTableId").val() +  "').on('expand-row.bs.table', function (index, row, $detail) {" + "\n";
+        data += "               //Call the plugin action to get a partial view of the detail data" + "\n";
+        data += "               //$.get(url, function(partialView){" + "\n";
+        data += "               //  IBI.UI.ClearHtml(\"detailSource-\" + index + \");" + "\n";
+        data += "               //  IBI.UI.SetHtml(\"detailSource-\" + index + \", partialView);" + "\n";
+        data += "               //});" + "\n";
+        data += "           });" + "\n";
+    }
+    data += "       });" + "\n";
+    data += "   </script>" + "\n";
+    data += "}" + "\n";
     //data += "" + "\n";
     $("#codeBlock").empty();
     $("#codeBlock").html(escapeHtml(data));

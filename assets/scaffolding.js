@@ -90,6 +90,7 @@ function LoadTables(){
 }
 
 function ClearEntityInfo(){
+	$("#dvPrimaryKeyAlert").addClass("hidden");
 	$("#chkReadOnly").prop('checked', false);
 	$('#tblEntityInfo').bootstrapTable('removeAll');
 	$("#txtEntityName").val("");
@@ -261,7 +262,7 @@ $(document).ready(function () {
 							if(databaseInformation[i].ColumnName == property.DatabaseColumn){
 								databaseInformation[i].IsNullable = property.IsNullable;
 								databaseInformation[i].PropertyName = property.PropertyName;
-								databaseInformation[i].IsPrimaryKey = property.IsPrimary;
+								//databaseInformation[i].IsPrimaryKey = property.IsPrimary;
 								databaseInformation[i].PropertyType = property.PropertyType;
 								databaseInformation[i].Ignore = property.Ignore;
 								databaseInformation[i].IsInsertOnly = property.IsInsertOnly != undefined ? property.IsInsertOnly : false;
@@ -286,37 +287,48 @@ $(document).ready(function () {
 	});
 	
 	$("#btnAddNewEntity").click(function(){
+		$("#dvPrimaryKeyAlert").addClass("hidden");
 		var columnData = $("#tblEntityInfo").bootstrapTable('getData', true);
-		var tableInfo = {
-			PropertyName: $("#txtEntityName").val(),
-			TableName: $("#hdTableName").val(),
-			Schema: $("#hdSchema").val(),
-			IsReadOnly: $("#chkReadOnly").prop('checked'),
-			Columns: columnData
+		var pkCount = 0;
+		for(var i = 0; i < columnData.length; i++){
+			if(columnData[i].IsPrimaryKey == true || columnData[i].IsPrimaryKey == "1") pkCount++;
 		}
-		
-		 for(var i = 0; i < entityInfo.length; i++){
-			var currentEntityInfo = entityInfo[i];
-			if(currentEntityInfo.PropertyName == tableInfo.PropertyName){
-				entityInfo.splice(i,1);
+		console.log(columnData);
+		console.log(pkCount);
+		if(pkCount == 1){
+
+			var tableInfo = {
+				PropertyName: $("#txtEntityName").val(),
+				TableName: $("#hdTableName").val(),
+				Schema: $("#hdSchema").val(),
+				IsReadOnly: $("#chkReadOnly").prop('checked'),
+				Columns: columnData
 			}
-		 }
-		entityInfo.push(tableInfo);
-		$('#table').bootstrapTable('load', entityInfo);
-		ClearEntityInfo();
-		$('#mdlAdd').modal('close');
-			$('.dropdown-button').dropdown({
-				inDuration: 300,
-				outDuration: 225,
-				constrainWidth: true, // Does not change width of dropdown to that of the activator
-				hover: false, // Activate on hover
-				gutter: 0, // Spacing from edge
-				belowOrigin: true, // Displays dropdown below the button
-				alignment: 'left', // Displays dropdown with edge aligned to the left of button
-				stopPropagation: false // Stops event propagation
-			  });
+			
+			for(var i = 0; i < entityInfo.length; i++){
+				var currentEntityInfo = entityInfo[i];
+				if(currentEntityInfo.PropertyName == tableInfo.PropertyName){
+					entityInfo.splice(i,1);
+				}
+			}
+			entityInfo.push(tableInfo);
+			$('#table').bootstrapTable('load', entityInfo);
+			ClearEntityInfo();
+			$('#mdlAdd').modal('close');
+				$('.dropdown-button').dropdown({
+					inDuration: 300,
+					outDuration: 225,
+					constrainWidth: true, // Does not change width of dropdown to that of the activator
+					hover: false, // Activate on hover
+					gutter: 0, // Spacing from edge
+					belowOrigin: true, // Displays dropdown below the button
+					alignment: 'left', // Displays dropdown with edge aligned to the left of button
+					stopPropagation: false // Stops event propagation
+				});
 	
-		
+		} else {
+			$("#dvPrimaryKeyAlert").removeClass("hidden");
+		}
 	});
 	
 	$("#btnWriteScaffolding").click(function(){
@@ -346,14 +358,16 @@ $(document).ready(function () {
 			var pk = "int";
 			var pkname = "";
 			for(var j = 0; j < entity.Columns.length; j++){
+				entity.Columns[j].Ignore = (entity.Columns[j].Ignore == "1" ? true : false);
+				entity.Columns[j].IsInsertOnly = (entity.Columns[j].IsInsertOnly == "1" ? true : false);
+				entity.Columns[j].IsAutoComplete = (entity.Columns[j].IsAutoComplete == "1" ? true : false);
+				entity.Columns[j].IsPrimaryKey = (entity.Columns[j].IsPrimaryKey == true || entity.Columns[j].IsPrimaryKey == "1" ? true : false);
 				if(entity.Columns[j].IsPrimaryKey){
 					pk = entity.Columns[j].PropertyType.replace("?", "");
 					entity.Columns[j].PropertyType = pk;
 					pkname = entity.Columns[j].PropertyName;
 				}
-				entity.Columns[j].Ignore = (entity.Columns[j].Ignore == "1" ? true : false);
-				entity.Columns[j].IsInsertOnly = (entity.Columns[j].IsInsertOnly == "1" ? true : false);
-				entity.Columns[j].IsAutoComplete = (entity.Columns[j].IsAutoComplete == "1" ? true : false);
+				
 			}
 			entity.PrimaryKey = pk;
 			entity.PrimaryName = pkname;
