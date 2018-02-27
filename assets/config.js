@@ -35,7 +35,7 @@ exports.GetDatabaseConnection = function () {
 			server: systemConstants.DEFAULTDEVSERVER,
 			password: systemConstants.DEFAULTDEVPASSWORD,
 			options: {
-				encrypt: false
+				encrypt: true
 			}
 		};
 	} else {
@@ -45,7 +45,7 @@ exports.GetDatabaseConnection = function () {
 			user: config.DatabaseUser,
 			password: config.DatabasePassword,
 			options: {
-				encrypt: false
+				encrypt: true
 			}
 		};
 	}
