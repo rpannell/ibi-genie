@@ -54,7 +54,7 @@ function CreateTable(){
         data += "                                   <div class=\"panel-body\">" + "\n";
         data += "                                       <div class=\"smart-form\">" + "\n";
         data += "                                           <div class=\"row\">" + "\n";
-        data += "                                               <section class=\"col col-12\">" + "\n";
+        data += "                                               <section class=\"col col-xs-12\">" + "\n";
         data += "                                                   <label class=\"label\">Search:</label>" + "\n";
         data += "                                                   <label class=\"input\"><input type=\"text\" class=\"form-control\" id=\"txtSearchValue\" /></label>" + "\n";
         data += "                                               </section>" + "\n";
