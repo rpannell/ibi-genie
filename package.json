@@ -51,7 +51,7 @@
     "jquery-validation": "^1.16.0",
     "jsonfile": "^3.0.1",
     "materialize-css": "^0.100.2",
-    "moment": "^2.20.1",
+    "moment": "^2.21.0",
     "mssql": "^4.1.0",
     "q": "^1.5.1",
     "redis": "^2.8.0",
