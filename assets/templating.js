@@ -10,7 +10,7 @@ $.validator.addMethod('standardPluginDataRequired', function (value, element, pa
 }, 'Required For Standard Plugin');
 
 $.validator.addMethod('standardServiceDataRequired', function (value, element, param) {
-	return $("#standardService").is(":checked") && value != undefined && value != null && value != "";
+	return ($("#standardService").is(":checked") || $("#coreService").is(":checked")) && value != undefined && value != null && value != "";
 }, 'Required For Standard Service');
 
 $.validator.addMethod('noSpace', function (value, element, param) {

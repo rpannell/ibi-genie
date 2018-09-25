@@ -280,12 +280,9 @@ function DatabaseTypeToSystemType(datatype, isNullable) {
         rtnString = "byte[]";
     }
     else if (datatype == "float") {
-        rtnString = isNullable ? "float?" : "float";
-    }
-    else if (datatype == "numeric") {
         rtnString = isNullable ? "double?" : "double";
     }
-	else if (datatype == "money" || datatype == "smallmoney" || datatype == "decimal") {
+	else if (datatype == "money" || datatype == "smallmoney" || datatype == "decimal" || datatype == "numeric") {
         rtnString = isNullable ? "decimal?" : "decimal";
     }
     else if (datatype == "uniqueidentifier") {

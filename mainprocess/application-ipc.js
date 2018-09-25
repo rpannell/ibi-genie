@@ -86,6 +86,13 @@ ipcMain.on('run-templates', (event, arg) => {
 																'databaseProdPassword': arg.DatabaseProdPassword
 															  }, err => { });
 		});
+	} else if(arg.CoreService){
+		yeomanEnv.lookup(() => {
+			yeomanEnv.run('ibi-appframework:CoreService', { 'serviceName': 			arg.Name, 
+																'sourceLocation': 		arg.SourceLocation, 
+																'databaseName': 		arg.DatabaseName
+															  }, err => { });
+		});
 	}
 	
 	event.returnValue = 'saved';
