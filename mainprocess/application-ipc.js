@@ -63,7 +63,7 @@ ipcMain.on('run-templates', (event, arg) => {
 		});
 	} else if(arg.StandardApplication){
 		yeomanEnv.lookup(() => {
-			yeomanEnv.run('ibi-appframework:StandardApplication', { 'pluginName': 				arg.Name, 
+			yeomanEnv.run('ibi-appframework:CoreApplication', { 'pluginName': 				arg.Name, 
 																	'sourceLocation': 			arg.SourceLocation, 
 																	'createMasterSolution': 	arg.CreateMaster,
 																	'webServiceUrl': 			arg.WebServiceUrl,

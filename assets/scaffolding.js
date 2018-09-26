@@ -181,12 +181,18 @@ $(document).ready(function () {
 	if(configInfo.IsPlugin()){
 		$(".plugininfo").removeClass("hidden");
 		$("#lblPluginLocation").html(configInfo.GetPluginSourceLocation());
+		if(configInfo.GetPluginSourceLocation() == "" || configInfo.GetPluginSourceLocation() != null){
+			$("#chkScaffoldPlugin").removeAttr("checked");
+		}
 		$("#dvPluginLocation").html(configInfo.GetPluginSourceLocation());
 		$("#lblPluginCheckBoxLabel").append(" Add Entity to Plugin");
 	} else {
 		$(".appinfo").removeClass("hidden");
 		$("#lblApplication").html(configInfo.GetApplicationSourceLocation());
 		$("#dvApplicationLocation").html(configInfo.GetApplicationSourceLocation());
+		if(configInfo.GetApplicationSourceLocation() == "" || configInfo.GetApplicationSourceLocation() != null){
+			$("#chkScaffoldPlugin").removeAttr("checked");
+		}
 		$("#lblPluginCheckBoxLabel").append(" Add Entity to Application");
 	}
 	
