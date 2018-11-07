@@ -37,6 +37,7 @@ function ucFirstAllWords( str )
 {
 	str = str.replace(/([a-z])([A-Z])/g, '$1 $2');
     str = str.replace(/([A-Z])([A-Z][a-z])/g, '$1 $2')
+	str = str.replaceAll(" ", ""); //clean spaces in the name
 	str = str.replaceAll("_", " ");
 	var pieces = str.split(" ");
 	for ( var i = 0; i < pieces.length; i++ )

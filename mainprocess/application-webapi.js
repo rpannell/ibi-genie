@@ -3,6 +3,13 @@
 /*
  * Used to set a string to title case
  */
+String.prototype.replaceAll = function(search, replacement) {
+    var target = this;
+    return target.replace(new RegExp(search, 'g'), replacement);
+};
+
+
+
 String.prototype.titlecase = function (lang, withLowers = false) {
     var i, string, lowers, uppers;
 
@@ -256,7 +263,7 @@ function ToPascalCase(input) {
         rtn = input;
     }
 
-    return rtn;
+    return rtn.replaceAll(" ", "");
 }
 
 /// Converts the database type to a C# type
