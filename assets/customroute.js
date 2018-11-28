@@ -62,7 +62,12 @@ function RunTemplate() {
             configInfo.GetApplicationSourceLocation(),
         FunctionInfo: JSON.stringify(funtionInfo),
         ReturnsList: $("#dlReturn").val() == "list",
-        IsPost: $("#dlAction").val() == "post"
+        IsPost: $("#dlAction").val() == "post",
+        ReturnType: $("#dlReturn").val() == "list" 
+                        ? "L"
+                        : $("#dlReturn").val() == "single"
+                            ? "S"
+                            :  "V"
     };
     console.log(templateParameters);
     ipcRenderer.send('run-extended', templateParameters);

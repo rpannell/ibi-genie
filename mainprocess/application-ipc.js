@@ -37,7 +37,8 @@ ipcMain.on('run-extended', (event, arg) => {
 																	'functionInfo': 	arg.FunctionInfo,
 																	'isList': 			arg.ReturnsList,
 																	'isPost': 			arg.IsPost,
-																	'force': 			true 
+																	'force': 			true,
+																	'returnType':		arg.ReturnType	
 																}, err => { 
 																	console.log(err);
 				event.sender.send('run-extended-reply', err);
