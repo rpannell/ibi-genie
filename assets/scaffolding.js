@@ -237,7 +237,14 @@ $(document).ready(function () {
 		var databaseTableName = $(this).val().split(".", 2);
 		$("#hdSchema").val(databaseTableName[0]);
 		$("#hdTableName").val(databaseTableName[1]);
-		$("#txtEntityName").val(ucFirstAllWords(databaseTableName[1]));
+		debugger;
+		if(databaseTableName[1].includes("_")){
+			$("#txtEntityName").val(ucFirstAllWords(databaseTableName[1]));
+		}
+		else
+		{
+			$("#txtEntityName").val(databaseTableName[1]);
+		}
 		Materialize.updateTextFields();
 			
 	});
