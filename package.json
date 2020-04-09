@@ -1,6 +1,6 @@
 {
   "name": "ApplicationFrameworkManagement",
-  "version": "1.1.68",
+  "version": "1.1.70",
   "description": "Application Framework Management",
   "main": "main.js",
   "scripts": {
@@ -62,6 +62,7 @@
   },
   "build": {
     "appId": "apps.interlinebrands.com",
+    "buildDependenciesFromSource": true,
     "win": {
       "publish": [
         "github"

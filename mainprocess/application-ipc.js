@@ -7,7 +7,6 @@ var tfs = require('../assets/tfs-unlock');
 var glob = require('glob');
 const logger = require('winston');  
 tfs.init({
-	"visualStudioPath": tfs.vs2017.bit64
 });
 ipcMain.on('checkout', (event, arg) => {
 	var files = glob.sync(path.join(arg.FilePath, "*.csproj"));

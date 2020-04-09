@@ -68,7 +68,6 @@ var elecConfig = require("electron-config");
 var tfs = require('../assets/tfs-unlock');
 var config = new elecConfig();
 tfs.init({
-	"visualStudioPath": tfs.vs2017.bit64
 });
 /*
  * Used to help with the body of a web-api call
