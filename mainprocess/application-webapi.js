@@ -66,6 +66,8 @@ const fs = require('fs');
 const jsonfile = require('jsonfile');
 var elecConfig = require("electron-config");
 var tfs = require('../assets/tfs-unlock');
+const log = require('electron-log');
+const logger = require('winston');  
 var config = new elecConfig();
 tfs.init({
 });
@@ -90,6 +92,7 @@ var config = require('../assets/config').GetDatabaseConnection();
  * Get the list of SQL Server databases from a databas server
  */
 webApi.get('/', function (req, res) {
+    logger.info("Getting database list");
     mssql.close();
     mssql.connect(config).then(pool => {
         return pool.request()
@@ -97,6 +100,8 @@ webApi.get('/', function (req, res) {
     }).then(result => {
         res.send(result.recordset);
     }).catch(err => {
+        logger.error("Failed getting database list");
+        console.log(err);
         res.send("");
     })
 });
@@ -245,9 +250,11 @@ webApi.post('/GetTableInfo', function (req, res) {
 });
 
 /// Starts the web api service
-app.on('ready', function () {
-    webApi.listen(3000, function () { });
-})
+//app.on('ready', function () {
+//    webApi.listen(3000, function () { });
+//})
+
+webApi.listen(3000, function () { });
 
 /// Converts a string to PascalCase
 /// RGP - 09/15/2017

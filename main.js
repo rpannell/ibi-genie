@@ -3,12 +3,22 @@ const {app, BrowserWindow} = require('electron');
 const path = require('path');
 const fs = require('fs');
 const {autoUpdater} = require("electron-updater");
+const winston = require('winston');  
 //on the first run of the application the user data folder 
 //hasn't been created by this point, so create the userData
 //folder before creating the log folder
 if (!fs.existsSync(app.getPath("userData"))) {
   fs.mkdirSync(app.getPath("userData"));
 }
+
+var logFolder = path.join(app.getPath("userData"), "logs");
+var logFile = 'app.log';
+winston.configure({
+	transports: [
+	  new (winston.transports.File)({ filename: path.join(logFolder, logFile) })
+	]
+});
+
 
 function createWindow () {
   // Create the browser window.
@@ -37,8 +47,9 @@ app.whenReady().then(() => {
   createWindow()
   
   require(path.join(__dirname, 'mainprocess/application-menu.js'));
-  require(path.join(__dirname, 'mainprocess/application-webapi.js'));
   require(path.join(__dirname, 'mainprocess/application-ipc.js'));
+  require(path.join(__dirname, 'mainprocess/application-webapi.js'));
+  
 
   app.on('activate', function () {
     // On macOS it's common to re-create a window in the app when the

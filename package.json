@@ -1,13 +1,14 @@
 {
   "name": "ApplicationFrameworkManagement",
-  "version": "1.1.70",
+  "version": "1.1.71",
   "description": "Application Framework Management",
   "main": "main.js",
   "scripts": {
     "start": "electron .",
-    "dist": "build",
-    "release": "build",
-    "postinstall": "electron-builder install-app-deps"
+    "release": "electron-builder",
+    "postinstall": "electron-builder install-app-deps",
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder"
   },
   "keywords": [
     "Electron",
@@ -59,7 +60,8 @@
     "winston": "^3.3.3",
     "yeoman-environment": "^2.10.3",
     "yeoman-generator": "^4.12.0",
-    "yo": "^3.1.1"
+    "yo": "^3.1.1",
+    "generator-ibi-appframework": "1.1.40"
   },
   "build": {
     "appId": "apps.cloud.interlinebrands.com",
